@@ -1,13 +1,7 @@
 <template>
     <b-container>
-      
   <b-row align-v="center">
-    <b-col>
-
-
-    </b-col>
-    <b-col>2 of 3</b-col>
-    <b-col>3 of 3</b-col>
+    <h1>project DETAIL PAGE</h1>
   </b-row>
 </b-container>
 
@@ -16,9 +10,8 @@
 <script>
 // @ is an alias to /src
 
-
 export default {
-  name: "Projects",
+  name: "ProjectDetail",
   components: {
   },
 };

@@ -1,12 +1,25 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+     <Navbar-Component></Navbar-Component>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+
+import Navbar from './components/navbarComp.vue'
+
+export default {
+  components:{
+    "Navbar-Component": Navbar
+  },
+   computed: {
+       
+   },
+}
+</script>
 
 <style lang="scss">
 #app {
