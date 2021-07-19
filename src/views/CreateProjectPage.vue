@@ -8,6 +8,7 @@
 </template>
 
 <script>
+// hola mundo
 // @ is an alias to /src
 
 export default {
