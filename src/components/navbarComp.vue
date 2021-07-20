@@ -1,7 +1,11 @@
 <template>
-
   <div>
-    <h1>NAVBAR</h1>
+    <b-nav pills class="container">
+      <b-nav-item active>Admin</b-nav-item>
+      <b-nav-item>Projects</b-nav-item>
+      <b-nav-item-dropdown>CREATE PROJECT</b-nav-item>
+      <b-nav-item disabled>My Name</b-nav-item>
+    </b-nav>
   </div>
 </template>
 
@@ -14,3 +18,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.container{
+  display: flex;
+  justify-content: space-around;
+}
+</style>
