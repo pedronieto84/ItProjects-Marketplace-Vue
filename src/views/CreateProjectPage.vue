@@ -1,6 +1,6 @@
 <template>
     <b-container>
-  <b-row align-v="center">
+  <b-row align-v="center w-100">
     <crearProjecte/>
   </b-row>
 </b-container>
