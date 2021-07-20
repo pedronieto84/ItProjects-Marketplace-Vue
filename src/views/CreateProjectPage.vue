@@ -1,20 +1,19 @@
 <template>
     <b-container>
   <b-row align-v="center">
-    <h1>CREATE PROJECT PAGE</h1>
+    <crearProjecte/>
   </b-row>
 </b-container>
 
 </template>
 
 <script>
-// hola mundo
 // @ is an alias to /src
-//awidhn,dsv ,k
-
+import crearProjecte from '../components/crearProjecte.vue'
 export default {
   name: "CreateProject",
   components: {
+    crearProjecte
   },
 };
 </script>
