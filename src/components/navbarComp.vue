@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.state.allRegister[0].name === 'admin'">
     <b-nav pills class="container">
       <b-nav-item active>Admin</b-nav-item>
       <b-nav-item>Projects</b-nav-item>
@@ -8,6 +8,7 @@
       <b-nav-item disabled>My Name</b-nav-item>
       <!-- <b-form-input>{{name}}</b-form-input> -->
     </b-nav>
+    <hr>
   </div>
 </template>
 
@@ -18,9 +19,6 @@ export default {
   name: "Navbar",
   components: {
   },
-  props:{
-    user: Object
-  }
 };
 </script>
 

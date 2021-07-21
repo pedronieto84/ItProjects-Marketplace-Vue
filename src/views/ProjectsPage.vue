@@ -1,8 +1,8 @@
 <template>
+<div>
   <b-container>
-
     <b-row align-v="center">
-      <b-col v-for="user in users" :key="user.id">
+      <b-col v-for="user in $store.getters.allUsers" :key="user.id">
         <b-card
           title="Proyect"
           style="max-width: 20rem;"
@@ -17,6 +17,12 @@
       </b-col>
     </b-row>
   </b-container>
+  <hr>
+  <b-container>
+    Total Proejct : {{$store.getters.allUsersCount}}
+  </b-container>
+</div>
+
 </template>
 
 <script>
@@ -25,43 +31,5 @@ export default {
   name: "Projects",
   components: {
   },
-  data(){
-    return{
-      users:[
-        {
-          user_id: 1,
-          name: 'alberto'
-        },
-        {
-          user_id: 2,
-          name: 'david'
-        },
-        {
-          user_id: 3,
-          name: 'alvaro'
-        },
-        {
-          user_id: 4,
-          name: 'keita'
-        },
-        {
-          user_id: 5,
-          name: 'kar'
-        },
-        {
-          user_id: 6,
-          name: 'ben'
-        },
-        {
-          user_id: 7,
-          name: 'leon'
-        },
-        {
-          user_id: 8,
-          name: 'oriol'
-        }
-      ]
-    }
-  }
 };
 </script>
