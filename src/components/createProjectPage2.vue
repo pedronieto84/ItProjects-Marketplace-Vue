@@ -35,29 +35,29 @@
         <b-form-input type="text"></b-form-input>
       </b-col>
       <b-col sm="1">
-        <b-icon-plus-circle-fill class="h2"></b-icon-plus-circle-fill>
+        <b-button pill variant="info">+</b-button>
       </b-col>
     </b-row>
         </div>
         <div class="tech-set border d-flex p-3 m-2">
             <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded">
                 <p>technolgia</p>
-            <b-icon-file-minus-fill class="m-1"></b-icon-file-minus-fill>
+            <b-button pill variant="info">-</b-button>
             </div>
           <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded">
                 <p>technolgia</p>
-            <b-icon-file-minus-fill class="m-1"></b-icon-file-minus-fill>
+            <b-button pill variant="info">-</b-button>
             </div>
             <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded">
                 <p>technolgia</p>
-            <b-icon-file-minus-fill class="m-1"></b-icon-file-minus-fill>
+            <b-button pill variant="info">-</b-button>
             </div>
             
         </div>
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
-                <b-icon-arrow-left-square-fill class="h2"></b-icon-arrow-left-square-fill>
-          <b-icon-arrow-right-square-fill class="h2"></b-icon-arrow-right-square-fill>
+                <b-button pill variant="outline-danger">Back</b-button>
+          <b-button pill variant="outline-danger">Next</b-button>
         </div>
         </div>
   </b-container>

@@ -18,7 +18,7 @@
           class="mt-5"
         ></b-form-textarea>
         <div class="d-flex justify-content-end mt-3" >
-          <b-icon-arrow-right-square-fill class="h2"></b-icon-arrow-right-square-fill>
+           <b-button pill variant="outline-danger">Next</b-button>
         </div>
       </b-container>
     </div>
