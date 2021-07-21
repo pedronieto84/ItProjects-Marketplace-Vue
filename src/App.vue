@@ -8,7 +8,7 @@
 </template>
 
 <script>
-
+// hola mundo
 import Navbar from './components/navbarComp.vue'
 
 export default {
