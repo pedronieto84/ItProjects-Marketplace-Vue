@@ -2,24 +2,58 @@
     <div>
     <b-container fluid>
         <b-row class="d-flex w-100 align-items-center">
-          <b-col sm="6">
-            <label :for="name">Project title</label>
+          <b-col sm="5">
+            <label>Project title</label>
           </b-col>
-          <b-col sm="6">
-            <b-form-input class="w-100"></b-form-input>
+          <b-col sm="7">
+            <b-form-input 
+            :state="stateName"
+            placeholder="project title" 
+            trim 
+            class="w-100" 
+            v-model="project.projectTitle">
+            </b-form-input>
           </b-col>
         </b-row>
           <b-form-textarea
+          v-model="project.projectDescription"
           id="textarea"
-          v-model="text"
-          placeholder="Project description , 500 char"
+          placeholder="Project description , max 500 char"
           rows="3"
           max-rows="6"
-          class="mt-5"
+          class="mt-5 overflow-hidden"
+          :state="stateDescription"
+          trim
         ></b-form-textarea>
         <div class="d-flex justify-content-end mt-3" >
-           <b-button pill variant="outline-danger">Next</b-button>
+           <b-button @click="sendProjectData1" pill variant="outline-danger">Next</b-button>
         </div>
       </b-container>
     </div>
 </template>
+<script>
+export default {
+  data () {
+      return {
+        project : {
+          projectTitle:"",
+          projectDescription:"" 
+        }
+      }
+     
+  },
+  methods:{
+    sendProjectData1 () {
+      this.$emit('sendProjectData1', this.project);
+    }
+  },
+  computed:{
+     stateName() {
+      return this.project.projectTitle.length > 0 && this.project.projectTitle.length <= 150;
+    },
+    stateDescription() {
+      return this.project.projectDescription.length > 0 && this.project.projectDescription.length <= 500;
+    }
+  }
+}
+</script>

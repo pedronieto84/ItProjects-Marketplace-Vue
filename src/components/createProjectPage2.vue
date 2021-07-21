@@ -32,26 +32,24 @@
         <label>Add technology needed / desired </label>
       </b-col>
       <b-col sm="5">
-        <b-form-input type="text"></b-form-input>
+        <b-form-input 
+        type="text" 
+        placeholder="technology"
+        :state="stateTechnology"
+        trim
+        v-model="technologyNeeded"></b-form-input>
       </b-col>
       <b-col sm="1">
-        <b-button pill variant="info">+</b-button>
+        <b-button pill variant="info" @click="addTechnology">+</b-button>
       </b-col>
     </b-row>
         </div>
         <div class="tech-set border d-flex p-3 m-2">
-            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded">
-                <p>technolgia</p>
-            <b-button pill variant="info">-</b-button>
+            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded" v-for="technology in technologies" :key="technology">
+                <p class="pr-3">{{technology}}</p>
+            <b-button pill variant="info" @click="deleteTechnology">-</b-button>
             </div>
-          <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded">
-                <p>technolgia</p>
-            <b-button pill variant="info">-</b-button>
-            </div>
-            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded">
-                <p>technolgia</p>
-            <b-button pill variant="info">-</b-button>
-            </div>
+         
             
         </div>
         <div class="navigation">
@@ -64,8 +62,29 @@
 </template>
 <script>
 export default {
-   mounted:{
-       
-   }
+  data () {
+      return {
+        technologyNeeded:"",
+        technologies:[]
+      }
+     
+  },
+  computed:{
+        stateTechnology() {
+      return this.technologyNeeded.length > 0 && this.technologyNeeded.length <= 35;
+    }
+  },
+  methods:{
+      addTechnology () {
+          if(this.technologyNeeded.length>0){
+            this.technologies.push(this.technologyNeeded);
+            this.technologyNeeded="";
+          }
+      },
+      deleteTechnology(e) {
+            let techToDelete = e.target.previousSibling.textContent;
+            console.log(techToDelete);
+      } 
+  }
 }
 </script>
