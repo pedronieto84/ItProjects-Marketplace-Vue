@@ -41,20 +41,16 @@ export default new Vuex.Store({
         user_id: 7,
         name: 'leon'
       },
-      {
-        user_id: 8,
-        name: 'oriol'
-      }
     ]
   },
   getters: {
     getBaseURL(state) {
       return state.baseURL;
     },
-    allUsers: (state) => {
+    allUsers: state => {
       return state.allUsers
     },
-    allUsersCount: (state) => {
+    allUsersCount: state => {
       return state.allUsers.length;
     }
   },

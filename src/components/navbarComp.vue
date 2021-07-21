@@ -1,11 +1,11 @@
 <template>
-  <div v-if="$store.state.allRegister[0].name === 'admin'">
+  <div>
     <b-nav pills class="container">
-      <b-nav-item active>Admin</b-nav-item>
-      <b-nav-item>Projects</b-nav-item>
-      <b-nav-item active>CREATE PROJECT</b-nav-item>
+      <b-nav-item router :to="{name:'Admin'}" exact :active="allRegister[0].name === 'admin'">Admin</b-nav-item>
+      <b-nav-item router :to="{name:'Projects'}" exact>Projects</b-nav-item>
+      <b-nav-item router :to="{name:'CreateProject'}" exact active>CREATE PROJECT</b-nav-item>
       <!-- <b-nav-item-dropdown>CREATE PROJECT</b-nav-item> -->
-      <b-nav-item disabled>My Name</b-nav-item>
+      <b-nav-item router :to="{name:'MyAccount'}" exact>My Name</b-nav-item>
       <!-- <b-form-input>{{name}}</b-form-input> -->
     </b-nav>
     <hr>
@@ -14,11 +14,15 @@
 
 <script>
 // @ is an alias to /src
+import {mapState} from 'vuex'
 
 export default {
   name: "Navbar",
-  components: {
-  },
+  computed: {
+    ...mapState({
+      allRegister: 'allRegister'
+    })
+  }
 };
 </script>
 
@@ -26,6 +30,6 @@ export default {
 .container{
   display: flex;
   justify-content: space-around;
-  width: 1000%;
+  width: 100%;
 }
 </style>
