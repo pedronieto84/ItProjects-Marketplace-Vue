@@ -5,7 +5,7 @@
         <b-col v-for="user in allUsers" :key="user.id">
           <b-card
             title="Proyect"
-            style="max-width: 9rem;"
+            style="max-width: 10rem;"
             class="mb-2"
           >
             <b-card-text>
