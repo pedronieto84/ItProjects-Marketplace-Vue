@@ -43,7 +43,9 @@ export default {
         project : {
           projectTitle:"",
           projectDescription:"" 
-        }
+        },
+        projectTitle:true,
+        projectDescription:true
       }
      
   },
@@ -54,6 +56,9 @@ export default {
   },
   computed:{
      stateTitle () {
+       if (this.projectTitle) {
+         return null;
+       }
       return this.project.projectTitle.length > 0 && this.project.projectTitle.length <= 150;
     },
     stateDescription() {
