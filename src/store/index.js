@@ -17,23 +17,23 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getBaseURL(state) {
+    getBaseURL(state) { // he dejado Seokju para probar
       return state.baseURL;
     },
-    allUsers: state => {
+    allUsers: state => { // he dejado Seokju para probar
       return state.allUsers
     },
-    allUsersCount: state => {
+    allUsersCount: state => { // he dejado Seokju para probar
       return state.allUsers.length;
     }
   },
   mutations: {
-    // loginAdmin(state){
+    // loginAdmin(state){ // he dejado Seokju para probar
     //   state.isAdmin = true;
     // }
   },
   actions: {
-    // login({state, commit}, loginObj){
+    // login({state, commit}, loginObj){ // he dejado Seokju para probar
     //   ...
     // }
   },
