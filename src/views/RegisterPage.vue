@@ -113,6 +113,7 @@ export default {
       firstEmail: true,
       firstPassword: true,
       firstCPassword: true,
+
     };
   },
 

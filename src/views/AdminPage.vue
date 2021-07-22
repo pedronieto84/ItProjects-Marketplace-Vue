@@ -9,6 +9,6 @@
 
 export default {
   name: "Admin",
-  
+
 };
 </script>
