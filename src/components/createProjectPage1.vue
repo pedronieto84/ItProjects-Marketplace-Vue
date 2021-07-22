@@ -6,7 +6,7 @@
             <label>Project title</label>
           </b-col>
           <b-col sm="7">
-            <b-form-group :invalid-feedback="invalidFeedbackTitle">
+            <b-form-group :invalid-feedback="invalidFeedbackTitle" class="text-left">
             <b-form-input 
             :state="stateTitle"
             placeholder="project title" 
@@ -18,7 +18,7 @@
         </b-form-group>
           </b-col>
         </b-row>
-        <b-form-group :invalid-feedback="invalidFeedbackDescription">
+        <b-form-group :invalid-feedback="invalidFeedbackDescription" class="text-left">
           <b-form-textarea
           v-model="project.projectDescription"
           id="textarea"

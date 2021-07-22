@@ -5,9 +5,10 @@
             <b-row class="m-1">
               <b-col sm="12">
                   <label>Published: </label>
+                  {{date}}
               </b-col>
             <b-col>
-                <b-form-input type="date"></b-form-input>
+                <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
             </b-col>
           </b-row>
             <!--deadline-->
@@ -16,7 +17,7 @@
                 <label>Deadline: </label>
             </b-col>
             <b-col>
-                <b-form-input type="date"></b-form-input>
+                <b-form-datepicker v-model="publishData" :min="min" :max="max" locale="en"></b-form-datepicker>
             </b-col>
             </b-row>
             <!--price-->
@@ -50,7 +51,7 @@
       </b-col>
     </b-row>
         </div>
-        <div class="tech-set border d-flex p-3 m-2">
+        <div class="tech-set border d-flex flex-wrap p-3 m-2">
             <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded" v-for="technology in technologies" :key="technology">
                 <p class="pr-3">{{technology}}</p>
             <b-button pill variant="info" @click="deleteTechnology">-</b-button>
@@ -67,12 +68,23 @@
   </b-container>
 </template>
 <script>
+import axios from 'axios';
 export default {
   data () {
+      const now = new Date()
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      // min date today
+      const minDate = new Date(today)
+      //max date in 6 months
+      const maxDate = new Date(today)
+      maxDate.setMonth(maxDate.getMonth() + 6)
       return {
         technologyNeeded:"",
         technologies:[],
-        projectPrice:0
+        projectPrice:0,
+        value:"",
+        min: minDate,
+        max: maxDate
       }
      
   },
@@ -96,6 +108,11 @@ export default {
             let deleteThis = this.technologies.indexOf(techToDelete);
             this.technologies.splice(deleteThis,1);
       } 
+  },
+   mounted () {
+    axios
+      .get('https://us-central1-asamblea-27a8d.cloudfunctions.net/getTechSet')
+      .then(response => this.technologies = response.data );
   }
 }
 </script>
