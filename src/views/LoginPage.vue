@@ -8,6 +8,8 @@
       :invalid-feedback="invalidFeedbackEmail"
       :state="stateEmail"
     >
+
+    
       <b-form-input
         id="email"
         v-model="email"
