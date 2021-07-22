@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-nav pills class="container">
-      <b-nav-item router :to="{name:'Admin'}" exact :active="allRegister[0].name === 'admin'">Admin</b-nav-item>
+      <b-nav-item router :to="{name:'Admin'}" exact :active="isAdmin">Admin</b-nav-item>
       <b-nav-item router :to="{name:'Projects'}" exact>Projects</b-nav-item>
       <b-nav-item router :to="{name:'CreateProject'}" exact active>CREATE PROJECT</b-nav-item>
       <!-- <b-nav-item-dropdown>CREATE PROJECT</b-nav-item> -->
@@ -20,7 +20,7 @@ export default {
   name: "Navbar",
   computed: {
     ...mapState({
-      allRegister: 'allRegister'
+      isAdmin: 'isAdmin'
     })
   }
 };
