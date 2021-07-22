@@ -14,6 +14,7 @@
         :state="stateName"
         trim
         autofocus
+        @keydown="entrada($event)"
       ></b-form-input>
     </b-form-group>
 
@@ -29,6 +30,7 @@
         v-model="email"
         :state="stateEmail"
         trim
+        @keydown="entrada($event)"
       ></b-form-input>
     </b-form-group>
 
@@ -45,6 +47,7 @@
         v-model="password"
         :state="statePassword"
         trim
+        @keydown="entrada($event)"
       ></b-form-input>
     </b-form-group>
 
@@ -61,6 +64,7 @@
         v-model="cpassword"
         :state="stateCPassword"
         trim
+        @keydown="entrada($event)"
       ></b-form-input>
     </b-form-group>
 
@@ -108,11 +112,15 @@ export default {
       firstName: true,
       firstEmail: true,
       firstPassword: true,
+      firstCPassword: true,
     };
   },
 
   computed: {
     stateName() {
+      if (this.firstName) {
+        return null;
+      }
       return this.name.length > 0 && this.name.length <= 20;
     },
     invalidFeedbackName() {
@@ -125,7 +133,10 @@ export default {
     },
     stateEmail() {
       const pattern =
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+      if (this.firstEmail) {
+        return null;
+      }
       if (this.email.match(pattern) === null) {
         return false;
       } else {
@@ -134,7 +145,7 @@ export default {
     },
     invalidFeedbackEmail() {
       const pattern =
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
       if (this.email.match(pattern) === null) {
         return "Introduïr adreça email vàlida";
       }
@@ -143,6 +154,9 @@ export default {
     },
     statePassword() {
       const pattern = /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,10}$/;
+      if (this.firstPassword) {
+        return null;
+      }
       if (this.password.match(pattern) === null) {
         return false;
       } else {
@@ -159,6 +173,9 @@ export default {
       return "";
     },
     stateCPassword() {
+      if (this.firstCPassword) {
+        return null;
+      }
       if (this.cpassword === this.password) {
         return true;
       } else {
@@ -200,8 +217,22 @@ export default {
   },
 
   methods: {
-    firstTime(event) {
-      alert(event.target);
+    entrada(event) {
+      switch (event.target.id) {
+        case "userName":
+          this.firstName = false;
+          break;
+        case "email":
+          this.firstEmail = false;
+          break;
+        case "password":
+          this.firstPassword = false;
+          this.firstCPassword = false;
+          break;
+        case "cpassword":
+          this.firstCPassword = false;
+          break;
+      }
     },
     activar(okName, okEmail, okPass, okCPass) {
       if (okName && okEmail && okPass && okCPass) {
