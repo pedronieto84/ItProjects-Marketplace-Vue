@@ -35,13 +35,18 @@
       ></b-form-input>
     </b-form-group>
 
-    <b-button variant="primary" :disabled="disableSend" @click="login"
-      ><span
-        class="spinner-border spinner-border-sm"
-        v-if="sending === true"
-      ></span
-      ><span v-else>Enviar</span></b-button
-    >
+    <div class="d-flex flex-column">
+      <router-link to="registre" class="mb-3">Crear usuari</router-link>
+      <div>
+        <b-button variant="primary" :disabled="disableSend" @click="login"
+          ><span
+            class="spinner-border spinner-border-sm"
+            v-if="sending === true"
+          ></span
+          ><span v-else>Enviar</span></b-button
+        >
+      </div>
+    </div>
   </b-container>
 </template>
 
