@@ -1,7 +1,7 @@
 <template>
     <b-container>
-  <b-row align-v="center">
-    <h1>CREATE PROJECT PAGE</h1>
+  <b-row align-v="center w-100">
+    <crearProjecte/>
   </b-row>
 </b-container>
 
@@ -9,10 +9,11 @@
 
 <script>
 // @ is an alias to /src
-
+import crearProjecte from '../components/crearProjecte.vue'
 export default {
   name: "CreateProject",
   components: {
+    crearProjecte
   },
 };
 </script>
