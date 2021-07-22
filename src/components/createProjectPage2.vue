@@ -3,13 +3,13 @@
          <div class="d-flex align-items-center justify-content-center">
             <!--published-->
             <b-row class="m-1">
-            <b-col sm="12">
-                <label>Published: </label>
-            </b-col>
+              <b-col sm="12">
+                  <label>Published: </label>
+              </b-col>
             <b-col>
                 <b-form-input type="date"></b-form-input>
             </b-col>
-            </b-row>
+          </b-row>
             <!--deadline-->
             <b-row class="m-1">
             <b-col sm="12">
@@ -22,13 +22,19 @@
             <!--price-->
             <b-row class="mt-4">
             <b-col>
-                <b-form-input type="number" placeholder="Bid In Euros"></b-form-input>
+          <b-form-group :invalid-feedback="invalidFeedbackPrice">
+                <b-form-input 
+                type="number" 
+                placeholder="Bid In Euros" 
+                v-model="projectPrice"
+                :state="statePrice"></b-form-input>
+                </b-form-group>
             </b-col>
             </b-row>
         </div>
         <div class="add-technology m-5">
               <b-row class="my-1">
-      <b-col sm="6">
+      <b-col sm="6" class="">
         <label>Add technology needed / desired </label>
       </b-col>
       <b-col sm="5">
@@ -65,13 +71,17 @@ export default {
   data () {
       return {
         technologyNeeded:"",
-        technologies:[]
+        technologies:[],
+        projectPrice:0
       }
      
   },
   computed:{
-        stateTechnology() {
+    stateTechnology() {
       return this.technologyNeeded.length > 0 && this.technologyNeeded.length <= 35;
+    },
+    statePrice() {
+      return this.projectPrice > 0 && this.projectPrice <= 5000;
     }
   },
   methods:{
@@ -83,7 +93,8 @@ export default {
       },
       deleteTechnology(e) {
             let techToDelete = e.target.previousSibling.textContent;
-            console.log(techToDelete);
+            let deleteThis = this.technologies.indexOf(techToDelete);
+            this.technologies.splice(deleteThis,1);
       } 
   }
 }
