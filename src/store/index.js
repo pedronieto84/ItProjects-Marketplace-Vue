@@ -15,21 +15,45 @@ export default new Vuex.Store({
       typeOfInstitution: "",
       verified: false,
     },
+    isAdmin: true, // dejado para probar Seokju
+    allUsers: [ // dejado para probar Seokju
+      { user_id: 1, name: 'alberto' },
+      { user_id: 2, name: 'ber' },
+      { user_id: 3, name: 'car' },
+      { user_id: 4, name: 'david' },
+      { user_id: 5, name: 'elisa' },
+      { user_id: 6, name: 'alberto' }
+    ]
   },
   getters: {
-    getBaseURL(state) {
+    getBaseURL(state) { // he dejado Seokju para probar
       return state.baseURL;
     },
-
-    getUser(state) {
-      if (state.user.userId === "") {
-        let storedUser = sessionStorage.getItem("itAcademyProjects-storedUser");
-        if (storedUser !== null) {
-          state.user = JSON.parse(storedUser);
-        }
-      }
-      return state.user;
+    allUsers: state => { // he dejado Seokju para probar
+      return state.allUsers
     },
+    allUsersCount: state => { // he dejado Seokju para probar
+      return state.allUsers.length;
+    }
+  },
+  // mutations: {
+  //   // loginAdmin(state){ // he dejado Seokju para probar
+  //   //   state.isAdmin = true;
+  //   // }
+  // },
+  // actions: {
+  //   // login({state, commit}, loginObj){ // he dejado Seokju para probar
+  //   //   ...
+  //   // }
+  // },
+  getUser(state) {
+    if (state.user.userId === "") {
+      let storedUser = sessionStorage.getItem("itAcademyProjects-storedUser");
+      if (storedUser !== null) {
+        state.user = JSON.parse(storedUser);
+      }
+    }
+    return state.user;
   },
 
   mutations: {
