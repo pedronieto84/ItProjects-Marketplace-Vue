@@ -105,6 +105,9 @@ export default {
       disableAll: false,
       disableSend: true,
       sending: false,
+      firstName: true,
+      firstEmail: true,
+      firstPassword: true,
     };
   },
 
@@ -197,6 +200,9 @@ export default {
   },
 
   methods: {
+    firstTime(event) {
+      alert(event.target);
+    },
     activar(okName, okEmail, okPass, okCPass) {
       if (okName && okEmail && okPass && okCPass) {
         this.disableSend = false;
