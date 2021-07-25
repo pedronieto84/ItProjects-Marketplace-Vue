@@ -8,14 +8,13 @@
       :invalid-feedback="invalidFeedbackEmail"
       :state="stateEmail"
     >
-
-    
       <b-form-input
         id="email"
         v-model="email"
         :state="stateEmail"
         trim
         autofocus
+        @keydown="entrada($event)"
       ></b-form-input>
     </b-form-group>
 
@@ -32,16 +31,22 @@
         v-model="password"
         :state="statePassword"
         trim
+        @keydown="entrada($event)"
       ></b-form-input>
     </b-form-group>
 
-    <b-button variant="primary" :disabled="disableSend" @click="login"
-      ><span
-        class="spinner-border spinner-border-sm"
-        v-if="sending === true"
-      ></span
-      ><span v-else>Enviar</span></b-button
-    >
+    <div class="d-flex flex-column">
+      <router-link to="registre" class="mb-3">Crear usuari</router-link>
+      <div>
+        <b-button variant="primary" :disabled="disableSend" @click="login"
+          ><span
+            class="spinner-border spinner-border-sm"
+            v-if="sending === true"
+          ></span
+          ><span v-else>Enviar</span></b-button
+        >
+      </div>
+    </div>
   </b-container>
 </template>
 
@@ -58,6 +63,8 @@ export default {
       disableAll: false,
       disableSend: true,
       sending: false,
+      firstEmail: true,
+      firstPassword: true,
     };
   },
 
@@ -65,6 +72,9 @@ export default {
     stateEmail() {
       const pattern =
         /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
+      if (this.firstEmail) {
+        return null;
+      }
       if (this.email.match(pattern) === null) {
         return false;
       } else {
@@ -82,6 +92,9 @@ export default {
     },
     statePassword() {
       const pattern = /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,10}$/;
+      if (this.firstPassword) {
+        return null;
+      }
       if (this.password.match(pattern) === null) {
         return false;
       } else {
@@ -109,6 +122,17 @@ export default {
   },
 
   methods: {
+    entrada(event) {
+      switch (event.target.id) {
+        case "email":
+          this.firstEmail = false;
+          break;
+        case "password":
+          this.firstPassword = false;
+          break;
+      }
+    },
+
     activar(okEmail, okPass) {
       if (okEmail && okPass) {
         this.disableSend = false;
@@ -163,7 +187,7 @@ export default {
 
   created() {
     const user = this.$store.getters.getUser;
-    if (user.userId !== "") {
+    if (user && user.userId !== "") {
       this.$router.push("/");
     }
   },

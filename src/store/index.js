@@ -28,13 +28,16 @@ export default new Vuex.Store({
     // ifLoginError: false // el codigo probado para Seokju
   },
   getters: {
-    getBaseURL(state) { // he dejado Seokju para probar
+    getBaseURL(state) {
+      // he dejado Seokju para probar
       return state.baseURL;
     },
-    allUsers: state => { // he dejado Seokju para probar
-      return state.allUsers
+    allUsers: (state) => {
+      // he dejado Seokju para probar
+      return state.allUsers;
     },
-    allUsersCount: state => { // he dejado Seokju para probar
+    allUsersCount: (state) => {
+      // he dejado Seokju para probar
       return state.allUsers.length;
     },
     getUser(state) {
@@ -48,6 +51,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    // loginAdmin(state){ // he dejado Seokju para probar
+    //   state.isAdmin = true;
+    // }
     // loginSuccess(state) { // el codigo probado para Seokju
     //   state.isLogin = true
     //   state.isLoginError = false
@@ -122,6 +128,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    // login({state, commit}, loginObj){ // he dejado Seokju para probar}
     // login({ state, commit }, loginObj) { // el codigo probado para Seokju
     //   let selectedUser = null;
     //   state.allUsers.forEach(user => {
