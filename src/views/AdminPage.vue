@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-    <h1>This is an administrator page</h1>
-    <b-table striped bordered :items="items" :fields="fields"></b-table>
+
+    <b-table striped bordered :items="items" :per-page="perPage" :current-page="currentPage" :fields="fields"></b-table>
+    <b-pagination
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      align="center"
+    >
+    </b-pagination>
     <div>{{items2}}</div>
     <div>{{items2.name}} / {{items2.email}}</div>
   </div>
@@ -11,11 +18,14 @@
 // @ is an alias to /src
 import store from '@/store'
 
-let items = store.state.allUsers.sort((a,b) => {return b.user_id - a.user_id}) // probar sort Seokju
+
 export default {
   name: "Admin",
   data() {
+    let items = store.state.allUsers.sort((a,b) => {return b.user_id - a.user_id}) // probar sort Seokju
     return {
+      currentPage: 1,
+      perPage: 5,
       items: items,
       // items: store.state.allUsers, // probar Seokju
       items2: store.getters.getUser,
@@ -36,5 +46,10 @@ export default {
       ]
     }
   },
+  computed: {
+    rows(){
+      return this.items.length
+    }
+  }
 };
 </script>
