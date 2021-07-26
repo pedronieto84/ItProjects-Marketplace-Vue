@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -37,6 +38,7 @@ export default new Vuex.Store({
     ],
     // isLogin: false, // el codigo probado para Seokju
     // ifLoginError: false // el codigo probado para Seokju
+    users: null
   },
   getters: {
     getBaseURL(state) {
@@ -60,6 +62,19 @@ export default new Vuex.Store({
       }
       return state.user;
     },
+    getUsers(state) {
+      axios
+        .get(state.baseURL + '/getUsers')
+        .then(res => {
+          console.log(res.data)
+          state.users = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .then(() => {
+        })
+    }
   },
   mutations: {
     // loginAdmin(state){ // he dejado Seokju para probar
