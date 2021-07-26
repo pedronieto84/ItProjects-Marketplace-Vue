@@ -34,7 +34,6 @@ export default new Vuex.Store({
       { user_id: 3, name: 'car', content: 'hola3' },
       { user_id: 4, name: 'david', content: 'hola4' },
       { user_id: 5, name: 'elisa', content: 'hola5' },
-      { user_id: 6, name: 'alberto', content: 'hola6' }
     ],
     // isLogin: false, // el codigo probado para Seokju
     // ifLoginError: false // el codigo probado para Seokju
