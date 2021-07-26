@@ -23,12 +23,15 @@
             <!--price-->
             <b-row class="mt-4">
             <b-col>
+              
           <b-form-group :invalid-feedback="invalidFeedbackPrice">
                 <b-form-input 
+                id="priceId"
                 type="number" 
                 placeholder="Bid In Euros" 
                 v-model="projectPrice"
-                :state="statePrice"></b-form-input>
+                :state="statePrice"
+                @click="entrada($event)"></b-form-input>
                 </b-form-group>
             </b-col>
             </b-row>
@@ -39,16 +42,26 @@
         <label>Add technology needed / desired </label>
       </b-col>
       <b-col sm="5">
+
+
+
         <b-form-input 
+        id="projectTechnologyId"
         type="text" 
         placeholder="technology"
         :state="stateTechnology"
         trim
-        v-model="technologyNeeded"></b-form-input>
+        v-model="technologyNeeded"
+        @keydown="entrada($event)"></b-form-input>
       </b-col>
       <b-col sm="1">
         <b-button pill variant="info" @click="addTechnology">+</b-button>
       </b-col>
+
+
+
+
+
     </b-row>
         </div>
         <div class="tech-set border d-flex flex-wrap p-3 m-2">
@@ -84,15 +97,23 @@ export default {
         projectPrice:0,
         value:"",
         min: minDate,
-        max: maxDate
+        max: maxDate,
+        projectPriceId:true,
+        projectTechnologyId:true
       }
      
   },
   computed:{
     stateTechnology() {
+      if (this.projectTechnologyId) {
+        return null;
+      }
       return this.technologyNeeded.length > 0 && this.technologyNeeded.length <= 35;
     },
     statePrice() {
+      if (this.projectPriceId) {
+        return null;
+      }
       return this.projectPrice > 0 && this.projectPrice <= 5000;
     }
   },
@@ -107,7 +128,17 @@ export default {
             let techToDelete = e.target.previousSibling.textContent;
             let deleteThis = this.technologies.indexOf(techToDelete);
             this.technologies.splice(deleteThis,1);
-      } 
+      },
+         entrada(event) {
+       switch (event.target.id) {
+          case "priceId":
+          this.projectPriceId = false;
+          break;
+           case "projectTechnologyId":
+          this.projectTechnologyId = false;
+          break;
+      }
+    }
   },
    mounted () {
     axios

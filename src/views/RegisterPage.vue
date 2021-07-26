@@ -165,11 +165,9 @@ export default {
     },
     invalidFeedbackPassword() {
       const pattern = /^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,10}$/;
-
       if (this.password.match(pattern) === null) {
         return "La contrasenya ha de tenir entre 5 y 10 caràcters i al menys un símbol";
       }
-
       return "";
     },
     stateCPassword() {
