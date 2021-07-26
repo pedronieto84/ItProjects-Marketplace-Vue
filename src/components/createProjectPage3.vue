@@ -4,15 +4,17 @@
     <b-form-file
       v-model="file1"
       :state="Boolean(file1)"
-      placeholder="Choose a file or drop it here..."
-      drop-placeholder="Drop file here..."
+      placeholder="Drag and drop files here..."
       class="pt-5 pb-5 mt-5 h-50 text-left"
     ></b-form-file>
     
-    <div class="d-flex align-items-center justify-content-end">
+   <div>
+      <h4 class="text-left mb-5">Published files:</h4>
+      <p>File name: </p></div>
+    
+     <div class="d-flex align-items-center justify-content-end">
     <b-button variant="info">publish</b-button>
     </div>
-    <p class="text-left">Published files:<span>{{file1}}</span></p>
     
   </div>
 </template>

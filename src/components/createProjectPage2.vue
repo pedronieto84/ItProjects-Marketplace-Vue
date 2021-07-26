@@ -23,7 +23,7 @@
             <!--price-->
             <b-row class="mt-4">
             <b-col>
-              
+            
           <b-form-group :invalid-feedback="invalidFeedbackPrice">
                 <b-form-input 
                 id="priceId"
@@ -42,9 +42,6 @@
         <label>Add technology needed / desired </label>
       </b-col>
       <b-col sm="5">
-
-
-
         <b-form-input 
         id="projectTechnologyId"
         type="text" 
@@ -52,20 +49,22 @@
         :state="stateTechnology"
         trim
         v-model="technologyNeeded"
-        @keydown="entrada($event)"></b-form-input>
+        @keydown="entrada($event)"
+        @change="findTechnology"></b-form-input>
       </b-col>
+
+
+      <!--drop down technologies-->
+  <b-dropdown text="technologies"  variant="primary" class="m-2">
+    <b-dropdown-item v-for="technology of filteredTechnologies" :key="technology.id">{{technology}}</b-dropdown-item>
+  </b-dropdown>
       <b-col sm="1">
         <b-button pill variant="info" @click="addTechnology">+</b-button>
       </b-col>
-
-
-
-
-
     </b-row>
         </div>
         <div class="tech-set border d-flex flex-wrap p-3 m-2">
-            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded" v-for="technology in technologies" :key="technology">
+            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded" v-for="technology in pickedTechnologies" :key="technology">
                 <p class="pr-3">{{technology}}</p>
             <b-button pill variant="info" @click="deleteTechnology">-</b-button>
             </div>
@@ -74,8 +73,8 @@
         </div>
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
-                <b-button pill variant="outline-danger">Back</b-button>
-          <b-button pill variant="outline-danger">Next</b-button>
+                <b-button pill variant="outline-danger" class="mb-5">Back</b-button>
+          <b-button pill variant="outline-danger" class="mb-5">Next</b-button>
         </div>
         </div>
   </b-container>
@@ -94,12 +93,14 @@ export default {
       return {
         technologyNeeded:"",
         technologies:[],
+        pickedTechnologies:[],
         projectPrice:0,
         value:"",
         min: minDate,
         max: maxDate,
         projectPriceId:true,
         projectTechnologyId:true
+        
       }
      
   },
@@ -115,12 +116,16 @@ export default {
         return null;
       }
       return this.projectPrice > 0 && this.projectPrice <= 5000;
+    },
+    filteredTechnologies() {
+      const matches = this.technologies.filter((matchy) => matchy.includes(this.technologyNeeded))
+      return matches;
     }
   },
   methods:{
       addTechnology () {
           if(this.technologyNeeded.length>0){
-            this.technologies.push(this.technologyNeeded);
+            this.pickedTechnologies.push(this.technologyNeeded);
             this.technologyNeeded="";
           }
       },
