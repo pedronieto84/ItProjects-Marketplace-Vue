@@ -38,39 +38,52 @@
         </div>
         <div class="add-technology m-5">
               <b-row class="my-1">
-      <b-col sm="6" class="">
-        <label>Add technology needed / desired </label>
-      </b-col>
-      <b-col sm="5">
-        <b-form-input 
-        id="projectTechnologyId"
-        type="text" 
-        placeholder="technology"
-        :state="stateTechnology"
-        trim
-        v-model="technologyNeeded"
-        @keydown="entrada($event)"
-        @change="findTechnology"></b-form-input>
+      
+
+      <!--*** TECHNOLOGY NEEDED-->
+      <b-col sm="12">
+         <b-form-group label-for="tags-component-select">
+      <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
+      <b-form-tags
+        id="tags-component-select"
+        v-model="value"
+        size="lg"
+        class="mb-2"
+        add-on-change
+        no-outer-focus
+      >
+        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+           <b-form-select
+            v-bind="inputAttrs"
+            v-on="inputHandlers"
+            :disabled="disabled || technologies.length === 0"
+            :options="technologies"
+          >
+            <template #first>
+              <!-- This is required to prevent bugs with Safari -->
+              <option disabled value="">Choose a technology...</option>
+            </template>
+          </b-form-select>
+          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+            <li v-for="tag in tags" :key="tag" class="list-inline-item">
+              <b-form-tag
+                @remove="removeTag(tag)"
+                :title="tag"
+                :disabled="disabled"
+                variant="info"
+              >{{ tag }}</b-form-tag>
+            </li>
+          </ul>
+        
+        </template>
+      </b-form-tags>
+    </b-form-group>
       </b-col>
 
-
-      <!--drop down technologies-->
-  <b-dropdown text="technologies"  variant="primary" class="m-2">
-    <b-dropdown-item v-for="technology of filteredTechnologies" :key="technology.id">{{technology}}</b-dropdown-item>
-  </b-dropdown>
-      <b-col sm="1">
-        <b-button pill variant="info" @click="addTechnology">+</b-button>
-      </b-col>
     </b-row>
+
         </div>
-        <div class="tech-set border d-flex flex-wrap p-3 m-2">
-            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded" v-for="technology in pickedTechnologies" :key="technology">
-                <p class="pr-3">{{technology}}</p>
-            <b-button pill variant="info" @click="deleteTechnology">-</b-button>
-            </div>
-         
-            
-        </div>
+
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
                 <b-button pill variant="outline-danger" class="mb-5">Back</b-button>
@@ -93,7 +106,7 @@ export default {
       return {
         technologyNeeded:"",
         technologies:[],
-        pickedTechnologies:[],
+       /*  pickedTechnologies:[], */
         projectPrice:0,
         value:"",
         min: minDate,
@@ -123,12 +136,6 @@ export default {
     }
   },
   methods:{
-      addTechnology () {
-          if(this.technologyNeeded.length>0){
-            this.pickedTechnologies.push(this.technologyNeeded);
-            this.technologyNeeded="";
-          }
-      },
       deleteTechnology(e) {
             let techToDelete = e.target.previousSibling.textContent;
             let deleteThis = this.technologies.indexOf(techToDelete);
