@@ -51,6 +51,9 @@ export default new Vuex.Store({
     },
     allUsersCount: (state) => {
       // he dejado Seokju para probar
+
+
+      // comentario para ignorar
       return state.allUsers.length;
     },
     getUser(state) {
