@@ -15,6 +15,9 @@
      <div class="d-flex align-items-center justify-content-end">
     <b-button variant="info">publish</b-button>
     </div>
+    <div class="d-flex justify-content-start mt-3" >
+           <b-button pill variant="outline-danger" class="mb-5">Back</b-button>
+        </div>
     
   </div>
 </template>

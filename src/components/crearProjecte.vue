@@ -1,13 +1,16 @@
 <template>
-    <div class="crear-projecte-container border p-5">
-        <h2>1</h2>
-        <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)"/>
-        <hr>
-        <h2>2</h2>
-        <createProjectPage2/>
-        <hr>
-        <h2>3</h2>
-        <createProjectPage3/>
+    <div>
+        <div class="overflow-auto d-flex">
+
+    <b-button pill variant="success" class="m-1" @click="pageCounter=1">1</b-button>
+    <b-button pill variant="success" class="m-1" @click="pageCounter=2">2</b-button>
+    <b-button pill variant="success" class="m-1" @click="pageCounter=3">3</b-button>
+  </div>
+        <div class="crear-projecte-container border p-5">
+        <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-if="pageCounter===1"/>
+        <createProjectPage2 v-if="pageCounter===2"/>
+        <createProjectPage3 v-if="pageCounter===3"/>
+    </div>
     </div>
 </template>
 
@@ -18,7 +21,8 @@ import createProjectPage3 from '../components/createProjectPage3.vue'
 export default {
     data(){
         return {
-            project:{}
+            project:{},
+            pageCounter:1
         }
     },
    components: {

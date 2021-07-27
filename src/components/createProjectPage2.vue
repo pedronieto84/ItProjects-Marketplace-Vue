@@ -41,7 +41,8 @@
       
 
       <!--*** TECHNOLOGY NEEDED-->
-      <b-col sm="12">
+      <b-col sm="4"><p>Add technology needed</p></b-col>
+      <b-col sm="8">
          <b-form-group label-for="tags-component-select">
       <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
       <b-form-tags
@@ -106,14 +107,12 @@ export default {
       return {
         technologyNeeded:"",
         technologies:[],
-       /*  pickedTechnologies:[], */
         projectPrice:0,
         value:"",
         min: minDate,
         max: maxDate,
         projectPriceId:true,
         projectTechnologyId:true
-        
       }
      
   },
