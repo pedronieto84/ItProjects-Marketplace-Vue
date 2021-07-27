@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -15,16 +16,29 @@ export default new Vuex.Store({
       typeOfInstitution: "",
       verified: false,
     },
-    isAdmin: true, // dejado para probar Seokju
-    allUsers: [
-      // dejado para probar Seokju
-      { user_id: 1, name: "alberto" },
-      { user_id: 2, name: "ber" },
-      { user_id: 3, name: "car" },
-      { user_id: 4, name: "david" },
-      { user_id: 5, name: "elisa" },
-      { user_id: 6, name: "alberto" },
+    // isAdmin: true, // dejado para probar Seokju
+    allUsers: [ // dejado para probar Seokju
+      { user_id: 1, name: 'alberto', content: 'hola1' },
+      { user_id: 2, name: 'ber', content: 'hola2' },
+      { user_id: 3, name: 'car', content: 'hola3' },
+      { user_id: 4, name: 'david', content: 'hola4' },
+      { user_id: 5, name: 'elisa', content: 'hola5' },
+      { user_id: 6, name: 'alberto', content: 'hola6' },
+      { user_id: 1, name: 'alberto', content: 'hola1' },
+      { user_id: 2, name: 'ber', content: 'hola2' },
+      { user_id: 3, name: 'car', content: 'hola3' },
+      { user_id: 4, name: 'david', content: 'hola4' },
+      { user_id: 5, name: 'elisa', content: 'hola5' },
+      { user_id: 6, name: 'alberto', content: 'hola6' },
+      { user_id: 1, name: 'alberto', content: 'hola1' },
+      { user_id: 2, name: 'ber', content: 'hola2' },
+      { user_id: 3, name: 'car', content: 'hola3' },
+      { user_id: 4, name: 'david', content: 'hola4' },
+      { user_id: 5, name: 'elisa', content: 'hola5' },
     ],
+    // isLogin: false, // el codigo probado para Seokju
+    // ifLoginError: false // el codigo probado para Seokju
+    users: null
   },
   getters: {
     getBaseURL(state) {
@@ -48,19 +62,32 @@ export default new Vuex.Store({
       }
       return state.user;
     },
+    getUsers(state) {
+      axios
+        .get(state.baseURL + '/getUsers')
+        .then(res => {
+          console.log(res.data)
+          state.users = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        .then(() => {
+        })
+    }
   },
-  // mutations: {
-  //   // loginAdmin(state){ // he dejado Seokju para probar
-  //   //   state.isAdmin = true;
-  //   // }
-  // },
-  // actions: {
-  //   // login({state, commit}, loginObj){ // he dejado Seokju para probar
-  //   //   ...
-  //   // }
-  // },
-
   mutations: {
+    // loginAdmin(state){ // he dejado Seokju para probar
+    //   state.isAdmin = true;
+    // }
+    // loginSuccess(state) { // el codigo probado para Seokju
+    //   state.isLogin = true
+    //   state.isLoginError = false
+    // },
+    // loginError(state) { // el codigo probado para Seokju
+    //   state.isLogin = false
+    //   state.isLoginError = true
+    // },
     setUser(state, data) {
       /* data is a 2 element array.
           data[0] is the property to modify:
@@ -126,6 +153,17 @@ export default new Vuex.Store({
       );
     },
   },
-  actions: {},
+  actions: {
+    // login({state, commit}, loginObj){ // he dejado Seokju para probar}
+    // login({ state, commit }, loginObj) { // el codigo probado para Seokju
+    //   let selectedUser = null;
+    //   state.allUsers.forEach(user => {
+    //     if (user.email === loginObj.email) selectedUser = user
+    //   })
+    //   selectedUser === null || selectedUser.password !== loginObj.password
+    //     ? commit('loginError')
+    //     : commit('loginSuccess')
+    // }
+  },
   modules: {},
 });
