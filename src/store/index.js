@@ -164,7 +164,11 @@ export default new Vuex.Store({
       // })
       // .then(() => {
       // })
-    }
+    },
+    logout({ commit }) {
+      sessionStorage.removeItem("itAcademyProjects-storedUser");
+      commit("setUser", ["logout", null]);
+    },
     // login({ state, commit }, loginObj) { // el codigo probado para Seokju
     //   let selectedUser = null;
     //   state.allUsers.forEach(user => {
