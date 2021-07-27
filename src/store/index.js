@@ -63,20 +63,17 @@ export default new Vuex.Store({
       return state.user;
     },
     getUsers(state) {
-      axios
-        .get(state.baseURL + '/getUsers')
-        .then(res => {
-          console.log(res.data)
-          state.users = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .then(() => {
-        })
+      return state.users
     }
   },
   mutations: {
+    SET_USERS(state, payload) {
+      state.users = payload
+    },
+    // DELETE_USERS(state, index) { // he dejado Seokju para probar
+    //   state.users.splice(index, 1);
+    //   console.log('')
+    // },
     // loginAdmin(state){ // he dejado Seokju para probar
     //   state.isAdmin = true;
     // }
@@ -154,7 +151,20 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    // login({state, commit}, loginObj){ // he dejado Seokju para probar}
+    async actionUsers({ commit }) {
+      const users = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getUsers")
+      commit('SET_USERS', users.data)
+      console.log(users.data)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    }
     // login({ state, commit }, loginObj) { // el codigo probado para Seokju
     //   let selectedUser = null;
     //   state.allUsers.forEach(user => {

@@ -34,7 +34,7 @@
           </b-row>
 
           <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
-          <b-button size="sm" class="m-3" @click="deleteUser(row.index)">Delete <i class="fas fa-trash-alt"></i></b-button>
+          <b-button size="sm" class="m-3" @click="deleteUser(row.item.userId)">Delete <i class="fas fa-trash-alt"></i></b-button>
         </b-card>
       </template>
       <!-- <template #cell(name)="row">
@@ -84,7 +84,7 @@ export default {
       filter: null,
       // items: store.state.allUsers, // probar Seokju
       // fields: ['name', 'content'] // probar Seokju
-      items: store.state.users,
+      items: store.getters.getUsers,
       fields: [
         { key: 'name', label: 'NOMBRE', sortable: true},
         { key:'email', label: 'EMAIL', sortable: true },
@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     rows(){
-      return this.items.length
+      return this.items ? this.items.length : 0
     }
   },
   methods: {
@@ -109,13 +109,33 @@ export default {
     //     index++
     //   )
     // }
-    deleteUser(index){
+    deleteUser(userid){
       // console.log(index)
-      store.state.users.splice(index,1)
+      // console.log(row)
+      // let users = store.state.users.splice(index, 1)
+      // let users = store.state.users.splice(index, 1)
+      // console.log(users)
+      // items.splice(items.index, 1)
+      console.log(userid)
+      const idx = this.items.findIndex(item => item.userId === userid)
+      this.items.splice(idx, 1)
+      // store.commit('SET_USERS', users)
+      // console.log(users)
+      // const idx = items.findIndex(item => {
+      //   return item.userId === userid
+      // })
+      // console.log(idx)
+      // let users = store.state.users.splice(idx, 1)
+      // console.log(users)
+      // items.splice(idx, 1)
+      // console.log(items)
+      // console.log(store.state.users)
+      // console.log(store.state.users[index])
+      // store.dispatch("actionUsers", users)
     }
   },
   created(){
-    store.getters.getUsers()
+    store.dispatch('actionUsers')
   },
 };
 </script>
