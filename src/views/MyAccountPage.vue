@@ -109,37 +109,33 @@
       </b-tab>
 
       <b-tab title="Els meus projectes">
-        <!-- <b-row class="mt-4 mb-4" align-v="center" align-h="center">
-          <b-button
-            class="btn-sm"
-            variant="primary"
-            v-if="!editMode"
-            @click="editMode = true"
-          >
-            <span class="material-icons">mode_edit</span>
-          </b-button>
-          <b-button
-            class="btn-sm mr-1"
-            variant="danger"
-            v-if="editMode"
-            @click="cancelEdit"
-          >
-            <span class="material-icons">cancel</span>
-          </b-button>
-          <b-button
-            class="btn-sm ml-1"
-            variant="primary"
-            v-if="editMode"
-            :disabled="disableSend"
-            @click="updateUser"
-          >
-            <span
-              class="spinner-border spinner-border-sm"
-              v-if="sending === true"
-            ></span>
-            <span v-else class="material-icons">check</span>
-          </b-button>
-        </b-row> -->
+        <b-table
+          id="taula"
+          striped
+          hover
+          responsive
+          :items="projects"
+          :fields="fields"
+          primary-key="projectId"
+          show-empty
+        >
+          <template #empty>
+            <h4>No hi ha projectes per mostrar</h4>
+          </template>
+          <template #cell(edition)="row">
+            <b-button-group>
+              <b-button variant="primary" size="sm" class="mr-2"
+                ><span class="material-icons">mode_edit</span></b-button
+              >
+              <b-button
+                variant="danger"
+                size="sm"
+                @click="deleteProject(row.item)"
+                ><span class="material-icons">cancel</span></b-button
+              >
+            </b-button-group>
+          </template>
+        </b-table>
       </b-tab>
     </b-tabs>
   </b-container>
@@ -153,6 +149,7 @@ export default {
 
   data() {
     return {
+      // Pestanya Les meves dades
       userId: "",
       name: "",
       email: "",
@@ -168,10 +165,76 @@ export default {
       editMode: false,
       disableSend: true,
       sending: false,
+
+      // Pestanya Els meus projectes
+      fields: [
+        {
+          key: "title",
+          label: "Títol",
+          sortable: true,
+          tdClass: "text-left",
+        },
+        {
+          key: "publishedDate",
+          label: "Publicació",
+          sortable: true,
+        },
+        {
+          key: "deadline",
+          label: "Entrega",
+          sortable: true,
+        },
+        {
+          key: "bid",
+          label: "Oferta",
+          sortable: true,
+          tdClass: "text-right",
+        },
+        {
+          key: "state",
+          label: "Estat",
+          sortable: true,
+          tdClass: "text-left",
+        },
+        {
+          key: "edition",
+        },
+      ],
+      // projects: [],
+
+      // Start Mockup
+      projects: [
+        {
+          projectId: "projecte001",
+          title: "ERP",
+          publishedDate: "2021-03-01",
+          deadline: "2021-11-15",
+          bid: 750.55,
+          state: "doing",
+        },
+        {
+          projectId: "projecte002",
+          title: "Autoedició",
+          publishedDate: "2020-12-28",
+          deadline: "2021-07-20",
+          bid: 500,
+          state: "done",
+        },
+        {
+          projectId: "projecte003",
+          title: "Escaneig d'imatges",
+          publishedDate: "2021-07-04",
+          deadline: "2022-02-28",
+          bid: 0,
+          state: "accepted",
+        },
+      ],
+      // End mockup
     };
   },
 
   methods: {
+    // Pestanya Les meves dades
     cancelEdit() {
       const user = this.$store.getters.getUser;
       this.userId = user.userId;
@@ -275,7 +338,22 @@ export default {
       sessionStorage.removeItem("itAcademyProjects-storedUser");
       this.$store.commit("setUser", ["logout", null]);
       this.$router.push("/");
-    }
+    },
+
+    // Pestanya Els meus projectes
+    deleteProject(row) {
+      const id = row.projectId;
+      if (confirm("Desitja eliminar el projecte?")) {
+        // Start mockup
+        for (let i = 0; i < this.projects.length; i++) {
+          if (this.projects[i].projectId === id) {
+            this.projects.splice(i, 1);
+            break;
+          }
+        }
+        // End mockup
+      }
+    },
   },
 
   computed: {
