@@ -163,6 +163,9 @@ export default {
           } else {
             aixo.password = "";
             aixo.$bvToast.toast("Usuari i/o contrasenya invàlids", {
+              variant: "warning",
+              toaster: "b-toaster-top-center",
+              solid: true,
               title: "Fallada",
               autoHideDelay: 5000,
             });
@@ -173,6 +176,9 @@ export default {
         })
         .catch(function (error) {
           aixo.$bvToast.toast("S'ha produït un error a la petició", {
+            variant: "warning",
+            toaster: "b-toaster-top-center",
+            solid: true,
             title: "Fallada",
             autoHideDelay: 5000,
           });
