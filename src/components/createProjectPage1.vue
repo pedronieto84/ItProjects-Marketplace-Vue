@@ -20,8 +20,8 @@
             @keydown="entrada($event)">
             </b-form-input>
         </b-form-group>
-          </b-col>
-        </b-row>
+        </b-col>
+      </b-row>
         <b-form-group 
         :invalid-feedback="invalidFeedbackDescription" 
         class="text-left">
