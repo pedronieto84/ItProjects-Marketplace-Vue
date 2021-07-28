@@ -1,4 +1,5 @@
 <template>
+<b-container fluid>
   <div>
     <h4 class="text-left mb-2 mt-5">Drag and drop files (pdf, png, jpg)</h4>
     <b-form-file
@@ -16,10 +17,11 @@
     <b-button variant="info">publish</b-button>
     </div>
     <div class="d-flex justify-content-start mt-3" >
-           <b-button pill variant="outline-danger" class="mb-5">Back</b-button>
+           <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
         </div>
     
   </div>
+  </b-container>
 </template>
 
 <script>

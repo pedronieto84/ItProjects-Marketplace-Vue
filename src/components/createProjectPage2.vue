@@ -79,7 +79,7 @@
         </template>
       </b-form-tags>
     </b-form-group>
-      </b-col>
+</b-col>
 
     </b-row>
 
@@ -87,7 +87,7 @@
 
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
-                <b-button pill variant="outline-danger" class="mb-5">Back</b-button>
+                <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
           <b-button pill variant="outline-danger" class="mb-5">Next</b-button>
         </div>
         </div>

@@ -7,9 +7,9 @@
     <b-button pill variant="success" class="m-1" @click="pageCounter=3">3</b-button>
   </div>
         <div class="crear-projecte-container border p-5">
-        <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-if="pageCounter===1"/>
-        <createProjectPage2 v-if="pageCounter===2"/>
-        <createProjectPage3 v-if="pageCounter===3"/>
+        <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-show="pageCounter===1"/>
+        <createProjectPage2 v-show="pageCounter===2" v-on:go-back="goBack2"/>
+        <createProjectPage3 v-show="pageCounter===3" v-on:go-back="goBack3"/>
     </div>
     </div>
 </template>
@@ -33,8 +33,14 @@ export default {
    },
    methods:{
        updateProjectData1(project){
-           console.log(project);
             this.project=project;
+            this.pageCounter=2
+       },
+       goBack2(){
+           this.pageCounter=1
+       },
+       goBack3(){
+           this.pageCounter=2
        }
    }
 }
