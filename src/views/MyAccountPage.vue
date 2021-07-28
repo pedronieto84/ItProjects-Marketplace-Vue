@@ -124,7 +124,11 @@
           </template>
           <template #cell(edition)="row">
             <b-button-group>
-              <b-button variant="primary" size="sm" class="mr-2"
+              <b-button
+                variant="primary"
+                size="sm"
+                class="mr-2"
+                @click="editProject(row.item)"
                 ><span class="material-icons">mode_edit</span></b-button
               >
               <b-button
@@ -137,6 +141,82 @@
           </template>
         </b-table>
       </b-tab>
+
+      <b-modal id="modal-edit-project" title="Editar projecte">
+        <b-form-group
+          label="Títol"
+          label-for="title"
+          :invalid-feedback="invalidFeedbackTitle"
+          :state="stateTitle"
+        >
+          <b-form-input
+            id="title"
+            v-model="title"
+            :state="stateTitle"
+            trim
+            autofocus
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Publicació" label-for="publishedDate">
+          <b-form-input
+            id="publishedDate"
+            type="date"
+            v-model="publishedDate"
+            disabled
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label="Entrega"
+          label-for="deadline"
+          :invalid-feedback="invalidFeedbackDeadline"
+          :state="stateDeadline"
+        >
+          <b-form-input
+            id="deadline"
+            type="date"
+            v-model="deadline"
+            :state="stateDeadline"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label="Oferta"
+          label-for="bid"
+          :invalid-feedback="invalidFeedbackBid"
+          :state="stateBid"
+        >
+          <b-form-input
+            id="bid"
+            type="number"
+            number
+            v-model="bid"
+            :state="stateBid"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Estat" label-for="state">
+          <b-form-select
+            id="state"
+            v-model="state"
+            :options="stateOptions"
+          ></b-form-select>
+        </b-form-group>
+
+        <template #modal-footer>
+          <b-button size="sm" variant="secondary" @click="cancelEditProject"
+            >Cancel·lar</b-button
+          >
+          <b-button
+            size="sm"
+            variant="primary"
+            @click="updateProject"
+            :disabled="disableSendProject"
+            >Actualitzar</b-button
+          >
+        </template>
+      </b-modal>
     </b-tabs>
   </b-container>
 </template>
@@ -167,6 +247,22 @@ export default {
       sending: false,
 
       // Pestanya Els meus projectes
+      projectId: "",
+      title: "",
+      publishedDate: "",
+      deadline: "",
+      bid: 0,
+      state: "",
+      stateOptions: [
+        { value: "accepted", text: "Acceptat" },
+        { value: "published", text: "Publicat" },
+        { value: "refused", text: "Rebutjat" },
+        { value: "doing", text: "En procés" },
+        { value: "finished", text: "Finalitzat" },
+      ],
+      disableSendProject: true,
+      updatingProject: false,
+
       fields: [
         {
           key: "title",
@@ -191,7 +287,7 @@ export default {
           tdClass: "text-right",
         },
         {
-          key: "state",
+          key: "stateLiteral",
           label: "Estat",
           sortable: true,
           tdClass: "text-left",
@@ -211,6 +307,7 @@ export default {
           deadline: "2021-11-15",
           bid: 750.55,
           state: "doing",
+          stateLiteral: "En procés",
         },
         {
           projectId: "projecte002",
@@ -218,7 +315,8 @@ export default {
           publishedDate: "2020-12-28",
           deadline: "2021-07-20",
           bid: 500,
-          state: "done",
+          state: "finished",
+          stateLiteral: "Finalitzat",
         },
         {
           projectId: "projecte003",
@@ -227,6 +325,7 @@ export default {
           deadline: "2022-02-28",
           bid: 0,
           state: "accepted",
+          stateLiteral: "Acceptat",
         },
       ],
       // End mockup
@@ -354,6 +453,105 @@ export default {
         // End mockup
       }
     },
+
+    canISendProject() {
+      let pucEnviar = true;
+      this.disableSendProject = true;
+
+      if (this.stateTitle === false) {
+        pucEnviar = false;
+      }
+      if (this.stateDeadline === false) {
+        pucEnviar = false;
+      }
+      if (this.stateBid === false) {
+        pucEnviar = false;
+      }
+
+      if (pucEnviar) {
+        for (let i = 0; i < this.projects.length; i++) {
+          if (this.projects[i].projectId === this.projectId) {
+            if (
+              this.title !== this.projects[i].title ||
+              this.deadline !== this.projects[i].deadline ||
+              this.bid !== this.projects[i].bid ||
+              this.state !== this.projects[i].state
+            ) {
+              this.disableSendProject = false;
+            }
+            break;
+          }
+        }
+      }
+    },
+
+    updateProject() {
+      // Start mockup
+      for (let i = 0; i < this.projects.length; i++) {
+        if (this.projects[i].projectId === this.projectId) {
+          this.projects[i].title = this.title;
+          this.projects[i].deadline = this.deadline;
+          this.projects[i].bid = this.bid;
+          this.projects[i].state = this.state;
+          switch(this.state) {
+            case "accepted":
+              this.projects[i].stateLiteral = "Acceptat";
+              break;
+            case "published":
+              this.projects[i].stateLiteral = "Publicat";
+              break;
+            case "refused":
+              this.projects[i].stateLiteral = "Rebutjat";
+              break;
+            case "doing":
+              this.projects[i].stateLiteral = "En procés";
+              break;
+            case "finished":
+              this.projects[i].stateLiteral = "Finalitzat";
+              break;
+          }
+          break;
+        }
+      }
+      // End mockup
+
+      this.updatingProject = true;
+      this.initEditProjectModal();
+      this.$bvModal.hide("modal-edit-project");
+    },
+
+    cancelEditProject() {
+      this.initEditProjectModal();
+      this.$bvModal.hide("modal-edit-project");
+    },
+
+    editProject(row) {
+      const id = row.projectId;
+
+      for (let i = 0; i < this.projects.length; i++) {
+        if (this.projects[i].projectId === id) {
+          this.projectId = this.projects[i].projectId;
+          this.title = this.projects[i].title;
+          this.publishedDate = this.projects[i].publishedDate;
+          this.deadline = this.projects[i].deadline;
+          this.bid = this.projects[i].bid;
+          this.state = this.projects[i].state;
+          break;
+        }
+      }
+
+      this.updatingProject = false;
+      this.$bvModal.show("modal-edit-project");
+    },
+
+    initEditProjectModal() {
+      this.projectId = "";
+      this.title = "";
+      this.publishedDate = "";
+      this.deadline = "";
+      this.bid = 0;
+      this.state = "";
+    },
   },
 
   computed: {
@@ -433,6 +631,42 @@ export default {
 
       return "";
     },
+    stateTitle() {
+      if (this.updatingProject) {
+        return true;
+      }
+      return this.title.length > 0;
+    },
+    invalidFeedbackTitle() {
+      if (this.title.length === 0) {
+        return "Camp obligatori";
+      }
+      return "";
+    },
+    stateDeadline() {
+      if (this.updatingProject) {
+        return true;
+      }
+      return this.deadline > this.publishedDate;
+    },
+    invalidFeedbackDeadline() {
+      if (this.publishedDate > this.deadline) {
+        return "La data d'entrega ha de ser posterior a la de publicació";
+      }
+      return "";
+    },
+    stateBid() {
+      if (this.updatingProject) {
+        return true;
+      }
+      return this.bid >= 0;
+    },
+    invalidFeedbackBid() {
+      if (this.bid < 0) {
+        return "La oferta ha de ser un nombre positiu";
+      }
+      return "";
+    },
   },
 
   watch: {
@@ -464,6 +698,22 @@ export default {
       if (this.editMode) {
         this.canISend();
       }
+    },
+
+    title() {
+      this.canISendProject();
+    },
+
+    deadline() {
+      this.canISendProject();
+    },
+
+    bid() {
+      this.canISendProject();
+    },
+
+    state() {
+      this.canISendProject();
     },
   },
 
