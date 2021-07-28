@@ -5,10 +5,9 @@
             <b-row class="m-1">
               <b-col sm="12">
                   <label>Published: </label>
-                  {{date}}
               </b-col>
             <b-col>
-                <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
+                <b-form-datepicker v-model="project2.publishData" :min="min" :max="max" locale="en"></b-form-datepicker>
             </b-col>
           </b-row>
             <!--deadline-->
@@ -17,19 +16,18 @@
                 <label>Deadline: </label>
             </b-col>
             <b-col>
-                <b-form-datepicker v-model="publishData" :min="min" :max="max" locale="en"></b-form-datepicker>
+                <b-form-datepicker v-model="project2.deadlineData" locale="en"></b-form-datepicker>
             </b-col>
             </b-row>
             <!--price-->
             <b-row class="mt-4">
             <b-col>
-            
           <b-form-group :invalid-feedback="invalidFeedbackPrice">
                 <b-form-input 
                 id="priceId"
                 type="number" 
                 placeholder="Bid In Euros" 
-                v-model="projectPrice"
+                v-model="project2.projectPrice"
                 :state="statePrice"
                 @click="entrada($event)"></b-form-input>
                 </b-form-group>
@@ -38,8 +36,6 @@
         </div>
         <div class="add-technology m-5">
               <b-row class="my-1">
-      
-
       <!--*** TECHNOLOGY NEEDED-->
       <b-col sm="4"><p>Add technology needed</p></b-col>
       <b-col sm="8">
@@ -47,7 +43,7 @@
       <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
       <b-form-tags
         id="tags-component-select"
-        v-model="value"
+        v-model="project2.value"
         size="lg"
         class="mb-2"
         add-on-change
@@ -75,20 +71,16 @@
               >{{ tag }}</b-form-tag>
             </li>
           </ul>
-        
         </template>
       </b-form-tags>
     </b-form-group>
 </b-col>
-
     </b-row>
-
         </div>
-
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
                 <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
-          <b-button pill variant="outline-danger" class="mb-5">Next</b-button>
+          <b-button pill variant="outline-danger" class="mb-5" @click="sendProjectData2" >Next</b-button>
         </div>
         </div>
   </b-container>
@@ -105,41 +97,46 @@ export default {
       const maxDate = new Date(today)
       maxDate.setMonth(maxDate.getMonth() + 6)
       return {
-        technologyNeeded:"",
+        project2:{
+          technologyNeeded:"",
+          projectPrice:0,
+          publishData:"",
+          deadlineData:"",
+          value:""
+        },
+        
         technologies:[],
-        projectPrice:0,
-        value:"",
+        projectPriceId:true,
+        projectTechnologyId:true,
         min: minDate,
         max: maxDate,
-        projectPriceId:true,
-        projectTechnologyId:true
       }
      
   },
   computed:{
     stateTechnology() {
-      if (this.projectTechnologyId) {
+      if (this.project2.projectTechnologyId) {
         return null;
       }
-      return this.technologyNeeded.length > 0 && this.technologyNeeded.length <= 35;
+      return this.project2.technologyNeeded.length > 0 && this.project2.technologyNeeded.length <= 35;
     },
     statePrice() {
       if (this.projectPriceId) {
         return null;
       }
-      return this.projectPrice > 0 && this.projectPrice <= 5000;
+      //return this.project2.projectPrice > 0 && this.project2.projectPrice <= 5000;
+      if(this.project2.projectPrice>0 && this.project2.projectPrice <= 5000) {
+        return true;
+      } else {
+        return false;
+      }
     },
     filteredTechnologies() {
-      const matches = this.technologies.filter((matchy) => matchy.includes(this.technologyNeeded))
+      const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.technologyNeeded))
       return matches;
     }
   },
   methods:{
-      deleteTechnology(e) {
-            let techToDelete = e.target.previousSibling.textContent;
-            let deleteThis = this.technologies.indexOf(techToDelete);
-            this.technologies.splice(deleteThis,1);
-      },
          entrada(event) {
        switch (event.target.id) {
           case "priceId":
@@ -149,6 +146,9 @@ export default {
           this.projectTechnologyId = false;
           break;
       }
+    },
+    sendProjectData2 () {
+      this.$emit('sendProjectData2', this.project2);
     }
   },
    mounted () {

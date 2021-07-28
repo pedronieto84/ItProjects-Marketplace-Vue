@@ -1,7 +1,7 @@
 <template>
     <div>
     <b-container fluid>
-        <b-row class="d-flex w-100 align-items-center">
+        <b-row class="d-flex align-items-center justify-content-center">
           <b-col sm="5">
             <label>Project title</label>
           </b-col>
@@ -97,7 +97,7 @@ export default {
      invalidFeedbackDescription() {
       if (this.project.projectDescription.length == 0) {
         return "Add some description...";
-      } else if (this.project.projectDescription.length > 35) {
+      } else if (this.project.projectDescription.length > 500) {
         return "the description shouldn't be longer than 500 letters";
       }
       return "";

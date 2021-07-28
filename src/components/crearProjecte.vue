@@ -8,7 +8,7 @@
   </div>
         <div class="crear-projecte-container border p-5">
         <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-show="pageCounter===1"/>
-        <createProjectPage2 v-show="pageCounter===2" v-on:go-back="goBack2"/>
+        <createProjectPage2 v-on:sendProjectData2="updateProjectData2($event)" v-show="pageCounter===2" v-on:go-back="goBack2"/>
         <createProjectPage3 v-show="pageCounter===3" v-on:go-back="goBack3"/>
     </div>
     </div>
@@ -35,6 +35,10 @@ export default {
        updateProjectData1(project){
             this.project=project;
             this.pageCounter=2
+       },
+        updateProjectData2(project2){
+            this.project={...this.project, ...project2}
+            this.pageCounter=3
        },
        goBack2(){
            this.pageCounter=1
