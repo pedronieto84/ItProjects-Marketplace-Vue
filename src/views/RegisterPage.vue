@@ -247,6 +247,10 @@ export default {
       this.organizationType = "1";
       this.disableSend = true;
       this.disableAll = false;
+      this.firstName = true;
+      this.firstEmail = true;
+      this.firstPassword = true;
+      this.firstCPassword = true;
     },
     altaUsuari() {
       const aixo = this;
@@ -266,22 +270,36 @@ export default {
         },
       })
         .then(function (response) {
+          aixo.sending = false;
+          aixo.cancela();
           if (response.data.userId != undefined) {
             aixo.$bvToast.toast("S'ha donat d'alta l'usuari", {
+              variant: "success",
+              toaster: "b-toaster-top-center",
+              solid: true,
               title: "Èxit",
-              autoHideDelay: 5000,
+              autoHideDelay: 3000,
             });
+            // TODO Fer login?
+            // aixo.$store.commit("setUser", ["object", response.data.user]);
+            setTimeout(function () {
+              aixo.$router.push("createProject");
+            }, 3000);
           } else {
             aixo.$bvToast.toast("Errada en el procés d'alta d'usuari", {
+              variant: "warning",
+              toaster: "b-toaster-top-center",
+              solid: true,
               title: "Fallada",
               autoHideDelay: 5000,
             });
           }
-          aixo.sending = false;
-          aixo.cancela();
         })
         .catch(function (error) {
           aixo.$bvToast.toast("S'ha produït un error a la petició", {
+            variant: "warning",
+            toaster: "b-toaster-top-center",
+            solid: true,
             title: "Fallada",
             autoHideDelay: 5000,
           });

@@ -108,128 +108,21 @@
         </b-row>
       </b-tab>
 
-      <b-tab title="Els meus projectes">
-        <b-table
-          id="taula"
-          striped
-          hover
-          responsive
-          :items="projects"
-          :fields="fields"
-          primary-key="projectId"
-          show-empty
-        >
-          <template #empty>
-            <h4>No hi ha projectes per mostrar</h4>
-          </template>
-          <template #cell(edition)="row">
-            <b-button-group>
-              <b-button
-                variant="primary"
-                size="sm"
-                class="mr-2"
-                @click="editProject(row.item)"
-                ><span class="material-icons">mode_edit</span></b-button
-              >
-              <b-button
-                variant="danger"
-                size="sm"
-                @click="deleteProject(row.item)"
-                ><span class="material-icons">cancel</span></b-button
-              >
-            </b-button-group>
-          </template>
-        </b-table>
-      </b-tab>
-
-      <b-modal id="modal-edit-project" title="Editar projecte">
-        <b-form-group
-          label="Títol"
-          label-for="title"
-          :invalid-feedback="invalidFeedbackTitle"
-          :state="stateTitle"
-        >
-          <b-form-input
-            id="title"
-            v-model="title"
-            :state="stateTitle"
-            trim
-            autofocus
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group label="Publicació" label-for="publishedDate">
-          <b-form-input
-            id="publishedDate"
-            type="date"
-            v-model="publishedDate"
-            disabled
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          label="Entrega"
-          label-for="deadline"
-          :invalid-feedback="invalidFeedbackDeadline"
-          :state="stateDeadline"
-        >
-          <b-form-input
-            id="deadline"
-            type="date"
-            v-model="deadline"
-            :state="stateDeadline"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          label="Oferta"
-          label-for="bid"
-          :invalid-feedback="invalidFeedbackBid"
-          :state="stateBid"
-        >
-          <b-form-input
-            id="bid"
-            type="number"
-            number
-            v-model="bid"
-            :state="stateBid"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group label="Estat" label-for="state">
-          <b-form-select
-            id="state"
-            v-model="state"
-            :options="stateOptions"
-          ></b-form-select>
-        </b-form-group>
-
-        <template #modal-footer>
-          <b-button size="sm" variant="secondary" @click="cancelEditProject"
-            >Cancel·lar</b-button
-          >
-          <b-button
-            size="sm"
-            variant="primary"
-            @click="updateProject"
-            :disabled="disableSendProject"
-            >Actualitzar</b-button
-          >
-        </template>
-      </b-modal>
+      <projectList :userId="userId"></projectList>
     </b-tabs>
   </b-container>
 </template>
 
 <script>
 import axios from "axios";
+import projectList from "@/components/projectList.vue";
 
 export default {
   name: "MyAccount",
 
   data() {
     return {
-      // Pestanya Les meves dades
+      // Dades d'usuari
       userId: "",
       name: "",
       email: "",
@@ -245,95 +138,10 @@ export default {
       editMode: false,
       disableSend: true,
       sending: false,
-
-      // Pestanya Els meus projectes
-      projectId: "",
-      title: "",
-      publishedDate: "",
-      deadline: "",
-      bid: 0,
-      state: "",
-      stateOptions: [
-        { value: "accepted", text: "Acceptat" },
-        { value: "published", text: "Publicat" },
-        { value: "refused", text: "Rebutjat" },
-        { value: "doing", text: "En procés" },
-        { value: "finished", text: "Finalitzat" },
-      ],
-      disableSendProject: true,
-      updatingProject: false,
-
-      fields: [
-        {
-          key: "title",
-          label: "Títol",
-          sortable: true,
-          tdClass: "text-left",
-        },
-        {
-          key: "publishedDate",
-          label: "Publicació",
-          sortable: true,
-        },
-        {
-          key: "deadline",
-          label: "Entrega",
-          sortable: true,
-        },
-        {
-          key: "bid",
-          label: "Oferta",
-          sortable: true,
-          tdClass: "text-right",
-        },
-        {
-          key: "stateLiteral",
-          label: "Estat",
-          sortable: true,
-          tdClass: "text-left",
-        },
-        {
-          key: "edition",
-        },
-      ],
-      // projects: [],
-
-      // Start Mockup
-      projects: [
-        {
-          projectId: "projecte001",
-          title: "ERP",
-          publishedDate: "2021-03-01",
-          deadline: "2021-11-15",
-          bid: 750.55,
-          state: "doing",
-          stateLiteral: "En procés",
-        },
-        {
-          projectId: "projecte002",
-          title: "Autoedició",
-          publishedDate: "2020-12-28",
-          deadline: "2021-07-20",
-          bid: 500,
-          state: "finished",
-          stateLiteral: "Finalitzat",
-        },
-        {
-          projectId: "projecte003",
-          title: "Escaneig d'imatges",
-          publishedDate: "2021-07-04",
-          deadline: "2022-02-28",
-          bid: 0,
-          state: "accepted",
-          stateLiteral: "Acceptat",
-        },
-      ],
-      // End mockup
     };
   },
 
   methods: {
-    // Pestanya Les meves dades
     cancelEdit() {
       const user = this.$store.getters.getUser;
       this.userId = user.userId;
@@ -412,11 +220,15 @@ export default {
             aixo.disableSend = true;
 
             aixo.$bvToast.toast("S'ha actualitzat les dades d'usuari", {
+              variant: "success",
+              toaster: "b-toaster-top-center",
               title: "Èxit",
               autoHideDelay: 5000,
             });
           } else {
             aixo.$bvToast.toast("Errada en el procés d'actualització", {
+              variant: "warning",
+              toaster: "b-toaster-top-center",
               title: "Fallada",
               autoHideDelay: 5000,
             });
@@ -425,6 +237,8 @@ export default {
         })
         .catch(function (error) {
           aixo.$bvToast.toast("S'ha produït un error a la petició", {
+            variant: "warning",
+            toaster: "b-toaster-top-center",
             title: "Fallada",
             autoHideDelay: 5000,
           });
@@ -437,120 +251,6 @@ export default {
       sessionStorage.removeItem("itAcademyProjects-storedUser");
       this.$store.commit("setUser", ["logout", null]);
       this.$router.push("/");
-    },
-
-    // Pestanya Els meus projectes
-    deleteProject(row) {
-      const id = row.projectId;
-      if (confirm("Desitja eliminar el projecte?")) {
-        // Start mockup
-        for (let i = 0; i < this.projects.length; i++) {
-          if (this.projects[i].projectId === id) {
-            this.projects.splice(i, 1);
-            break;
-          }
-        }
-        // End mockup
-      }
-    },
-
-    canISendProject() {
-      let pucEnviar = true;
-      this.disableSendProject = true;
-
-      if (this.stateTitle === false) {
-        pucEnviar = false;
-      }
-      if (this.stateDeadline === false) {
-        pucEnviar = false;
-      }
-      if (this.stateBid === false) {
-        pucEnviar = false;
-      }
-
-      if (pucEnviar) {
-        for (let i = 0; i < this.projects.length; i++) {
-          if (this.projects[i].projectId === this.projectId) {
-            if (
-              this.title !== this.projects[i].title ||
-              this.deadline !== this.projects[i].deadline ||
-              this.bid !== this.projects[i].bid ||
-              this.state !== this.projects[i].state
-            ) {
-              this.disableSendProject = false;
-            }
-            break;
-          }
-        }
-      }
-    },
-
-    updateProject() {
-      // Start mockup
-      for (let i = 0; i < this.projects.length; i++) {
-        if (this.projects[i].projectId === this.projectId) {
-          this.projects[i].title = this.title;
-          this.projects[i].deadline = this.deadline;
-          this.projects[i].bid = this.bid;
-          this.projects[i].state = this.state;
-          switch(this.state) {
-            case "accepted":
-              this.projects[i].stateLiteral = "Acceptat";
-              break;
-            case "published":
-              this.projects[i].stateLiteral = "Publicat";
-              break;
-            case "refused":
-              this.projects[i].stateLiteral = "Rebutjat";
-              break;
-            case "doing":
-              this.projects[i].stateLiteral = "En procés";
-              break;
-            case "finished":
-              this.projects[i].stateLiteral = "Finalitzat";
-              break;
-          }
-          break;
-        }
-      }
-      // End mockup
-
-      this.updatingProject = true;
-      this.initEditProjectModal();
-      this.$bvModal.hide("modal-edit-project");
-    },
-
-    cancelEditProject() {
-      this.initEditProjectModal();
-      this.$bvModal.hide("modal-edit-project");
-    },
-
-    editProject(row) {
-      const id = row.projectId;
-
-      for (let i = 0; i < this.projects.length; i++) {
-        if (this.projects[i].projectId === id) {
-          this.projectId = this.projects[i].projectId;
-          this.title = this.projects[i].title;
-          this.publishedDate = this.projects[i].publishedDate;
-          this.deadline = this.projects[i].deadline;
-          this.bid = this.projects[i].bid;
-          this.state = this.projects[i].state;
-          break;
-        }
-      }
-
-      this.updatingProject = false;
-      this.$bvModal.show("modal-edit-project");
-    },
-
-    initEditProjectModal() {
-      this.projectId = "";
-      this.title = "";
-      this.publishedDate = "";
-      this.deadline = "";
-      this.bid = 0;
-      this.state = "";
     },
   },
 
@@ -631,42 +331,6 @@ export default {
 
       return "";
     },
-    stateTitle() {
-      if (this.updatingProject) {
-        return true;
-      }
-      return this.title.length > 0;
-    },
-    invalidFeedbackTitle() {
-      if (this.title.length === 0) {
-        return "Camp obligatori";
-      }
-      return "";
-    },
-    stateDeadline() {
-      if (this.updatingProject) {
-        return true;
-      }
-      return this.deadline > this.publishedDate;
-    },
-    invalidFeedbackDeadline() {
-      if (this.publishedDate > this.deadline) {
-        return "La data d'entrega ha de ser posterior a la de publicació";
-      }
-      return "";
-    },
-    stateBid() {
-      if (this.updatingProject) {
-        return true;
-      }
-      return this.bid >= 0;
-    },
-    invalidFeedbackBid() {
-      if (this.bid < 0) {
-        return "La oferta ha de ser un nombre positiu";
-      }
-      return "";
-    },
   },
 
   watch: {
@@ -699,22 +363,6 @@ export default {
         this.canISend();
       }
     },
-
-    title() {
-      this.canISendProject();
-    },
-
-    deadline() {
-      this.canISendProject();
-    },
-
-    bid() {
-      this.canISendProject();
-    },
-
-    state() {
-      this.canISendProject();
-    },
   },
 
   created() {
@@ -732,6 +380,8 @@ export default {
     this.cpassword = "";
   },
 
-  components: {},
+  components: {
+    projectList,
+  },
 };
 </script>
