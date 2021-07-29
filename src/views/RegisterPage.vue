@@ -247,6 +247,10 @@ export default {
       this.organizationType = "1";
       this.disableSend = true;
       this.disableAll = false;
+      this.firstName = true;
+      this.firstEmail = true;
+      this.firstPassword = true;
+      this.firstCPassword = true;
     },
     altaUsuari() {
       const aixo = this;
@@ -270,6 +274,8 @@ export default {
         },
       })
         .then(function (response) {
+          aixo.sending = false;
+          aixo.cancela();
           if (response.data.userId != undefined) {
             aixo.$bvToast.toast("S'ha donat d'alta l'usuari", {
               variant: "success",
@@ -290,6 +296,7 @@ export default {
               user.verified = false;
               aixo.$store.commit("setUser", ["object", user]);
               aixo.$router.push("/crear-projecte");
+
             }, 3000);
           } else {
             aixo.$bvToast.toast("Errada en el procés d'alta d'usuari", {
@@ -300,8 +307,6 @@ export default {
               autoHideDelay: 5000,
             });
           }
-          aixo.sending = false;
-          aixo.cancela();
         })
         .catch(function (error) {
           aixo.$bvToast.toast("S'ha produït un error a la petició", {
