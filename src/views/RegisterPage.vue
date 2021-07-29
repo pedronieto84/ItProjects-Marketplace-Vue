@@ -247,6 +247,10 @@ export default {
       this.organizationType = "1";
       this.disableSend = true;
       this.disableAll = false;
+      this.firstName = true;
+      this.firstEmail = true;
+      this.firstPassword = true;
+      this.firstCPassword = true;
     },
     altaUsuari() {
       const aixo = this;
@@ -254,6 +258,10 @@ export default {
       this.disableSend = true;
       this.disableAll = true;
       this.sending = true;
+      this.firstName = true;
+      this.firstEmail = true;
+      this.firstPassword = true;
+      this.firstCPassword = true;
 
       axios({
         method: "post",
@@ -266,22 +274,45 @@ export default {
         },
       })
         .then(function (response) {
+          aixo.sending = false;
+          aixo.cancela();
           if (response.data.userId != undefined) {
             aixo.$bvToast.toast("S'ha donat d'alta l'usuari", {
+              variant: "success",
+              toaster: "b-toaster-top-center",
+              solid: true,
               title: "Èxit",
-              autoHideDelay: 5000,
+              autoHideDelay: 3000,
             });
+
+            setTimeout(() => {
+              let user = {};
+              user.userId = response.data.userId;
+              user.name = response.data.name;
+              user.email = response.data.email;
+              user.admin = false;
+              user.projectsPublished = [];
+              user.typeOfInstitution = response.data.typeOfInstitution;
+              user.verified = false;
+              aixo.$store.commit("setUser", ["object", user]);
+              aixo.$router.push("/crear-projecte");
+
+            }, 3000);
           } else {
             aixo.$bvToast.toast("Errada en el procés d'alta d'usuari", {
+              variant: "warning",
+              toaster: "b-toaster-top-center",
+              solid: true,
               title: "Fallada",
               autoHideDelay: 5000,
             });
           }
-          aixo.sending = false;
-          aixo.cancela();
         })
         .catch(function (error) {
           aixo.$bvToast.toast("S'ha produït un error a la petició", {
+            variant: "warning",
+            toaster: "b-toaster-top-center",
+            solid: true,
             title: "Fallada",
             autoHideDelay: 5000,
           });
