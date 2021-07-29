@@ -38,7 +38,8 @@ export default new Vuex.Store({
     ],
     // isLogin: false, // el codigo probado para Seokju
     // ifLoginError: false // el codigo probado para Seokju
-    users: null
+    users: null,
+    projects: null
   },
   getters: {
     getBaseURL(state) {
@@ -67,11 +68,17 @@ export default new Vuex.Store({
     },
     getUsers(state) {
       return state.users
+    },
+    getProjects(state) {
+      return state.projects
     }
   },
   mutations: {
     SET_USERS(state, payload) {
       state.users = payload
+    },
+    SET_PROJECTS(state, payload) {
+      state.projects = payload
     },
     // DELETE_USERS(state, index) { // he dejado Seokju para probar
     //   state.users.splice(index, 1);
@@ -154,7 +161,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async actionUsers({ commit }) {
+    async getUsers({ commit }) {
       const users = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getUsers")
       commit('SET_USERS', users.data)
       console.log(users.data)
@@ -168,9 +175,40 @@ export default new Vuex.Store({
       // .then(() => {
       // })
     },
+    async deleteUser({ state }, userId) {
+      const users = await axios.delete(state.baseURL + 'deleteUser', { data: { userId } })
+      console.log(users)
+      // dispatch('getUsers')
+      // console.log(users)
+      // dispatch('getUsers')
+      // console.log(users)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
     logout({ commit }) {
       sessionStorage.removeItem("itAcademyProjects-storedUser");
       commit("setUser", ["logout", null]);
+    },
+    async getProejects({ commit }) {
+      const projects = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getProjects")
+      commit('SET_PROJECTS', projects.data)
+      console.log(projects.data)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
     },
     // login({ state, commit }, loginObj) { // el codigo probado para Seokju
     //   let selectedUser = null;

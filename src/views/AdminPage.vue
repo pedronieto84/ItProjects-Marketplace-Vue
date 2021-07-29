@@ -82,7 +82,6 @@ export default {
       perPage: 10,
       sortBy:'name',
       filter: null,
-      // items: store.state.allUsers, // probar Seokju
       // fields: ['name', 'content'] // probar Seokju
       items: store.getters.getUsers,
       fields: [
@@ -98,6 +97,11 @@ export default {
       return this.items ? this.items.length : 0
     }
   },
+  // watch: {
+  //   items: (newVal) => {
+  //     this.items = newVal
+  //   }
+  // },
   methods: {
     // deleteUser: userid => {
     //   let index = 0;
@@ -109,16 +113,24 @@ export default {
     //     index++
     //   )
     // }
-    deleteUser(userid){
+    deleteUser(userId){
       // console.log(index)
       // console.log(row)
       // let users = store.state.users.splice(index, 1)
       // let users = store.state.users.splice(index, 1)
       // console.log(users)
       // items.splice(items.index, 1)
-      console.log(userid)
-      const idx = this.items.findIndex(item => item.userId === userid)
-      this.items.splice(idx, 1)
+      store.dispatch('deleteUser', userId)
+      // this.$router.push('/redirac-admin')
+      store.dispatch('getUsers')
+      // this.items = store.getters.getUsers
+      // if(store.dispatch('getUsers')){
+      //   this.items = store.getters.getUsers
+      // }
+      // console.log(userid)
+      // const idx = this.items.findIndex(item => item.userId === userid)
+      // this.items.splice(idx, 1)
+
       // store.commit('SET_USERS', users)
       // console.log(users)
       // const idx = items.findIndex(item => {
@@ -134,8 +146,8 @@ export default {
       // store.dispatch("actionUsers", users)
     }
   },
-  created(){
-    store.dispatch('actionUsers')
+  mounted(){
+    store.dispatch('getUsers')
   },
 };
 </script>
