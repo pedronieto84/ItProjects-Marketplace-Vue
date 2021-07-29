@@ -258,6 +258,10 @@ export default {
       this.disableSend = true;
       this.disableAll = true;
       this.sending = true;
+      this.firstName = true;
+      this.firstEmail = true;
+      this.firstPassword = true;
+      this.firstCPassword = true;
 
       axios({
         method: "post",
@@ -280,10 +284,19 @@ export default {
               title: "Èxit",
               autoHideDelay: 3000,
             });
-            // TODO Fer login?
-            // aixo.$store.commit("setUser", ["object", response.data.user]);
-            setTimeout(function () {
-              aixo.$router.push("createProject");
+
+            setTimeout(() => {
+              let user = {};
+              user.userId = response.data.userId;
+              user.name = response.data.name;
+              user.email = response.data.email;
+              user.admin = false;
+              user.projectsPublished = [];
+              user.typeOfInstitution = response.data.typeOfInstitution;
+              user.verified = false;
+              aixo.$store.commit("setUser", ["object", user]);
+              aixo.$router.push("/crear-projecte");
+
             }, 3000);
           } else {
             aixo.$bvToast.toast("Errada en el procés d'alta d'usuari", {
