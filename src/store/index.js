@@ -163,8 +163,13 @@ export default new Vuex.Store({
   actions: {
     async getUsers({ commit }) {
       const users = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getUsers")
-      commit('SET_USERS', users.data)
-      console.log(users.data)
+        .then(res => {
+          console.log(res)
+          commit('SET_USERS', users.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       // .then(res => {
       //   console.log(res.data)
       //   commit('SET_USERS', res.data)
@@ -175,10 +180,16 @@ export default new Vuex.Store({
       // .then(() => {
       // })
     },
-    async deleteUser({ state }, userId) {
-      const users = await axios.delete(state.baseURL + 'deleteUser', { data: { userId } })
-      console.log(users)
-      // dispatch('getUsers')
+    async deleteUser({ state, dispatch }, userId) {
+      const user = await axios.delete(state.baseURL + 'deleteUser', { data: { userId } })
+        .then(res => {
+          console.log(res)
+          console.log(user)
+          dispatch('getUsers')
+        })
+        .catch(err => console.log(err))
+      // console.log(users)
+
       // console.log(users)
       // dispatch('getUsers')
       // console.log(users)

@@ -11,7 +11,7 @@
       </b-input-group-append>
     </b-input-group>
 
-    <b-table striped bordered :items="items" :per-page="perPage" :current-page="currentPage" :fields="fields" :sort-by.sync="sortBy" :filter="filter"
+    <b-table striped bordered :items="getUsers" :per-page="perPage" :current-page="currentPage" :fields="fields" :sort-by.sync="sortBy" :filter="filter"
     >
       <template #cell(show_details)="row">
         <b-button size="sm" @click="row.toggleDetails" class="mr-2">
@@ -72,6 +72,7 @@
 <script>
 // @ is an alias to /src
 import store from '@/store'
+import {mapGetters} from 'vuex'
 
 export default {
   name: "Admin",
@@ -95,7 +96,10 @@ export default {
   computed: {
     rows(){
       return this.items ? this.items.length : 0
-    }
+    },
+    ...mapGetters({
+      getUsers : 'getUsers'
+    })
   },
   // watch: {
   //   items: (newVal) => {
@@ -122,7 +126,6 @@ export default {
       // items.splice(items.index, 1)
       store.dispatch('deleteUser', userId)
       // this.$router.push('/redirac-admin')
-      store.dispatch('getUsers')
       // this.items = store.getters.getUsers
       // if(store.dispatch('getUsers')){
       //   this.items = store.getters.getUsers
@@ -146,7 +149,7 @@ export default {
       // store.dispatch("actionUsers", users)
     }
   },
-  mounted(){
+  created(){
     store.dispatch('getUsers')
   },
 };
