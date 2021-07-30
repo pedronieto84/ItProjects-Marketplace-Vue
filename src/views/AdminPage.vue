@@ -11,7 +11,7 @@
       </b-input-group-append>
     </b-input-group>
 
-    <b-table striped bordered :items="items" :per-page="perPage" :current-page="currentPage" :fields="fields" :sort-by.sync="sortBy" :filter="filter"
+    <b-table striped bordered :items="getUsers" :per-page="perPage" :current-page="currentPage" :fields="fields" :sort-by.sync="sortBy" :filter="filter"
     >
       <template #cell(show_details)="row">
         <b-button size="sm" @click="row.toggleDetails" class="mr-2">
@@ -34,7 +34,7 @@
           </b-row>
 
           <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
-          <b-button size="sm" class="m-3" @click="deleteUser(row.index)">Delete <i class="fas fa-trash-alt"></i></b-button>
+          <b-button size="sm" class="m-3" @click="deleteUser(row.item.userId)">Delete <i class="fas fa-trash-alt"></i></b-button>
         </b-card>
       </template>
       <!-- <template #cell(name)="row">
@@ -72,6 +72,7 @@
 <script>
 // @ is an alias to /src
 import store from '@/store'
+import {mapGetters} from 'vuex'
 
 export default {
   name: "Admin",
@@ -82,22 +83,29 @@ export default {
       perPage: 10,
       sortBy:'name',
       filter: null,
-      // items: store.state.allUsers, // probar Seokju
       // fields: ['name', 'content'] // probar Seokju
-      items: store.state.users,
+      // items: store.getters.getUsers,
       fields: [
         { key: 'name', label: 'NOMBRE', sortable: true},
         { key:'email', label: 'EMAIL', sortable: true },
-        { key: 'userId', label: 'USER_UD', sortable: true },
+        { key: 'userId', label: 'USER_ID', sortable: true },
         { key: 'show_details', label: 'ACTIONS' }
       ]
     }
   },
   computed: {
     rows(){
-      return this.items.length
-    }
+      return this.items ? this.items.length : 0
+    },
+    ...mapGetters({
+      getUsers : 'getUsers'
+    })
   },
+  // watch: {
+  //   items: (newVal) => {
+  //     this.items = newVal
+  //   }
+  // },
   methods: {
     // deleteUser: userid => {
     //   let index = 0;
@@ -109,13 +117,40 @@ export default {
     //     index++
     //   )
     // }
-    deleteUser(index){
+    deleteUser(userId){
       // console.log(index)
-      store.state.users.splice(index,1)
+      // console.log(row)
+      // let users = store.state.users.splice(index, 1)
+      // let users = store.state.users.splice(index, 1)
+      // console.log(users)
+      // items.splice(items.index, 1)
+      store.dispatch('deleteUser', userId)
+      // this.$router.push('/redirac-admin')
+      // this.items = store.getters.getUsers
+      // if(store.dispatch('getUsers')){
+      //   this.items = store.getters.getUsers
+      // }
+      // console.log(userid)
+      // const idx = this.items.findIndex(item => item.userId === userid)
+      // this.items.splice(idx, 1)
+
+      // store.commit('SET_USERS', users)
+      // console.log(users)
+      // const idx = items.findIndex(item => {
+      //   return item.userId === userid
+      // })
+      // console.log(idx)
+      // let users = store.state.users.splice(idx, 1)
+      // console.log(users)
+      // items.splice(idx, 1)
+      // console.log(items)
+      // console.log(store.state.users)
+      // console.log(store.state.users[index])
+      // store.dispatch("actionUsers", users)
     }
   },
   created(){
-    store.getters.getUsers()
+    store.dispatch('getUsers')
   },
 };
 </script>

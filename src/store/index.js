@@ -38,7 +38,8 @@ export default new Vuex.Store({
     ],
     // isLogin: false, // el codigo probado para Seokju
     // ifLoginError: false // el codigo probado para Seokju
-    users: null
+    users: null,
+    projects: null
   },
   getters: {
     getBaseURL(state) {
@@ -66,20 +67,23 @@ export default new Vuex.Store({
       return state.user;
     },
     getUsers(state) {
-      axios
-        .get(state.baseURL + '/getUsers')
-        .then(res => {
-          console.log(res.data)
-          state.users = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .then(() => {
-        })
+      return state.users
+    },
+    getProjects(state) {
+      return state.projects
     }
   },
   mutations: {
+    SET_USERS(state, payload) {
+      state.users = payload
+    },
+    SET_PROJECTS(state, payload) {
+      state.projects = payload
+    },
+    // DELETE_USERS(state, index) { // he dejado Seokju para probar
+    //   state.users.splice(index, 1);
+    //   console.log('')
+    // },
     // loginAdmin(state){ // he dejado Seokju para probar
     //   state.isAdmin = true;
     // }
@@ -157,7 +161,66 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    // login({state, commit}, loginObj){ // he dejado Seokju para probar}
+    async getUsers({ commit }) {
+      const users = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getUsers")
+        .then(res => {
+          console.log(res)
+          commit('SET_USERS', users.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
+    async deleteUser({ state, dispatch }, userId) {
+      const user = await axios.delete(state.baseURL + 'deleteUser', { data: { userId } })
+        .then(res => {
+          console.log(res)
+          console.log(user)
+          dispatch('getUsers')
+        })
+        .catch(err => console.log(err))
+      // console.log(users)
+
+      // console.log(users)
+      // dispatch('getUsers')
+      // console.log(users)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
+    logout({ commit }) {
+      sessionStorage.removeItem("itAcademyProjects-storedUser");
+      commit("setUser", ["logout", null]);
+    },
+    async getProejects({ commit }) {
+      const projects = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getProjects")
+      commit('SET_PROJECTS', projects.data)
+      console.log(projects.data)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
     // login({ state, commit }, loginObj) { // el codigo probado para Seokju
     //   let selectedUser = null;
     //   state.allUsers.forEach(user => {

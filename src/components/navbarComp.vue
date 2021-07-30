@@ -10,7 +10,7 @@
       <b-button-group v-if="getUser.name!==''">
         <b-dropdown :text="getUser.name">
           <b-dropdown-item router :to="{name:'MyAccount'}">My Page</b-dropdown-item>
-          <b-dropdown-item v-if="getUser.name!==''" router :to="{name:'Projects'}">Logout</b-dropdown-item>
+          <b-dropdown-item v-if="getUser.name!==''" router :to="{name:'Projects'}" @click="logout">Logout</b-dropdown-item>
         </b-dropdown>
       </b-button-group>
     </b-nav>
@@ -20,7 +20,7 @@
 
 <script>
 // @ is an alias to /src
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "Navbar",
@@ -30,6 +30,11 @@ export default {
     // }), <!-- dejo para recordar Seokju -->
     ...mapGetters({
       getUser: 'getUser'
+    })
+  },
+  methods: {
+    ...mapActions({
+      logout: 'logout'
     })
   },
   filters: {

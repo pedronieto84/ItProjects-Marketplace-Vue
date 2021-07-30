@@ -157,9 +157,13 @@ export default {
         },
       })
         .then(function (response) {
-          if (response.data.user.userId != undefined) {
-            aixo.$store.commit("setUser", ["object", response.data.user]);
+          console.log('response', response)
+          
+          if (response.data.userId != undefined) {
+            aixo.$store.commit("setUser", ["object", response.data]);
             aixo.$router.push("/");
+            
+
           } else {
             aixo.password = "";
             aixo.$bvToast.toast("Usuari i/o contrasenya invàlids", {
