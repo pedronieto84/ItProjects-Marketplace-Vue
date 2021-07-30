@@ -84,11 +84,11 @@ export default {
       sortBy:'name',
       filter: null,
       // fields: ['name', 'content'] // probar Seokju
-      items: store.getters.getUsers,
+      // items: store.getters.getUsers,
       fields: [
         { key: 'name', label: 'NOMBRE', sortable: true},
         { key:'email', label: 'EMAIL', sortable: true },
-        { key: 'userId', label: 'USER_UD', sortable: true },
+        { key: 'userId', label: 'USER_ID', sortable: true },
         { key: 'show_details', label: 'ACTIONS' }
       ]
     }
