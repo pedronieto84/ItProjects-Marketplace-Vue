@@ -1,18 +1,17 @@
 <template>
   <div class="container">
-    <b-input-group size="m" class="mb-3">
-      <b-form-input
-        type="search"
-        placeholder="Type to Search"
-        v-model="filter"
-      ></b-form-input>
-      <b-input-group-append>
-        <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-      </b-input-group-append>
-    </b-input-group>
-
     <b-tabs content-class="mt-3" pills>
       <b-tab title="USUARIOS" active>
+        <b-input-group size="m" class="mb-3">
+          <b-form-input
+            type="search"
+            placeholder="Type to Search"
+            v-model="filter"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+          </b-input-group-append>
+        </b-input-group>
         <b-overlay :show="getOverlay" rounded="sm">
           <b-table striped bordered :items="getUsers" :per-page="perPage" :current-page="currentPage" :fields="fields" :sort-by.sync="sortBy" :filter="filter"
           >
@@ -73,6 +72,16 @@
       </b-tab>
 
       <b-tab title="PROJECTS">
+        <b-input-group size="m" class="mb-3">
+          <b-form-input
+            type="search"
+            placeholder="Type to Search"
+            v-model="filter2"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button :disabled="!filter2" @click="filter2 = ''">Clear</b-button>
+          </b-input-group-append>
+        </b-input-group>
         <b-overlay :show="getOverlay2" rounded="sm">
           <b-table striped bordered :items="getProjects" :per-page="perPage2" :current-page="currentPage2" :fields="fields2" :sort-by.sync="sortBy2" :filter="filter2"
           >
@@ -171,6 +180,12 @@ export default {
       ]
     }
   },
+  created(){
+    store.dispatch('getUsers'),
+    store.commit('SET_OVERLAY', 'true'),
+    store.dispatch('getProjects'),
+    store.commit('SET_OVERLAY2', 'true')
+  },
   computed: {
     rows(){
       // return this.items ? this.items.length : 0
@@ -204,6 +219,8 @@ export default {
     //   )
     // }
     deleteUser(userId){
+      store.commit('SET_OVERLAY', 'true')
+      store.dispatch('deleteUser', userId)
       // console.log(index)
       // console.log(row)
       // let users = store.state.users.splice(index, 1)
@@ -211,8 +228,7 @@ export default {
       // console.log(users)
       // items.splice(items.index, 1)
       // store.dispatch('deleteUser', userId)
-      store.commit('SET_OVERLAY', 'true')
-      store.dispatch('deleteUser', userId)
+
       // this.$router.push('/redirac-admin')
       // this.items = store.getters.getUsers
       // if(store.dispatch('getUsers')){
@@ -221,7 +237,6 @@ export default {
       // console.log(userid)
       // const idx = this.items.findIndex(item => item.userId === userid)
       // this.items.splice(idx, 1)
-
       // store.commit('SET_USERS', users)
       // console.log(users)
       // const idx = items.findIndex(item => {
@@ -236,12 +251,6 @@ export default {
       // console.log(store.state.users[index])
       // store.dispatch("actionUsers", users)
     }
-  },
-  created(){
-    store.dispatch('getUsers'),
-    store.commit('SET_OVERLAY', 'true'),
-    store.dispatch('getProjects'),
-    store.commit('SET_OVERLAY2', 'true')
   },
 };
 </script>

@@ -1,25 +1,24 @@
 <template>
   <div>
+    <b-container style="display:flex; justify-content: flex-start; font-size: 20px; color: red;">
+      Total project : {{getProjects.length}}
+    </b-container>
     <b-container>
       <b-row align-v="center">
-        <b-col v-for="user in allUsers" :key="user.id">
+        <b-col v-for="project in getProjects" :key="project.id">
           <b-card
             title="Proyect"
             style="max-width: 10rem;"
             class="mb-2"
           >
             <b-card-text>
-              {{ user.user_id }} || {{ user.name }}
+              {{ project.title }} || {{ project.state }}
             </b-card-text>
 
             <b-button href="#" variant="primary">Detail</b-button>
           </b-card>
         </b-col>
       </b-row>
-    </b-container>
-    <hr>
-    <b-container>
-      Total Proejct : {{allUsersCount}}
     </b-container>
   </div>
 </template>
@@ -38,12 +37,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      allUsers: 'allUsers',
-      allUsersCount: 'allUsersCount'
+      getProjects: 'getProjects',
     })
   },
-  // created(){
-  //   store.dispatch('getProjects')
-  // },
+  created(){
+    store.dispatch('getProjects'),
+    store.commit('SET_OVERLAY2', 'true')
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+</style>

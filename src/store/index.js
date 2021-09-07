@@ -17,26 +17,26 @@ export default new Vuex.Store({
       verified: false
     },
     // isAdmin: true, // dejado para probar Seokju
-    allUsers: [
-      // dejado para probar Seokju
-      { user_id: 1, name: 'alberto', content: 'hola1' },
-      { user_id: 2, name: 'ber', content: 'hola2' },
-      { user_id: 3, name: 'car', content: 'hola3' },
-      { user_id: 4, name: 'david', content: 'hola4' },
-      { user_id: 5, name: 'elisa', content: 'hola5' },
-      { user_id: 6, name: 'alberto', content: 'hola6' },
-      { user_id: 1, name: 'alberto', content: 'hola1' },
-      { user_id: 2, name: 'ber', content: 'hola2' },
-      { user_id: 3, name: 'car', content: 'hola3' },
-      { user_id: 4, name: 'david', content: 'hola4' },
-      { user_id: 5, name: 'elisa', content: 'hola5' },
-      { user_id: 6, name: 'alberto', content: 'hola6' },
-      { user_id: 1, name: 'alberto', content: 'hola1' },
-      { user_id: 2, name: 'ber', content: 'hola2' },
-      { user_id: 3, name: 'car', content: 'hola3' },
-      { user_id: 4, name: 'david', content: 'hola4' },
-      { user_id: 5, name: 'elisa', content: 'hola5' }
-    ],
+    // allUsers: [
+    //   // dejado para probar Seokju
+    //   { user_id: 1, name: 'alberto', content: 'hola1' },
+    //   { user_id: 2, name: 'ber', content: 'hola2' },
+    //   { user_id: 3, name: 'car', content: 'hola3' },
+    //   { user_id: 4, name: 'david', content: 'hola4' },
+    //   { user_id: 5, name: 'elisa', content: 'hola5' },
+    //   { user_id: 6, name: 'alberto', content: 'hola6' },
+    //   { user_id: 1, name: 'alberto', content: 'hola1' },
+    //   { user_id: 2, name: 'ber', content: 'hola2' },
+    //   { user_id: 3, name: 'car', content: 'hola3' },
+    //   { user_id: 4, name: 'david', content: 'hola4' },
+    //   { user_id: 5, name: 'elisa', content: 'hola5' },
+    //   { user_id: 6, name: 'alberto', content: 'hola6' },
+    //   { user_id: 1, name: 'alberto', content: 'hola1' },
+    //   { user_id: 2, name: 'ber', content: 'hola2' },
+    //   { user_id: 3, name: 'car', content: 'hola3' },
+    //   { user_id: 4, name: 'david', content: 'hola4' },
+    //   { user_id: 5, name: 'elisa', content: 'hola5' }
+    // ],
     // isLogin: false, // el codigo probado para Seokju
     // ifLoginError: false // el codigo probado para Seokju
     users: null,
@@ -49,16 +49,15 @@ export default new Vuex.Store({
       // he dejado Seokju para probar
       return state.baseURL
     },
-    allUsers: (state) => {
-      // he dejado Seokju para probar
-      return state.allUsers
-    },
-    allUsersCount: (state) => {
-      // he dejado Seokju para probar
-
-      // comentario para ignorar
-      return state.allUsers.length
-    },
+    // allUsers: (state) => {
+    //   // he dejado Seokju para probar
+    //   return state.allUsers
+    // },
+    // allUsersCount: (state) => {
+    //   // he dejado Seokju para probar
+    //   // comentario para ignorar
+    //   return state.allUsers.length
+    // },
     getUser(state) {
       if (state.user.userId === '') {
         let storedUser = sessionStorage.getItem('itAcademyProjects-storedUser')
@@ -167,7 +166,6 @@ export default new Vuex.Store({
           state.user.verified = false
           break
       }
-
       sessionStorage.setItem('itAcademyProjects-storedUser', JSON.stringify(state.user))
     }
   },
@@ -219,7 +217,7 @@ export default new Vuex.Store({
       const projects = await axios.get('https://us-central1-asamblea-27a8d.cloudfunctions.net/getProjects')
       commit('SET_PROJECTS', projects.data)
       commit('SET_OVERLAY2', false)
-      // console.log(projects.data)
+      console.log(projects.data)
       // .then(res => {
       //   console.log(res.data)
       //   commit('SET_USERS', res.data)
