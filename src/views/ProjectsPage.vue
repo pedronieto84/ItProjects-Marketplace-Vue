@@ -42,8 +42,8 @@ export default {
       allUsersCount: 'allUsersCount'
     })
   },
-  created(){
-    store.dispatch('getProejects')
-  },
+  // created(){
+  //   store.dispatch('getProjects')
+  // },
 };
 </script>
