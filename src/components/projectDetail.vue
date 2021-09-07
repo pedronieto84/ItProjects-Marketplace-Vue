@@ -1,17 +1,32 @@
 <template>
-    <div>
 
-        <b-container>
+        <b-container class="border" fluid>
+            <b-row class="w-100">
+                <b-col class="text-center px-5 py-5">{{projectDetall.title}}</b-col>
+                <b-col class="text-center px-5 py-5">FALTA PublisherName</b-col>
+            </b-row>
 
-            <h1>Project Detail Page</h1>
+            <b-row>
+                <b-col class="text-center px-5 py-5">{{projectDetall.shortExplanation}}</b-col>
+            </b-row>
+
+            <b-row>
+                <b-col class="text-center px-5 py-5">{{projectDetall.publishedDate}}</b-col>
+                <b-col class="text-center px-5 py-5">{{projectDetall.deadline}}</b-col>
+                <b-col class="text-center px-5 py-5">{{projectDetall.bid}} Bind</b-col>
+            </b-row>
+
+            <b-row>
+                <b-col class="text-center px-5 py-5">{{projectDetall.techSet}}</b-col>
+            </b-row>
 
         </b-container>
 
-    </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import axios from 'axios'
+
 export default {
 
     name:'projectDetail',
@@ -19,16 +34,22 @@ export default {
     data(){
         //id que ha d'arribar per url (es el id del projecte)
         return{
-            projectId:this.$route.params.id
+            projectId:this.$route.params.id,
+            projectDetall:''
         }
     },
 
-    computed:{
-        ...mapState(['projects']),
-    },
-
     mounted(){
-        this.$store.dispatch('getProejects');
+        axios.post('https://us-central1-asamblea-27a8d.cloudfunctions.net/getProject',{
+            projectId: 'AsPYHXBrUje4zRHcBNpd',// this.projectId
+            userId:'WUnYiEbXKkLhG2FptA1p',//
+        })
+        .then((response) => {
+            console.log(response.data);
+            this.projectDetall=response.data;
+        }, (error) => {
+            console.log(error);
+        });
     }
 
 }
