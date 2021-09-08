@@ -41,7 +41,6 @@
         </b-form-group>
         <div class="d-flex justify-content-end mt-3" >
           <b-button :disabled="disabledBtn" id="nextButtonId" @click="sendProjectData1" pill variant="outline-primary" class="mb-5">Next</b-button>
-           <!-- <b-button disabled id="nextButtonId" @click="sendProjectData1" pill variant="outline-primary" class="mb-5">Next</b-button> -->
         </div>
       </b-container>
     </div>
@@ -73,14 +72,7 @@ export default {
           this.projectDescription = false;
           break;
       }
-    },
-    // activarButton(nextButtonId){
-    //   projectDescriptionId.addEvenListener('input', () => {
-    //     if(this.projectTitle && this.projectDescription){
-    //     nextButtonId.removeAttribute('disable')
-    //     }
-    //   })
-    // }
+    }
   },
   computed:{
     stateTitle () {
