@@ -16,7 +16,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import("../views/AdminPage.vue")
+    component: () => import("../views/AdminPage.vue"),
   },
   {
     path: "/crear-projecte",
@@ -68,6 +68,11 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/ProjectDetailPage.vue"),
   },
+  {
+    path: "/redirect-admin",
+    name: 'Redirect',
+    redirect: { name: 'Admin' }
+  }
 ];
 
 const router = new VueRouter({

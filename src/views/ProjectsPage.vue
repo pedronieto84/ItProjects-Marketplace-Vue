@@ -26,14 +26,24 @@
 
 <script>
 // @ is an alias to /src
+import store from '@/store'
 import {mapGetters} from 'vuex'
+
 export default {
   name: "Projects",
+  data() {
+    return {
+      items: store.getters.getProjects,
+    }
+  },
   computed: {
     ...mapGetters({
       allUsers: 'allUsers',
       allUsersCount: 'allUsersCount'
     })
-  }
+  },
+  created(){
+    store.dispatch('getProejects')
+  },
 };
 </script>
