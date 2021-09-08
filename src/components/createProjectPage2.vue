@@ -10,7 +10,7 @@
                 <b-form-datepicker v-model="project2.publishedDate" :min="min" :max="max" locale="en"></b-form-datepicker>
             </b-col>
           </b-row>
-            <!--deadline-->
+            <!--deadliasdfasdfasdfne-->
             <b-row class="m-1">
             <b-col sm="12">
                 <label>Deadline: </label>

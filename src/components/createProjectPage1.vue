@@ -92,6 +92,7 @@ export default {
       } else if (this.project.title.length > 35) {
         return "the title shouldn't be longer than 35 letters";
       }
+
       return "";
     },
      invalidFeedbackDescription() {
@@ -100,6 +101,7 @@ export default {
       } else if (this.project.shortExplanation.length > 500) {
         return "the description shouldn't be longer than 500 letters";
       }
+      
       return "";
     }
 
