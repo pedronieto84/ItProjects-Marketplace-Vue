@@ -16,7 +16,7 @@
                 <label>Deadline: </label>
             </b-col>
             <b-col>
-                <b-form-datepicker v-model="project2.deadline" locale="en"></b-form-datepicker>
+                <b-form-datepicker :min="project2.publishedDate" v-model="project2.deadline" locale="en"></b-form-datepicker>
             </b-col>
             </b-row>
             <!--price-->
@@ -25,7 +25,8 @@
                 <b-form-group :invalid-feedback="invalidFeedbackPrice">
                   <b-form-input 
                     id="priceId"
-                    type="text" 
+                    type="number" 
+                    min="1" max="5000"
                     placeholder="Bid In Euros" 
                     v-model="project2.projectPrice"
                     :state="statePrice"
@@ -81,7 +82,7 @@
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
                 <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
-          <b-button pill variant="outline-danger" class="mb-5" @click="sendProjectData2" >Next</b-button>
+          <b-button :disabled="disabledBtn" pill variant="outline-success" class="mb-5" @click="sendProjectData2" >Next</b-button>
         </div>
         </div>
   </b-container>
@@ -125,16 +126,24 @@ export default {
       if (this.projectPriceId) {
         return null;
       }
-      //return this.project2.projectPrice > 0 && this.project2.projectPrice <= 5000;
-      if(this.project2.projectPrice>0 && this.project2.projectPrice <= 5000) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.project2.projectPrice > 0 && this.project2.projectPrice <= 5000;
     },
     filteredTechnologies() {
       const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.techSet))
       return matches;
+    },
+    invalidFeedbackPrice(){
+      if(this.project2.projectPrice <= 0 || this.project2.projectPrice === ""){
+        return "Add some value..."
+      }else if(this.project2.projectPrice > 5000){
+        return "Less of 5000"
+      }
+      return ""
+    },
+    disabledBtn(){
+      return this.project2.projectPrice <=0 || this.project2.projectPrice >= 500 
+      || this.project2.deadline === "" || this.project2.publishedDate === "" ||
+      this.project2.value.length === 0
     }
   },
   methods:{
