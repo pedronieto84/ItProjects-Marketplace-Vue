@@ -98,10 +98,11 @@ export default {
      invalidFeedbackDescription() {
       if (this.project.shortExplanation.length == 0) {
         return "Add some description...";
+        //sdafadsf
       } else if (this.project.shortExplanation.length > 500) {
         return "the description shouldn't be longer than 500 letters";
       }
-      
+
       return "";
     }
 
