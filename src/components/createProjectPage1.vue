@@ -3,7 +3,7 @@
     <b-container fluid>
         <b-row class="d-flex align-items-center justify-content-center">
           <b-col sm="5">
-            <label>Project title</label>
+            <h4>Project title</h4>
           </b-col>
           <b-col sm="7">
             <b-form-group 
@@ -12,11 +12,11 @@
             <b-form-input 
             id="projectTitleId"
             :state="stateTitle"
-            placeholder="project title" 
+            placeholder="Insert your project title" 
             trim 
             class="w-100" 
-            v-model="project.projectTitle"
-            label-for="project.projectTitle"
+            v-model="project.title"
+            label-for="project.title"
             @keydown="entrada($event)">
             </b-form-input>
         </b-form-group>
@@ -26,7 +26,7 @@
         :invalid-feedback="invalidFeedbackDescription" 
         class="text-left">
           <b-form-textarea
-          v-model="project.projectDescription"
+          v-model="project.shortExplanation"
           id="projectDescriptionId"
           placeholder="Project description , max 500 char"
           rows="3"
@@ -38,7 +38,7 @@
         ></b-form-textarea>
         </b-form-group>
         <div class="d-flex justify-content-end mt-3" >
-           <b-button @click="sendProjectData1" pill variant="outline-danger" class="mb-5">Next</b-button>
+           <b-button @click="sendProjectData1" pill variant="outline-primary" class="mb-5">Next</b-button>
         </div>
       </b-container>
     </div>
@@ -48,9 +48,9 @@ export default {
   data () {
       return {
         project : {
-          projectTitle: "",
-          projectDescription: "",
-          
+          title: "",
+          shortExplanation: "",
+          ownerId: ""          
         },
         projectTitle: true,
         projectDescription:true
@@ -77,27 +77,27 @@ export default {
        if (this.projectTitle) {
          return null;
        }
-      return this.project.projectTitle.length > 0 && this.project.projectTitle.length <= 150;
+      return this.project.title.length > 0 && this.project.title.length <= 150;
     },
     stateDescription() {
       if (this.projectDescription) {
         return null;
       }
-      return this.project.projectDescription.length > 0 && this.project.projectDescription.length <= 500;
+      return this.project.shortExplanation.length > 0 && this.project.shortExplanation.length <= 500;
     },
     //ivalid feedback
      invalidFeedbackTitle() {
-      if (this.project.projectTitle.length == 0) {
+      if (this.project.title.length == 0) {
         return "Add some title...";
-      } else if (this.project.projectTitle.length > 35) {
+      } else if (this.project.title.length > 35) {
         return "the title shouldn't be longer than 35 letters";
       }
       return "";
     },
      invalidFeedbackDescription() {
-      if (this.project.projectDescription.length == 0) {
+      if (this.project.shortExplanation.length == 0) {
         return "Add some description...";
-      } else if (this.project.projectDescription.length > 500) {
+      } else if (this.project.shortExplanation.length > 500) {
         return "the description shouldn't be longer than 500 letters";
       }
       return "";
