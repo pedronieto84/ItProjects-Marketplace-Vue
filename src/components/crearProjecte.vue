@@ -2,8 +2,8 @@
     <div class="w-75 m-auto">
         <div class="btn-toolbar">
             <b-button variant="primary" class="border-upper-radius" @click="pageCounter=1">1</b-button>
-            <b-button variant="primary" class="border-upper-radius"  @click="pageCounter=2">2</b-button>
-            <b-button variant="primary" class="border-upper-radius" @click="pageCounter=3">3</b-button>
+            <b-button :disabled="disableBtn2" variant="primary" class="border-upper-radius"  @click="pageCounter=2">2</b-button>
+            <b-button :disabled="disableBtn3" variant="primary" class="border-upper-radius" @click="pageCounter=3">3</b-button>
         </div>
         <div class="crear-projecte-container border p-5">
             <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-show="pageCounter===1"/>
@@ -31,34 +31,27 @@ export default {
 
    },
    methods:{
-       updateProjectData1(project){           
-           if(project.title === "" ||
-            project.shortExplanation === "" ||
-            project.shortExplanation.lenght > 500){
-               alert('Please make sure all fields are filled in correctly')
-           }else{
+       updateProjectData1(project){ 
             this.project=project;
             this.pageCounter=2
-           }
        },
         updateProjectData2(project2){
-            if(project2.value === "" ||
-             project2.deadline === "" ||
-             project2.deadline === ""){
-                alert('Please make sure all fields are filled in correctly')
-                console.log(project2.value.lenght)
-             }else{
-                this.project={...this.project, ...project2}
-                this.pageCounter=3
-             }
-            // this.project={...this.project, ...project2}
-            // this.pageCounter=3
+            this.project={...this.project, ...project2}
+            this.pageCounter=3
        },
        goBack2(){
            this.pageCounter=1
        },
        goBack3(){
            this.pageCounter=2
+       }
+   },
+   computed:{
+       disableBtn2(){
+           return this.pageCounter === 1
+       },
+       disableBtn3(){
+           return this.pageCounter != 3
        }
    }
 }
