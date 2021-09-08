@@ -1,16 +1,16 @@
 <template>
 
-        <b-container class="border" fluid>
+        <b-container class="border rounded" fluid>
             <b-row class="w-100">
-                <b-col class="text-left px-5 py-4 font-weight-bolder"><h4>{{projectDetall.title}}</h4></b-col>
-                <b-col class="text-right px-5 py-4">FALTA PublisherName</b-col>
+                <b-col class="text-left font-weight-bold px-5 py-4"><h3>{{projectDetall.title}}</h3></b-col>
+                <b-col class="text-right px-5 py-4">{{projectDetall.ownerId}}</b-col>
             </b-row>
 
             <b-row>
-                <b-col class="text-justify text-wrap px-5 py-4 border mx-5 my-3 bg-light">{{projectDetall.shortExplanation}}</b-col>
+                <b-col class="text-justify text-wrap px-5 py-4 border rounded mx-5 my-4 bg-light">{{projectDetall.shortExplanation}}</b-col>
             </b-row>
 
-            <b-row>
+            <b-row class="my-5">
                 <b-col class="px-5">
                     <div class="container">
                         <b-row>
@@ -61,46 +61,53 @@
                 </b-col>
             </b-row>
 
-            <b-row>
-                <b-col class="text-justify text-wrap px-5 py-3 border mx-5 my-3">
+            <b-row class="my-5">
+                <b-col class="px-5 border rounded mx-5 my-3">
+                    <p>Techset</p>
                     <ul class="row list-unstyled">
                         <li v-for="item in projectDetall.techSet" :key="item.id">
-                            <h5 class="mx-4"><b-badge>{{ item }}</b-badge></h5>
+                            <h5 class="mt-4 mr-4 text-center"><b-badge>{{ item }}</b-badge></h5>
                         </li>
                     </ul>
                 </b-col>
             </b-row>
 
-            <b-row>
+            <b-row class="my-5">
                 <b-col>
                     <div class="container">
                         <b-row>
                             <b-col class="text-left px-5">
                             Files with more info
-                                <b-row class="text-left mx-1">
-                                    link <!--falta link-->
+                                <b-row class="text-left mx-1 my-2">
+                                    <b-link href="#" target="_blank" class="text-decoration-none">Mockups</b-link> <!--falta link-->
                                 </b-row>
-                                <b-row class="text-left mx-1">
-                                    link <!--falta link-->
+                                <b-row class="text-left text-dark mx-1 my-2">
+                                    <b-link href="#" target="_blank" class="text-decoration-none">Database Design</b-link> <!--falta link-->
                                 </b-row>
                             </b-col>
                         </b-row>
                     </div>
                 </b-col>
             </b-row>
-
-
-
         </b-container>
 
 </template>
 
 <script>
 import axios from 'axios'
+import {mapGetters} from 'vuex'
 
 export default {
 
     name:'projectDetail',
+
+    computed:{
+        ...mapGetters(['getUser']),
+
+        userId(){
+            return this.getUser.userId
+        }
+    },
 
     data(){
         return{
@@ -113,7 +120,7 @@ export default {
     mounted(){
         axios.post('https://us-central1-asamblea-27a8d.cloudfunctions.net/getProject',{
             projectId: 'AsPYHXBrUje4zRHcBNpd',// !! He de posar "this.projectId" esta posat 'AsPYHX..' pq encara no arriba el id per url
-            userId:'WUnYiEbXKkLhG2FptA1p',//??
+            userId:this.userId
         })
         .then((response) => {
             console.log(response.data);//Borrar
