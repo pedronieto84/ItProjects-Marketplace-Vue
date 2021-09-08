@@ -7,8 +7,8 @@
                   <label>Published: </label>
               </b-col>
             <b-col>
-                <b-form-datepicker v-model="project2.publishData" :min="min" :max="max" locale="en"></b-form-datepicker>
-            </b-col> 
+                <b-form-datepicker v-model="project2.publishedDate" :min="min" :max="max" locale="en"></b-form-datepicker>
+            </b-col>
           </b-row>
             <!--deadliasdfasdfasdfne-->
             <b-row class="m-1">
@@ -16,23 +16,24 @@
                 <label>Deadline: </label>
             </b-col>
             <b-col>
-                <b-form-datepicker v-model="project2.deadlineData" locale="en"></b-form-datepicker>
+                <b-form-datepicker v-model="project2.deadline" locale="en"></b-form-datepicker>
             </b-col>
             </b-row>
             <!--price-->
-            <b-row class="mt-4">
-            <b-col>
-          <b-form-group :invalid-feedback="invalidFeedbackPrice">
-                <b-form-input 
-                id="priceId"
-                type="number" 
-                placeholder="Bid In Euros" 
-                v-model="project2.projectPrice"
-                :state="statePrice"
-                @click="entrada($event)"></b-form-input>
+            
+              <b-col sm="3 mt-5">
+                <b-form-group :invalid-feedback="invalidFeedbackPrice">
+                  <b-form-input 
+                    id="priceId"
+                    type="text" 
+                    placeholder="Bid In Euros" 
+                    v-model="project2.projectPrice"
+                    :state="statePrice"
+                    @click="entrada($event)">
+                  </b-form-input>
                 </b-form-group>
-            </b-col>
-            </b-row>
+              </b-col>
+            
         </div>
         <div class="add-technology m-5">
               <b-row class="my-1">
@@ -98,10 +99,10 @@ export default {
       maxDate.setMonth(maxDate.getMonth() + 6)
       return {
         project2:{
-          technologyNeeded:"",
-          projectPrice:0,
-          publishData:"",
-          deadlineData:"",
+          techSet:"",
+          projectPrice:"",
+          publishedDate:"",
+          deadline:"",
           value:""
         },
         
@@ -118,7 +119,7 @@ export default {
       if (this.project2.projectTechnologyId) {
         return null;
       }
-      return this.project2.technologyNeeded.length > 0 && this.project2.technologyNeeded.length <= 35;
+      return this.project2.techSet.length > 0 && this.project2.techSet.length <= 35;
     },
     statePrice() {
       if (this.projectPriceId) {
@@ -132,7 +133,7 @@ export default {
       }
     },
     filteredTechnologies() {
-      const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.technologyNeeded))
+      const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.techSet))
       return matches;
     }
   },
