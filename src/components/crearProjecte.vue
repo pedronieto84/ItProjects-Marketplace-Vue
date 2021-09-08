@@ -41,6 +41,7 @@ export default {
             this.pageCounter=3
        },
        goBack2(){
+           /// comentario 1
            this.pageCounter=1
        },
        goBack3(){
