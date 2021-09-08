@@ -108,51 +108,21 @@
         </b-row>
       </b-tab>
 
-      <b-tab title="Els meus projectes">
-        <!-- <b-row class="mt-4 mb-4" align-v="center" align-h="center">
-          <b-button
-            class="btn-sm"
-            variant="primary"
-            v-if="!editMode"
-            @click="editMode = true"
-          >
-            <span class="material-icons">mode_edit</span>
-          </b-button>
-          <b-button
-            class="btn-sm mr-1"
-            variant="danger"
-            v-if="editMode"
-            @click="cancelEdit"
-          >
-            <span class="material-icons">cancel</span>
-          </b-button>
-          <b-button
-            class="btn-sm ml-1"
-            variant="primary"
-            v-if="editMode"
-            :disabled="disableSend"
-            @click="updateUser"
-          >
-            <span
-              class="spinner-border spinner-border-sm"
-              v-if="sending === true"
-            ></span>
-            <span v-else class="material-icons">check</span>
-          </b-button>
-        </b-row> -->
-      </b-tab>
+      <projectList :userId="userId"></projectList>
     </b-tabs>
   </b-container>
 </template>
 
 <script>
 import axios from "axios";
+import projectList from "@/components/projectList.vue";
 
 export default {
   name: "MyAccount",
 
   data() {
     return {
+      // Dades d'usuari
       userId: "",
       name: "",
       email: "",
@@ -250,11 +220,15 @@ export default {
             aixo.disableSend = true;
 
             aixo.$bvToast.toast("S'ha actualitzat les dades d'usuari", {
+              variant: "success",
+              toaster: "b-toaster-top-center",
               title: "Èxit",
               autoHideDelay: 5000,
             });
           } else {
             aixo.$bvToast.toast("Errada en el procés d'actualització", {
+              variant: "warning",
+              toaster: "b-toaster-top-center",
               title: "Fallada",
               autoHideDelay: 5000,
             });
@@ -263,6 +237,8 @@ export default {
         })
         .catch(function (error) {
           aixo.$bvToast.toast("S'ha produït un error a la petició", {
+            variant: "warning",
+            toaster: "b-toaster-top-center",
             title: "Fallada",
             autoHideDelay: 5000,
           });
@@ -275,7 +251,7 @@ export default {
       sessionStorage.removeItem("itAcademyProjects-storedUser");
       this.$store.commit("setUser", ["logout", null]);
       this.$router.push("/");
-    }
+    },
   },
 
   computed: {
@@ -404,6 +380,8 @@ export default {
     this.cpassword = "";
   },
 
-  components: {},
+  components: {
+    projectList,
+  },
 };
 </script>

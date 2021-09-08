@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -15,16 +16,30 @@ export default new Vuex.Store({
       typeOfInstitution: "",
       verified: false,
     },
-    isAdmin: true, // dejado para probar Seokju
-    allUsers: [
-      // dejado para probar Seokju
-      { user_id: 1, name: "alberto" },
-      { user_id: 2, name: "ber" },
-      { user_id: 3, name: "car" },
-      { user_id: 4, name: "david" },
-      { user_id: 5, name: "elisa" },
-      { user_id: 6, name: "alberto" },
+    // isAdmin: true, // dejado para probar Seokju
+    allUsers: [ // dejado para probar Seokju
+      { user_id: 1, name: 'alberto', content: 'hola1' },
+      { user_id: 2, name: 'ber', content: 'hola2' },
+      { user_id: 3, name: 'car', content: 'hola3' },
+      { user_id: 4, name: 'david', content: 'hola4' },
+      { user_id: 5, name: 'elisa', content: 'hola5' },
+      { user_id: 6, name: 'alberto', content: 'hola6' },
+      { user_id: 1, name: 'alberto', content: 'hola1' },
+      { user_id: 2, name: 'ber', content: 'hola2' },
+      { user_id: 3, name: 'car', content: 'hola3' },
+      { user_id: 4, name: 'david', content: 'hola4' },
+      { user_id: 5, name: 'elisa', content: 'hola5' },
+      { user_id: 6, name: 'alberto', content: 'hola6' },
+      { user_id: 1, name: 'alberto', content: 'hola1' },
+      { user_id: 2, name: 'ber', content: 'hola2' },
+      { user_id: 3, name: 'car', content: 'hola3' },
+      { user_id: 4, name: 'david', content: 'hola4' },
+      { user_id: 5, name: 'elisa', content: 'hola5' },
     ],
+    // isLogin: false, // el codigo probado para Seokju
+    // ifLoginError: false // el codigo probado para Seokju
+    users: null,
+    projects: null
   },
   getters: {
     getBaseURL(state) {
@@ -37,6 +52,9 @@ export default new Vuex.Store({
     },
     allUsersCount: (state) => {
       // he dejado Seokju para probar
+
+
+      // comentario para ignorar
       return state.allUsers.length;
     },
     getUser(state) {
@@ -48,19 +66,35 @@ export default new Vuex.Store({
       }
       return state.user;
     },
+    getUsers(state) {
+      return state.users
+    },
+    getProjects(state) {
+      return state.projects
+    }
   },
-  // mutations: {
-  //   // loginAdmin(state){ // he dejado Seokju para probar
-  //   //   state.isAdmin = true;
-  //   // }
-  // },
-  // actions: {
-  //   // login({state, commit}, loginObj){ // he dejado Seokju para probar
-  //   //   ...
-  //   // }
-  // },
-
   mutations: {
+    SET_USERS(state, payload) {
+      state.users = payload
+    },
+    SET_PROJECTS(state, payload) {
+      state.projects = payload
+    },
+    // DELETE_USERS(state, index) { // he dejado Seokju para probar
+    //   state.users.splice(index, 1);
+    //   console.log('')
+    // },
+    // loginAdmin(state){ // he dejado Seokju para probar
+    //   state.isAdmin = true;
+    // }
+    // loginSuccess(state) { // el codigo probado para Seokju
+    //   state.isLogin = true
+    //   state.isLoginError = false
+    // },
+    // loginError(state) { // el codigo probado para Seokju
+    //   state.isLogin = false
+    //   state.isLoginError = true
+    // },
     setUser(state, data) {
       /* data is a 2 element array.
           data[0] is the property to modify:
@@ -126,6 +160,76 @@ export default new Vuex.Store({
       );
     },
   },
-  actions: {},
+  actions: {
+    async getUsers({ commit }) {
+      const users = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getUsers")
+        .then(res => {
+          console.log(res)
+          commit('SET_USERS', users.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
+    async deleteUser({ state, dispatch }, userId) {
+      const user = await axios.delete(state.baseURL + 'deleteUser', { data: { userId } })
+        .then(res => {
+          console.log(res)
+          console.log(user)
+          dispatch('getUsers')
+        })
+        .catch(err => console.log(err))
+      // console.log(users)
+
+      // console.log(users)
+      // dispatch('getUsers')
+      // console.log(users)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
+    logout({ commit }) {
+      sessionStorage.removeItem("itAcademyProjects-storedUser");
+      commit("setUser", ["logout", null]);
+    },
+    async getProejects({ commit }) {
+      const projects = await axios.get("https://us-central1-asamblea-27a8d.cloudfunctions.net/getProjects")
+      commit('SET_PROJECTS', projects.data)
+      console.log(projects.data)
+      // .then(res => {
+      //   console.log(res.data)
+      //   commit('SET_USERS', res.data)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
+      // .then(() => {
+      // })
+    },
+    // login({ state, commit }, loginObj) { // el codigo probado para Seokju
+    //   let selectedUser = null;
+    //   state.allUsers.forEach(user => {
+    //     if (user.email === loginObj.email) selectedUser = user
+    //   })
+    //   selectedUser === null || selectedUser.password !== loginObj.password
+    //     ? commit('loginError')
+    //     : commit('loginSuccess')
+    // }
+  },
   modules: {},
 });
