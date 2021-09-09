@@ -101,7 +101,7 @@ export default {
       return "";
     },
     disabledBtn(){
-      return this.project.shortExplanation.length === "0" || this.project.title.length === 0
+      return this.project.shortExplanation.length === 0 || this.project.title.length === 0
     }
 
   }
