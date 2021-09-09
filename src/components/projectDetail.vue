@@ -159,7 +159,7 @@ export default {
 
     mounted(){
         axios.post('https://us-central1-asamblea-27a8d.cloudfunctions.net/getProject',{
-            projectId: 'AsPYHXBrUje4zRHcBNpd',// !! He de posar "this.projectId" esta posat 'AsPYHX..' pq encara no arriba el id per url
+            projectId: this.projectId,// !! He de posar "this.projectId" esta posat 'AsPYHX..' pq encara no arriba el id per url
             userId: this.userId
         })
         .then((response) => {
