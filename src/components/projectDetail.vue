@@ -11,14 +11,14 @@
             </b-row>
 
             <b-row class="my-5">
-                <b-col class="px-5">
+                <b-col cols="6" md="1" class="px-5">
                     <div class="container">
                         <b-row>
                             <b-col class="text-left">
                                 Published
                                 <b-row>
                                     <b-col class="text-left">
-                                        {{ PublishedDateFormat }}
+                                        {{ publishedDateFormat }}
                                     </b-col>
                                     <b-col class="text-left">
                                         <b-icon-calendar3 variant="secondary"></b-icon-calendar3>
@@ -29,7 +29,7 @@
                     </div>
                 </b-col>
 
-                <b-col class="px-5">
+                <b-col cols="6" md="1" class="px-5">
                     <div class="container">
                         <b-row>
                             <b-col class="text-left">
@@ -47,7 +47,7 @@
                     </div>
                 </b-col>
 
-                <b-col class="px-5">
+                <b-col cols="6" md="1" class="px-5">
                     <div class="container">
                         <b-row>
                             <b-col class="text-left">
@@ -61,14 +61,23 @@
                 </b-col>
             </b-row>
 
-            <b-row class="my-5">
-                <b-col class="px-5 border rounded mx-5 my-3 shadow-sm">
-                    <ul class="row list-unstyled">
-                        <li v-for="item in projectDetall.techSet" :key="item.id">
-                            <h5 class="mt-4 mr-4 text-center"><b-badge>{{ item }}</b-badge></h5>
-                        </li>
-                    </ul>
-                </b-col>
+            <b-row>
+                <div class="container">
+                    <b-row>
+                        <b-col class="pl-5 text-left">
+                        Techset
+                        </b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col class="px-5 border rounded mx-5 my-3 shadow-sm">
+                            <ul class="row list-unstyled">
+                                <li v-for="item in projectDetall.techSet" :key="item.id">
+                                    <h5 class="mt-4 mr-4 text-center"><b-badge>{{ item }}</b-badge></h5>
+                                </li>
+                            </ul>
+                        </b-col>
+                    </b-row>
+                </div>
             </b-row>
 
             <b-row class="my-5">
@@ -95,8 +104,6 @@
                 </b-col>
             </b-row>
 
-
-
         </b-container>
 
 </template>
@@ -113,28 +120,22 @@ export default {
     data(){
         return{
             projectId:this.$route.params.id, //id que ha d'arribar per url (es el id del projecte)
-            projectDetall:'',//response del axios call
-            item:'',
+            projectDetall:'',
+            item:''
         }
     },
 
     computed:{
         ...mapGetters(['getUser']),
 
-        PublishedDate(){
-            return new Date (this.projectDetall.publishedDate);
-        },
-
-        PublishedDateFormat(){
-            return this.PublishedDate.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
-        },
-
-        deadline(){
-            return new Date (this.projectDetall.deadline);
+        publishedDateFormat(){
+            const PublishedDate = new Date (this.projectDetall.publishedDate)
+            return PublishedDate.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
         },
 
         deadlineFormat(){
-            return this.deadline.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+            const deadline = new Date (this.projectDetall.deadline);
+            return deadline.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
         },
 
         userId(){
@@ -145,7 +146,7 @@ export default {
 
     methods:{
         anterior(){
-        this.$router.go(-1)
+            this.$router.go(-1)
         },
     },
 
@@ -155,7 +156,6 @@ export default {
             userId:this.userId
         })
         .then((response) => {
-            console.log(response.data);//Borrar
             this.projectDetall = response.data;
         }, (error) => {
             console.log(error);
