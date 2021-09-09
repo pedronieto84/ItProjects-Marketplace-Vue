@@ -1,18 +1,18 @@
 <template>
   <div>
-    <b-container style="display:flex; justify-content: flex-start; font-size: 20px; color: red;">
+    <b-container style="display:flex; justify-content: flex-start; font-size: 2rem; color: red; margin-bottom: 1rem">
       Total project : {{getProjects.length}}
     </b-container>
     <b-container>
-      <b-row align-v="center">
+      <b-row align-v="center" >
         <b-col v-for="project in getProjects" :key="project.id">
           <b-card
             title="Proyect"
-            style="max-width: 10rem;"
+            style="max-width: 20rem; height: 15rem;"
             class="mb-2"
           >
             <b-card-text>
-              {{ project.title }} || {{ project.state }}
+              {{ project.title }}
             </b-card-text>
 
             <b-button href="#" variant="primary">Detail</b-button>
