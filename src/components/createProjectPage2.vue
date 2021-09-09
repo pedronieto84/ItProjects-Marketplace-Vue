@@ -27,6 +27,7 @@
                     id="priceId"
                     type="number" 
                     min="1" max="5000"
+                    step="any"
                     placeholder="Bid In Euros" 
                     v-model="project2.projectPrice"
                     :state="statePrice"
@@ -126,28 +127,28 @@ export default {
       if (this.projectPriceId) {
         return null;
       }
-      return this.project2.projectPrice > 0 && this.project2.projectPrice <= 5000;
+      return this.project2.projectPrice <= 500000;
     },
     filteredTechnologies() {
       const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.techSet))
       return matches;
     },
     invalidFeedbackPrice(){
-      if(this.project2.projectPrice <= 0 || this.project2.projectPrice === ""){
+      if(this.project2.projectPrice === ""){
         return "Add some value..."
-      }else if(this.project2.projectPrice > 5000){
-        return "Less of 5000"
+      }else if(this.project2.projectPrice > 500000){
+        return "Less of 500.000"
       }
       return ""
     },
     disabledBtn(){
-      return this.project2.projectPrice <=0 || this.project2.projectPrice >= 500 
+      return this.project2.projectPrice >= 500000 
       || this.project2.deadline === "" || this.project2.publishedDate === "" ||
       this.project2.value.length === 0
     }
   },
   methods:{
-         entrada(event) {
+    entrada(event) {
        switch (event.target.id) {
           case "priceId":
           this.projectPriceId = false;
