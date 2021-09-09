@@ -1,15 +1,19 @@
 <template>
 
         <b-container class="border rounded mb-5 shadow-sm" fluid>
+
+            <!--Project Title & Publisher Name-->
             <b-row class="w-100">
                 <b-col class="text-left font-weight-bold px-5 py-4"><h3>{{ projectDetall.title }}</h3></b-col>
                 <b-col class="text-right px-5 py-4">{{ projectDetall.ownerId }}</b-col>
             </b-row>
 
+            <!--Project Descripction-->
             <b-row>
                 <b-col class="text-justify text-wrap px-5 py-4 border rounded mx-5 my-4 bg-light shadow-sm">{{ projectDetall.shortExplanation }}</b-col>
             </b-row>
 
+            <!--Published & Deadline & Bind-->
             <b-row class="my-5">
                 <b-col class="px-5">
                     <div class="container">
@@ -61,6 +65,7 @@
                 </b-col>
             </b-row>
 
+            <!--Project Techset-->
             <b-row>
                 <div class="container">
                     <b-row>
@@ -80,6 +85,7 @@
                 </div>
             </b-row>
 
+            <!--More Info-->
             <b-row class="my-5">
                 <b-col>
                     <div class="container">
@@ -98,6 +104,7 @@
                 </b-col>
             </b-row>
 
+            <!--Button Back-->
             <b-row class="my-5">
                 <b-col class="text-right">
                      <b-button variant="outline-secondary" size="sm" @click="anterior()"><b-icon-chevron-left></b-icon-chevron-left> Go back </b-button>
@@ -153,7 +160,7 @@ export default {
     mounted(){
         axios.post('https://us-central1-asamblea-27a8d.cloudfunctions.net/getProject',{
             projectId: 'AsPYHXBrUje4zRHcBNpd',// !! He de posar "this.projectId" esta posat 'AsPYHX..' pq encara no arriba el id per url
-            userId:this.userId
+            userId: this.userId
         })
         .then((response) => {
             this.projectDetall = response.data;
