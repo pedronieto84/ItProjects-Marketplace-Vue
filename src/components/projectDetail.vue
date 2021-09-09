@@ -1,13 +1,13 @@
 <template>
 
-        <b-container class="border rounded mb-5" fluid>
+        <b-container class="border rounded mb-5 shadow-sm" fluid>
             <b-row class="w-100">
                 <b-col class="text-left font-weight-bold px-5 py-4"><h3>{{ projectDetall.title }}</h3></b-col>
                 <b-col class="text-right px-5 py-4">{{ projectDetall.ownerId }}</b-col>
             </b-row>
 
             <b-row>
-                <b-col class="text-justify text-wrap px-5 py-4 border rounded mx-5 my-4 bg-light">{{ projectDetall.shortExplanation }}</b-col>
+                <b-col class="text-justify text-wrap px-5 py-4 border rounded mx-5 my-4 bg-light shadow-sm">{{ projectDetall.shortExplanation }}</b-col>
             </b-row>
 
             <b-row class="my-5">
@@ -21,7 +21,7 @@
                                         {{ PublishedDateFormat }}
                                     </b-col>
                                     <b-col class="text-left">
-                                        <b-icon-calendar3></b-icon-calendar3>
+                                        <b-icon-calendar3 variant="secondary"></b-icon-calendar3>
                                     </b-col>
                                 </b-row>
                             </b-col>
@@ -39,7 +39,7 @@
                                         {{ deadlineFormat }}
                                     </b-col>
                                     <b-col>
-                                        <b-icon-calendar3></b-icon-calendar3>
+                                        <b-icon-calendar3 variant="secondary"></b-icon-calendar3>
                                     </b-col>
                                 </b-row>
                             </b-col>
@@ -62,7 +62,7 @@
             </b-row>
 
             <b-row class="my-5">
-                <b-col class="px-5 border rounded mx-5 my-3">
+                <b-col class="px-5 border rounded mx-5 my-3 shadow-sm">
                     <ul class="row list-unstyled">
                         <li v-for="item in projectDetall.techSet" :key="item.id">
                             <h5 class="mt-4 mr-4 text-center"><b-badge>{{ item }}</b-badge></h5>
