@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ProjectsPage from '../views/ProjectsPage.vue'
 
 Vue.use(VueRouter)
 
@@ -8,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'Projects',
-    component: ProjectsPage
+    component: () => import('../views/ProjectsPage')
   },
   {
     path: '/admin',
