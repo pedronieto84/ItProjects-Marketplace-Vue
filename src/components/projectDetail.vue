@@ -1,13 +1,13 @@
 <template>
 
-        <b-container class="border rounded" fluid>
+        <b-container class="border rounded mb-5" fluid>
             <b-row class="w-100">
-                <b-col class="text-left font-weight-bold px-5 py-4"><h3>{{projectDetall.title}}</h3></b-col>
-                <b-col class="text-right px-5 py-4">{{projectDetall.ownerId}}</b-col>
+                <b-col class="text-left font-weight-bold px-5 py-4"><h3>{{ projectDetall.title }}</h3></b-col>
+                <b-col class="text-right px-5 py-4">{{ projectDetall.ownerId }}</b-col>
             </b-row>
 
             <b-row>
-                <b-col class="text-justify text-wrap px-5 py-4 border rounded mx-5 my-4 bg-light">{{projectDetall.shortExplanation}}</b-col>
+                <b-col class="text-justify text-wrap px-5 py-4 border rounded mx-5 my-4 bg-light">{{ projectDetall.shortExplanation }}</b-col>
             </b-row>
 
             <b-row class="my-5">
@@ -17,10 +17,10 @@
                             <b-col class="text-left">
                                 Published
                                 <b-row>
-                                    <b-col>
-                                        {{ projectDetall.publishedDate }}
+                                    <b-col class="text-left">
+                                        {{ PublishedDateFormat }}
                                     </b-col>
-                                    <b-col>
+                                    <b-col class="text-left">
                                         <b-icon-calendar3></b-icon-calendar3>
                                     </b-col>
                                 </b-row>
@@ -36,7 +36,7 @@
                                 Deadline
                                 <b-row>
                                     <b-col>
-                                        {{ projectDetall.deadline }}
+                                        {{ deadlineFormat }}
                                     </b-col>
                                     <b-col>
                                         <b-icon-calendar3></b-icon-calendar3>
@@ -63,7 +63,6 @@
 
             <b-row class="my-5">
                 <b-col class="px-5 border rounded mx-5 my-3">
-                    <p>Techset</p>
                     <ul class="row list-unstyled">
                         <li v-for="item in projectDetall.techSet" :key="item.id">
                             <h5 class="mt-4 mr-4 text-center"><b-badge>{{ item }}</b-badge></h5>
@@ -89,11 +88,21 @@
                     </div>
                 </b-col>
             </b-row>
+
+            <b-row class="my-5">
+                <b-col class="text-right">
+                     <b-button variant="outline-secondary" size="sm" @click="anterior()"><b-icon-chevron-left></b-icon-chevron-left> Go back </b-button>
+                </b-col>
+            </b-row>
+
+
+
         </b-container>
 
 </template>
 
 <script>
+
 import axios from 'axios'
 import {mapGetters} from 'vuex'
 
@@ -101,20 +110,43 @@ export default {
 
     name:'projectDetail',
 
+    data(){
+        return{
+            projectId:this.$route.params.id, //id que ha d'arribar per url (es el id del projecte)
+            projectDetall:'',//response del axios call
+            item:'',
+        }
+    },
+
     computed:{
         ...mapGetters(['getUser']),
+
+        PublishedDate(){
+            return new Date (this.projectDetall.publishedDate);
+        },
+
+        PublishedDateFormat(){
+            return this.PublishedDate.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        },
+
+        deadline(){
+            return new Date (this.projectDetall.deadline);
+        },
+
+        deadlineFormat(){
+            return this.deadline.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        },
 
         userId(){
             return this.getUser.userId
         }
+
     },
 
-    data(){
-        return{
-            projectId:this.$route.params.id, //id que ha d'arribar per url (es el id del projecte)
-            projectDetall:'',
-            item:'',
-        }
+    methods:{
+        anterior(){
+        this.$router.go(-1)
+        },
     },
 
     mounted(){
