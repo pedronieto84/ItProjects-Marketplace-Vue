@@ -11,7 +11,7 @@
             </b-row>
 
             <b-row class="my-5">
-                <b-col cols="6" md="1" class="px-5">
+                <b-col class="px-5">
                     <div class="container">
                         <b-row>
                             <b-col class="text-left">
@@ -29,7 +29,7 @@
                     </div>
                 </b-col>
 
-                <b-col cols="6" md="1" class="px-5">
+                <b-col class="px-5">
                     <div class="container">
                         <b-row>
                             <b-col class="text-left">
@@ -47,7 +47,7 @@
                     </div>
                 </b-col>
 
-                <b-col cols="6" md="1" class="px-5">
+                <b-col class="px-5">
                     <div class="container">
                         <b-row>
                             <b-col class="text-left">
