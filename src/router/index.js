@@ -1,24 +1,78 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import ProjectsPage from "../views/ProjectsPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Projects",
+    component: ProjectsPage,
   },
   {
-    path: "/about",
-    name: "About",
+    path: "/admin",
+    name: "Admin",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/AdminPage.vue"),
+  },
+  {
+    path: "/crear-projecte",
+    name: "CreateProject",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      import(/* webpackChunkName: "about" */ "../views/CreateProjectPage.vue"),
   },
+  {
+    path: "/login",
+    name: "Login",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/LoginPage.vue"),
+  }, {
+    path: "/registre",
+    name: "Register",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/RegisterPage.vue"),
+  }, {
+    path: "/crear-compte",
+    name: "CreateAccount",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/RegisterPage.vue"),
+  }, {
+    path: "/el-meu-compte",
+    name: "MyAccount",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/MyAccountPage.vue"),
+  }, {
+    path: "/projecte-detall",
+    name: "ProjectDetail",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/ProjectDetailPage.vue"),
+  },
+  {
+    path: "/redirect-admin",
+    name: 'Redirect',
+    redirect: { name: 'Admin' }
+  }
 ];
 
 const router = new VueRouter({
