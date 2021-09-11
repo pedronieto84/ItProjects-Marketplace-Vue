@@ -16,7 +16,7 @@ export default {
     "Navbar-Component": Navbar
   },
    computed: {
-       
+
    },
 }
 </script>
