@@ -20,7 +20,7 @@
             router :to="{
               name:'ProjectDetail',
               params: {
-                projectId: project.projectId
+                id: project.projectId
               }
             }" variant="primary">Detail</b-button>
           </b-card>

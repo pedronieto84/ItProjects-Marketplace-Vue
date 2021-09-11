@@ -5,76 +5,85 @@
             <b-row class="m-1">
               <b-col sm="12">
                   <label>Published: </label>
-                  {{date}}
               </b-col>
             <b-col>
-                <b-form-datepicker v-model="value" :min="min" :max="max" locale="en"></b-form-datepicker>
+                <b-form-datepicker v-model="project2.publishedDate" :min="min" :max="max" locale="en"></b-form-datepicker>
             </b-col>
           </b-row>
-            <!--deadline-->
+            <!--deadliasdfasdfasdfne-->
             <b-row class="m-1">
             <b-col sm="12">
                 <label>Deadline: </label>
             </b-col>
             <b-col>
-                <b-form-datepicker v-model="publishData" :min="min" :max="max" locale="en"></b-form-datepicker>
+                <b-form-datepicker :min="project2.publishedDate" v-model="project2.deadline" locale="en"></b-form-datepicker>
             </b-col>
             </b-row>
             <!--price-->
-            <b-row class="mt-4">
-            <b-col>
             
-          <b-form-group :invalid-feedback="invalidFeedbackPrice">
-                <b-form-input 
-                id="priceId"
-                type="number" 
-                placeholder="Bid In Euros" 
-                v-model="projectPrice"
-                :state="statePrice"
-                @click="entrada($event)"></b-form-input>
+              <b-col sm="3 mt-5">
+                <b-form-group :invalid-feedback="invalidFeedbackPrice">
+                  <b-form-input 
+                    id="priceId"
+                    type="number" 
+                    min="1" max="5000"
+                    step="any"
+                    placeholder="Bid In Euros" 
+                    v-model="project2.projectPrice"
+                    :state="statePrice"
+                    @click="entrada($event)">
+                  </b-form-input>
                 </b-form-group>
-            </b-col>
-            </b-row>
+              </b-col>
+            
         </div>
         <div class="add-technology m-5">
               <b-row class="my-1">
-      <b-col sm="6" class="">
-        <label>Add technology needed / desired </label>
-      </b-col>
-      <b-col sm="5">
-        <b-form-input 
-        id="projectTechnologyId"
-        type="text" 
-        placeholder="technology"
-        :state="stateTechnology"
-        trim
-        v-model="technologyNeeded"
-        @keydown="entrada($event)"
-        @change="findTechnology"></b-form-input>
-      </b-col>
-
-
-      <!--drop down technologies-->
-  <b-dropdown text="technologies"  variant="primary" class="m-2">
-    <b-dropdown-item v-for="technology of filteredTechnologies" :key="technology.id">{{technology}}</b-dropdown-item>
-  </b-dropdown>
-      <b-col sm="1">
-        <b-button pill variant="info" @click="addTechnology">+</b-button>
-      </b-col>
+      <!--*** TECHNOLOGY NEEDED-->
+      <b-col sm="4"><p>Add technology needed</p></b-col>
+      <b-col sm="8">
+         <b-form-group label-for="tags-component-select">
+      <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
+      <b-form-tags
+        id="tags-component-select"
+        v-model="project2.value"
+        size="lg"
+        class="mb-2"
+        add-on-change
+        no-outer-focus
+      >
+        <template v-slot="{ tags, inputAttrs, inputHandlers, disabled, removeTag }">
+           <b-form-select
+            v-bind="inputAttrs"
+            v-on="inputHandlers"
+            :disabled="disabled || technologies.length === 0"
+            :options="technologies"
+          >
+            <template #first>
+              <!-- This is required to prevent bugs with Safari -->
+              <option disabled value="">Choose a technology...</option>
+            </template>
+          </b-form-select>
+          <ul v-if="tags.length > 0" class="list-inline d-inline-block mb-2">
+            <li v-for="tag in tags" :key="tag" class="list-inline-item">
+              <b-form-tag
+                @remove="removeTag(tag)"
+                :title="tag"
+                :disabled="disabled"
+                variant="info"
+              >{{ tag }}</b-form-tag>
+            </li>
+          </ul>
+        </template>
+      </b-form-tags>
+    </b-form-group>
+</b-col>
     </b-row>
-        </div>
-        <div class="tech-set border d-flex flex-wrap p-3 m-2">
-            <div class="technology d-flex align-items-center m-2 p-1 bg-danger rounded" v-for="technology in pickedTechnologies" :key="technology">
-                <p class="pr-3">{{technology}}</p>
-            <b-button pill variant="info" @click="deleteTechnology">-</b-button>
-            </div>
-         
-            
         </div>
         <div class="navigation">
             <div class="d-flex justify-content-between mt-3" >
-                <b-button pill variant="outline-danger" class="mb-5">Back</b-button>
-          <b-button pill variant="outline-danger" class="mb-5">Next</b-button>
+                <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
+          <b-button :disabled="disabledBtn" pill variant="outline-success" class="mb-5" @click="sendProjectData2" >Next</b-button>
         </div>
         </div>
   </b-container>
@@ -91,50 +100,55 @@ export default {
       const maxDate = new Date(today)
       maxDate.setMonth(maxDate.getMonth() + 6)
       return {
-        technologyNeeded:"",
+        project2:{
+          techSet:"",
+          projectPrice:"",
+          publishedDate:"",
+          deadline:"",
+          value:""
+        },
+        
         technologies:[],
-        pickedTechnologies:[],
-        projectPrice:0,
-        value:"",
+        projectPriceId:true,
+        projectTechnologyId:true,
         min: minDate,
         max: maxDate,
-        projectPriceId:true,
-        projectTechnologyId:true
-        
       }
      
   },
   computed:{
     stateTechnology() {
-      if (this.projectTechnologyId) {
+      if (this.project2.projectTechnologyId) {
         return null;
       }
-      return this.technologyNeeded.length > 0 && this.technologyNeeded.length <= 35;
+      return this.project2.techSet.length > 0 && this.project2.techSet.length <= 35;
     },
     statePrice() {
       if (this.projectPriceId) {
         return null;
       }
-      return this.projectPrice > 0 && this.projectPrice <= 5000;
+      return this.project2.projectPrice <= 500000;
     },
     filteredTechnologies() {
-      const matches = this.technologies.filter((matchy) => matchy.includes(this.technologyNeeded))
+      const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.techSet))
       return matches;
+    },
+    invalidFeedbackPrice(){
+      if(this.project2.projectPrice === ""){
+        return "Add some value..."
+      }else if(this.project2.projectPrice > 500000){
+        return "Less of 500.000"
+      }
+      return ""
+    },
+    disabledBtn(){
+      return this.project2.projectPrice >= 500000 
+      || this.project2.deadline === "" || this.project2.publishedDate === "" ||
+      this.project2.value.length === 0
     }
   },
   methods:{
-      addTechnology () {
-          if(this.technologyNeeded.length>0){
-            this.pickedTechnologies.push(this.technologyNeeded);
-            this.technologyNeeded="";
-          }
-      },
-      deleteTechnology(e) {
-            let techToDelete = e.target.previousSibling.textContent;
-            let deleteThis = this.technologies.indexOf(techToDelete);
-            this.technologies.splice(deleteThis,1);
-      },
-         entrada(event) {
+    entrada(event) {
        switch (event.target.id) {
           case "priceId":
           this.projectPriceId = false;
@@ -143,6 +157,9 @@ export default {
           this.projectTechnologyId = false;
           break;
       }
+    },
+    sendProjectData2 () {
+      this.$emit('sendProjectData2', this.project2);
     }
   },
    mounted () {
