@@ -9,7 +9,7 @@
     @changed="handleImages"/>
      
    <div>
-      <h4 class="text-left mb-5">Published files:</h4>
+      <h4 class="text-left my-5">Published files:</h4>
       <p>File name: </p></div>
       <div v-for="file in project3.filesArray" :key="file.id" 
       class="d-flex col-12 justify-content-between align-items-center">
@@ -18,7 +18,7 @@
       
     
      <div class="d-flex align-items-center justify-content-end">
-    <b-button variant="info">publish</b-button>
+    <b-button variant="info" @click="sendProjectData3">publish</b-button>
     </div>
     <div class="d-flex justify-content-start mt-3" >
            <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
@@ -36,8 +36,7 @@ import loadingUploading from "./loadingUploading.vue"
       return {
         project3:{
           filesArray: []
-        },
-        eliminateList: []
+        }
       }
     },
     components: {
@@ -45,11 +44,14 @@ import loadingUploading from "./loadingUploading.vue"
         loadingUploading
     },
     methods:{
-            handleImages(files){
-                console.log(files)
-                this.project3.filesArray = [...files]
-            }
-        }
+        handleImages(files){
+            console.log(files)
+            this.project3.filesArray = [...files];
+        },
+        sendProjectData3 () {
+          this.$emit('sendProjectData3', this.project3);
+    }
+    }
     
   }
 </script>

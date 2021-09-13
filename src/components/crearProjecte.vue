@@ -3,13 +3,12 @@
         <div class="btn-toolbar">
             <b-button variant="primary" class="border-upper-radius" @click="pageCounter=1">1</b-button>
             <b-button :disabled="disableBtn2" variant="primary" class="border-upper-radius"  @click="pageCounter=2">2</b-button>
-            <b-button variant="primary" class="border-upper-radius" @click="pageCounter=3">3</b-button>
-            <!-- <b-button :disabled="disableBtn3" variant="primary" class="border-upper-radius" @click="pageCounter=3">3</b-button> -->
+            <b-button :disabled="disableBtn3" variant="primary" class="border-upper-radius" :project="project" @click="pageCounter=3">3</b-button>
         </div>
         <div class="crear-projecte-container border p-5">
             <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-show="pageCounter===1"/>
             <createProjectPage2 v-on:sendProjectData2="updateProjectData2($event)" v-show="pageCounter===2" v-on:go-back="goBack2"/>
-            <createProjectPage3 v-show="pageCounter===3" v-on:go-back="goBack3"/>
+            <createProjectPage3 v-on:sendProjectData3="updateProjectData3($event)" v-show="pageCounter===3" v-on:go-back="goBack3"/>
         </div>
     </div>
 </template>
@@ -39,6 +38,10 @@ export default {
         updateProjectData2(project2){
             this.project={...this.project, ...project2}
             this.pageCounter=3
+       },
+       updateProjectData3(project3){
+            this.project={...this.project, ...project3}
+            console.log(this.project)
        },
        goBack2(){
            /// comentario 1
