@@ -59,7 +59,7 @@
                                 <b-row>
                                     <b-col v-if="projectDetall.bid" class="ml-1">{{ projectDetall.bid }}</b-col><!--Si hay bid-->
                                     <b-col v-else class="ml-1">0</b-col> <!--Si no hay bid aparece 0€-->
-                                    
+
                                     <b-col class="text-secondary">€</b-col>
                                 </b-row>
                             </b-col>
