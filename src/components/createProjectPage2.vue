@@ -105,7 +105,7 @@ export default {
           projectPrice:"",
           publishedDate:"",
           deadline:"",
-          value:""
+          value:[]
         },
         
         technologies:[],
