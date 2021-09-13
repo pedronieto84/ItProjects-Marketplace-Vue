@@ -56,8 +56,11 @@
                         <b-row>
                             <b-col class="text-left">
                                 Bid in Euros
-                                <b-row class="ml-1">
-                                {{}}<!--falta-->
+                                <b-row>
+                                    <b-col v-if="projectDetall.bid" class="ml-1">{{ projectDetall.bid }}</b-col><!--Si hay bid-->
+                                    <b-col v-else class="ml-1">0</b-col> <!--Si no hay bid aparece 0€-->
+                                    
+                                    <b-col class="text-secondary">€</b-col>
                                 </b-row>
                             </b-col>
                         </b-row>
@@ -77,7 +80,7 @@
                         <b-col class="px-5 border rounded mx-5 my-3 shadow-sm">
                             <ul class="row list-unstyled">
                                 <li v-for="item in projectDetall.techSet" :key="item.id">
-                                    <h5 class="mt-4 mr-4 text-center"><b-badge>{{ item }}</b-badge></h5>
+                                    <h5 class="mt-4 mr-4 text-center"><b-badge variant="secondary">{{ item }}</b-badge></h5>
                                 </li>
                             </ul>
                         </b-col>
@@ -87,21 +90,22 @@
 
             <!--More Info-->
             <b-row class="my-5">
-                <b-col>
-                    <div class="container">
-                        <b-row>
-                            <b-col class="text-left px-5">
-                            Files with more info
-                                <b-row class="text-left mx-1 my-2">
-                                    <b-link href="#" target="_blank" class="text-decoration-none">Mockups</b-link> <!--falta link-->
-                                </b-row>
-                                <b-row class="text-left text-dark mx-1 my-2">
-                                    <b-link href="#" target="_blank" class="text-decoration-none">Database Design</b-link> <!--falta link-->
-                                </b-row>
-                            </b-col>
-                        </b-row>
-                    </div>
-                </b-col>
+                <div class="container">
+                    <b-row class="pl-5 text-left">
+                        <b-col>
+                        Download files with more info:
+                        </b-col>
+                    </b-row>
+                    <b-row class="pl-5 text-left mt-1">
+                        <b-col>
+                            <ul class="list-unstyled">
+                                <li v-for="item in projectDetall.filesArray" :key="item.id">
+                                    <a :href="item" target="_blank" download style="text-decoration: none" class="ml-2">File <b-icon-download></b-icon-download></a> <!--Files no tienen nombre-->
+                                </li>
+                            </ul>
+                        </b-col>
+                    </b-row>
+                </div>
             </b-row>
 
             <!--Button Back-->
