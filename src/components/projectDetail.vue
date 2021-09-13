@@ -99,8 +99,10 @@
                     <b-row class="pl-5 text-left mt-1">
                         <b-col>
                             <ul class="list-unstyled">
-                                <li v-for="item in projectDetall.filesArray" :key="item.id">
-                                    <a :href="item" target="_blank" download style="text-decoration: none" class="ml-2">File <b-icon-download></b-icon-download></a> <!--Files no tienen nombre-->
+                                <li v-for="products in projectDetall.filesArray" :key="products.id">
+                                    <a :href="products.url" target="_blank" download style="text-decoration: none" class="ml-2">
+                                        {{products.name}}
+                                    <b-icon-download></b-icon-download></a> <!--Files no tienen nombre-->
                                 </li>
                             </ul>
                         </b-col>
