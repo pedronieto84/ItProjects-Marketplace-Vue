@@ -7,19 +7,14 @@
     maxError="Max files exceed"
     uploadMsg="upload product images" 
     @changed="handleImages"/>
-    <!-- <b-form-file
-      v-model="file1"
-      :state="Boolean(file1)"
-      placeholder="Drag and drop files here..."
-      class="pt-5 pb-5 mt-5 h-50 text-left"
-    ></b-form-file> -->
-    
+     
    <div>
       <h4 class="text-left mb-5">Published files:</h4>
       <p>File name: </p></div>
-      <div v-for="file in project3.filesArray" :key="file.id" class="d-flex col-12">
-        {{file.name}} <loadingUploading class="col-10"/>
-        </div>
+      <div v-for="file in project3.filesArray" :key="file.id" 
+      class="d-flex col-12 justify-content-between align-items-center">
+        {{file.name}} <loadingUploading class="col-8"/>
+      </div>
       
     
      <div class="d-flex align-items-center justify-content-end">
@@ -41,7 +36,8 @@ import loadingUploading from "./loadingUploading.vue"
       return {
         project3:{
           filesArray: []
-        }
+        },
+        eliminateList: []
       }
     },
     components: {
@@ -51,7 +47,7 @@ import loadingUploading from "./loadingUploading.vue"
     methods:{
             handleImages(files){
                 console.log(files)
-                this.project3.filesArray=[...files]
+                this.project3.filesArray = [...files]
             }
         }
     
