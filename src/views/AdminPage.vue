@@ -285,10 +285,10 @@ export default {
       SET_OVERLAY: 'SET_OVERLAY',
     }),
     ...mapActions({
-      getUsers : 'getUsers',
+      // getUsers : 'getUsers',
       updateUser : 'updateUser',
       deleteUser : 'deleteUser',
-      getProjects : 'getProjects',
+      // getProjects : 'getProjects',
       updateProject : 'updateProject',
       deleteProject : 'deleteProject'
     }),

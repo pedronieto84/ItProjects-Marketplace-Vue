@@ -13,6 +13,7 @@
           label-for="userName"
           :invalid-feedback="invalidFeedbackName"
           :state="stateName"
+          v-if="!editNombre"
         >
           <b-form-input
             id="userName"
@@ -21,6 +22,27 @@
             trim
             :disabled="!editMode"
           ></b-form-input>
+
+          <b-button size="sm" variant="info" @click="editNombre = true">Edit<i class="fas fa-pencil-alt"></i></b-button>
+        </b-form-group>
+
+        <b-form-group
+          class="text-left"
+          label="Nom"
+          label-for="userName"
+          :invalid-feedback="invalidFeedbackName"
+          :state="stateName"
+          v-if="editNombre"
+        >
+          <b-form-input
+            id="userName"
+            v-model="name"
+            :state="stateName"
+            trim
+            :disabled="editMode"
+          ></b-form-input>
+
+          <b-button size="sm" variant="success" @click="updateUser()">Guardar<i class="fas fa-pencil-alt"></i></b-button>
         </b-form-group>
 
         <b-form-group
@@ -29,6 +51,7 @@
           label-for="email"
           :invalid-feedback="invalidFeedbackEmail"
           :state="stateEmail"
+          v-if="!editEmail"
         >
           <b-form-input
             id="email"
@@ -37,6 +60,27 @@
             trim
             :disabled="!editMode"
           ></b-form-input>
+
+          <b-button size="sm" variant="info" @click="editEmail = true">Edit<i class="fas fa-pencil-alt"></i></b-button>
+        </b-form-group>
+
+        <b-form-group
+          class="text-left"
+          label="Email"
+          label-for="email"
+          :invalid-feedback="invalidFeedbackEmail"
+          :state="stateEmail"
+          v-if="editEmail"
+        >
+          <b-form-input
+            id="email"
+            v-model="email"
+            :state="stateEmail"
+            trim
+            :disabled="editMode"
+          ></b-form-input>
+
+          <b-button size="sm" variant="success" @click="updateUser()">Guardar<i class="fas fa-pencil-alt"></i></b-button>
         </b-form-group>
 
         <b-form-group
@@ -138,6 +182,8 @@ export default {
       editMode: false,
       disableSend: true,
       sending: false,
+      editNombre: false,
+      editEmail: false
     };
   },
 
@@ -245,6 +291,8 @@ export default {
           aixo.sending = false;
           console.log(error);
         });
+        this.editNombre = false
+        this.editEmail = false
     },
 
     desconnexio() {
