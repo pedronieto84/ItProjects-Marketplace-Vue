@@ -16,6 +16,11 @@ export default new Vuex.Store({
       typeOfInstitution: '',
       verified: false
     },
+    name: '',
+    email: '',
+    title: '',
+    state: '',
+    shortExplanation: '',
     // isAdmin: true, // dejado para probar Seokju
     // allUsers: [
     //   // dejado para probar Seokju
@@ -41,8 +46,7 @@ export default new Vuex.Store({
     // ifLoginError: false // el codigo probado para Seokju
     users: null,
     projects: null,
-    overlay: false,
-    overlay2: false
+    overlay: false
   },
   getters: {
     getBaseURL(state) {
@@ -90,9 +94,22 @@ export default new Vuex.Store({
     SET_OVERLAY(state, payload) {
       state.overlay = payload
     },
-    SET_OVERLAY2(state, payload) {
-      state.overlay2 = payload
+    SET_NAME(state, payload) {
+      state.name = payload
     },
+    SET_EMAIL(state, payload) {
+      state.email = payload
+    },
+    SET_TITLE(state, payload) {
+      state.title = payload
+    },
+    SET_SHORTEXPLANATION(state, payload) {
+      state.shortExplanation = payload
+    },
+    SET_STATE(state, payload) {
+      state.state = payload
+    },
+    //////////////// Seokju
     // DELETE_USERS(state, index) { // he dejado Seokju para probar
     //   state.users.splice(index, 1);
     //   console.log('')
@@ -170,65 +187,56 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getUsers({ commit }) {
-      const users = await axios.get('https://us-central1-asamblea-27a8d.cloudfunctions.net/getUsers')
+    async getUsers({ state, commit }) {
+      const users = await axios.get(state.baseURL + 'getUsers')
+      // console.log(users)
       commit('SET_USERS', users.data)
       commit('SET_OVERLAY', false)
-      // .then(res => {
-      //   console.log(res.data)
-      //   commit('SET_USERS', res.data)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      // .then(() => {
-      // })
+    },
+    async updateUser({ state, commit, dispatch }, userId) {
+      const name = state.name
+      const email = state.email
+      await axios.post(state.baseURL + 'updateUser', { userId, name, email })
+      commit('SET_NAME', '')
+      commit('SET_EMAIL', '')
+      // commit('SET_USERS', user.data)
+      commit('SET_OVERLAY', false)
+      dispatch('getUsers')
     },
     async deleteUser({ state, commit, dispatch }, userId) {
       await axios.delete(state.baseURL + 'deleteUser', { data: { userId } })
-      dispatch('getUsers')
       commit('SET_OVERLAY', false)
-      // .then(res => {
-      //   console.log(res)
-      //   console.log(user)
-      //   dispatch('getUsers')
-      // })
-      // .catch(err => console.log(err))
-      // console.log(users)
-
-      // console.log(users)
-      // dispatch('getUsers')
-      // console.log(users)
-      // .then(res => {
-      //   console.log(res.data)
-      //   commit('SET_USERS', res.data)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      // .then(() => {
-      // })
+      dispatch('getUsers')
+    },
+    async getProjects({ state, commit }) {
+      const projects = await axios.get(state.baseURL + 'getProjects')
+      commit('SET_PROJECTS', projects.data)
+      commit('SET_OVERLAY', false)
+    },
+    async updateProject({ state, commit, dispatch }, projectId) {
+      const title = state.title
+      const shortExplanation = state.shortExplanation
+      const pState = state.state
+      await axios.post(state.baseURL + 'updateProject', { projectId, title, shortExplanation, pState })
+      commit('SET_TITLE', '')
+      commit('SET_SHORTEXPLANATION', '')
+      commit('SET_STATE', '')
+      commit('SET_OVERLAY', false)
+      dispatch('getProjects')
+    },
+    async deleteProject({ state, commit, dispatch }, projectId) {
+      await axios.delete(state.baseURL + 'deleteProject', { projectId })
+      console.log(projectId)
+      commit('SET_OVERLAY', false)
+      dispatch('getProjects')
     },
     logout({ commit }) {
       sessionStorage.removeItem('itAcademyProjects-storedUser')
       commit('setUser', ['logout', null])
-    },
-    async getProjects({ commit }) {
-      const projects = await axios.get('https://us-central1-asamblea-27a8d.cloudfunctions.net/getProjects')
-      commit('SET_PROJECTS', projects.data)
-      commit('SET_OVERLAY2', false)
-      console.log(projects.data)
-      // .then(res => {
-      //   console.log(res.data)
-      //   commit('SET_USERS', res.data)
-      // })
-      // .catch(err => {
-      //   console.log(err)
-      // })
-      // .then(() => {
-      // })
     }
-    // login({ state, commit }, loginObj) { // el codigo probado para Seokju
+
+    //////////////// Seokju
+    // login({ state, commit }, loginObj) {
     //   let selectedUser = null;
     //   state.allUsers.forEach(user => {
     //     if (user.email === loginObj.email) selectedUser = user
