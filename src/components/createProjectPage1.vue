@@ -46,13 +46,14 @@
     </div>
 </template>
 <script>
+import {mapGetters} from 'vuex'
 export default {
   data () {
       return {
         project : {
           title: "",
           shortExplanation: "",
-          ownerId: ""          
+          ownerId: ""         
         },
         projectTitle: true,
         projectDescription:true
@@ -61,6 +62,7 @@ export default {
   },
   methods:{
     sendProjectData1 () {
+      this.project.ownerId = this.getUser.userId 
       this.$emit('sendProjectData1', this.project);
     },
     entrada(event) {
@@ -102,7 +104,10 @@ export default {
     },
     disabledBtn(){
       return this.project.shortExplanation.length === 0 || this.project.title.length === 0
-    }
+    },
+    ...mapGetters({
+        getUser: 'getUser'
+       })
 
   }
 }

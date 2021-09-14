@@ -17,6 +17,7 @@
 import createProjectPage1 from '../components/createProjectPage1.vue'
 import createProjectPage2 from '../components/createProjectPage2.vue'
 import createProjectPage3 from '../components/createProjectPage3.vue'
+import {mapGetters} from 'vuex'
 export default {
     data(){
         return {
@@ -57,7 +58,10 @@ export default {
        },
        disableBtn3(){
            return this.pageCounter != 3
-       }
+       },
+       ...mapGetters({
+        getUser: 'getUser'
+       })
    }
 }
 </script>
