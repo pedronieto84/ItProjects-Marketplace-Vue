@@ -3,7 +3,8 @@
         <div class="btn-toolbar">
             <b-button variant="primary" class="border-upper-radius" @click="pageCounter=1">1</b-button>
             <b-button :disabled="disableBtn2" variant="primary" class="border-upper-radius"  @click="pageCounter=2">2</b-button>
-            <b-button :disabled="disableBtn3" variant="primary" class="border-upper-radius" :project="project" @click="pageCounter=3">3</b-button>
+            <b-button variant="primary" class="border-upper-radius" :project="project" @click="pageCounter=3">3</b-button>
+            <!-- <b-button :disabled="disableBtn3" variant="primary" class="border-upper-radius" :project="project" @click="pageCounter=3">3</b-button> -->
         </div>
         <div class="crear-projecte-container border p-5">
             <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-show="pageCounter===1"/>

@@ -11,14 +11,16 @@
    <div>
       <h4 class="text-left my-5">Published files:</h4>
       <p>File name: </p></div>
-      <div v-for="file in project3.filesArray" :key="file.id" 
+      <div v-for="(file, index) in project3.filesArray" :key="file.id" 
       class="d-flex col-12 justify-content-between align-items-center">
         {{file.name}} <loadingUploading class="col-8"/>
+      <!-- <b-button pill variant="primary" @click="proof(index)">X</b-button> -->
+      <b-button pill variant="primary" @click="delteDoc(index)">X</b-button>
       </div>
       
     
      <div class="d-flex align-items-center justify-content-end">
-    <b-button variant="info" @click="sendProjectData3">publish</b-button>
+    <b-button variant="info" @click="sendProjectData3">PUBLISH</b-button>
     </div>
     <div class="d-flex justify-content-start mt-3" >
            <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
@@ -45,12 +47,29 @@ import loadingUploading from "./loadingUploading.vue"
     },
     methods:{
         handleImages(files){
-            console.log(files)
-            this.project3.filesArray = [...files];
+                      // console.log(files)
+            // const arrayFilteringFiles = files.filter((item)=>{
+            //   const fileName = item.name;
+            //   const wordsArray = fileName.split('.');
+            //   const fileType = wordsArray[wordsArray.length-1]
+            //   const lowerCasedFileType = fileType.toLowerCase();
+            //   if( (lowerCasedFileType === 'jpg' ) || lowerCasedFileType === 'pdf' || lowerCasedFileType === 'png'){
+            //     return true
+            //   }else {
+            //     return false
+            //   }
+            // })
+            // console.log('AFFAY FILTRADO', arrayFilteringFiles)
+            if(this.project3.filesArray.name != files[files.length-1].name){
+            this.project3.filesArray.push(files[files.length-1])
+            }
         },
         sendProjectData3 () {
           this.$emit('sendProjectData3', this.project3);
-    }
+        },
+        delteDoc(index){  
+          this.project3.filesArray.splice(index, 1);          
+        }
     }
     
   }
