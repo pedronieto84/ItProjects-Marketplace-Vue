@@ -134,7 +134,7 @@ export default new Vuex.Store({
           state.user.typeOfInstitution = value
           break
         case 'projectsPublished':
-          state.user.state.projectsPublished.push(value)
+          state.user.projectsPublished = value
           break
         case 'object':
           // Change the whole user object

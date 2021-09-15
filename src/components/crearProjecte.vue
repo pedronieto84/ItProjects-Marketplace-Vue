@@ -8,7 +8,7 @@
         <div class="crear-projecte-container border p-5">
             <createProjectPage1 v-on:sendProjectData1="updateProjectData1($event)" v-show="pageCounter===1"/>
             <createProjectPage2 v-on:sendProjectData2="updateProjectData2($event)" v-show="pageCounter===2" v-on:go-back="goBack2"/>
-            <createProjectPage3 v-on:sendProjectData3="updateProjectData3($event)" v-show="pageCounter===3" v-on:go-back="goBack3"/>
+            <createProjectPage3 v-on:sendProjectData3="confirmProjectData($event)" v-show="pageCounter===3" v-on:go-back="goBack3"/>
         </div>
     </div>
 </template>
@@ -44,7 +44,7 @@ export default {
             this.pageCounter=3
        },
     //    Here there is creation of a new project
-       updateProjectData3(project3){
+       confirmProjectData(project3){
         this.project={...this.project, ...project3}
         console.log(JSON.stringify(this.project))
         const aixo = this;
@@ -68,11 +68,11 @@ export default {
                 setTimeout(() => {
                 let project = response.data;
                 aixo.$store.commit("setUser", ["projectsPublished", project]);
-                aixo.$router.push("/crear-projecte");
+                aixo.$router.push("/");
 
                 }, 3000);
                 } else {
-                    aixo.$bvToast.toast("Errada en el procés d'alta d'usuari", {
+                    aixo.$bvToast.toast("Error, the project is not save", {
                     variant: "warning",
                     toaster: "b-toaster-top-center",
                     solid: true,

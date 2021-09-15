@@ -3,8 +3,6 @@
   <div>
     <h4 class="text-left mb-2 mt-5">Drag and drop files (pdf, png, jpg)</h4>
     <UploadImages
-    :max="5"
-    maxError="Max files exceed"
     uploadMsg="upload product images" 
     @changed="handleImages"/>
      
@@ -14,7 +12,6 @@
       <div v-for="(file, index) in project3.filesArray" :key="file.id" 
       class="d-flex col-12 justify-content-between align-items-center">
         {{file.name}} <loadingUploading class="col-8"/>
-      <!-- <b-button pill variant="primary" @click="proof(index)">X</b-button> -->
       <b-button pill variant="primary" @click="deleteDoc(index)">X</b-button>
     </div>
       
@@ -45,22 +42,11 @@ import loadingUploading from "./loadingUploading.vue"
     },
     methods:{
         handleImages(files){
-                      // console.log(files)
-            // const arrayFilteringFiles = files.filter((item)=>{
-            //   const fileName = item.name;
-            //   const wordsArray = fileName.split('.');
-            //   const fileType = wordsArray[wordsArray.length-1]
-            //   const lowerCasedFileType = fileType.toLowerCase();
-            //   if( (lowerCasedFileType === 'jpg' ) || lowerCasedFileType === 'pdf' || lowerCasedFileType === 'png'){
-            //     return true
-            //   }else {
-            //     return false
-            //   }
-            // })
-            // console.log('AFFAY FILTRADO', arrayFilteringFiles)
-            if(this.project3.filesArray.name != files[files.length-1].name){
-            this.project3.filesArray.push(files[files.length-1])
-            }
+          // Files is an array with all the uploaded documents, also with the deleted files with deleteDoc()
+          // console.log(files)
+          if(this.project3.filesArray.name != files[files.length-1].name){
+          this.project3.filesArray.push(files[files.length-1])
+          }
         },
         sendProjectData3 () {
           this.$emit('sendProjectData3', this.project3);
