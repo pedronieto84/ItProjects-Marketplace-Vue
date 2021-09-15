@@ -15,16 +15,14 @@
       class="d-flex col-12 justify-content-between align-items-center">
         {{file.name}} <loadingUploading class="col-8"/>
       <!-- <b-button pill variant="primary" @click="proof(index)">X</b-button> -->
-      <b-button pill variant="primary" @click="delteDoc(index)">X</b-button>
-      </div>
+      <b-button pill variant="primary" @click="deleteDoc(index)">X</b-button>
+    </div>
       
     
-     <div class="d-flex align-items-center justify-content-end">
-    <b-button variant="info" @click="sendProjectData3">PUBLISH</b-button>
+    <div class="d-flex align-items-center justify-content-between">
+      <b-button pill variant="outline-danger" @click="$emit('go-back')">Back</b-button>
+      <b-button variant="info" :disabled="disabledBtn" @click="sendProjectData3">PUBLISH</b-button>
     </div>
-    <div class="d-flex justify-content-start mt-3" >
-           <b-button pill variant="outline-danger" class="mb-5" @click="$emit('go-back')">Back</b-button>
-        </div>
     
   </div>
   </b-container>
@@ -67,10 +65,15 @@ import loadingUploading from "./loadingUploading.vue"
         sendProjectData3 () {
           this.$emit('sendProjectData3', this.project3);
         },
-        delteDoc(index){  
+        deleteDoc(index){  
           this.project3.filesArray.splice(index, 1);          
         }
+    },
+  computed:{
+    disabledBtn(){
+      return this.project3.filesArray.length === 0
     }
+  }
     
   }
 </script>
