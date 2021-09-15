@@ -21,7 +21,8 @@ export default new Vuex.Store({
     title: '',
     state: '',
     shortExplanation: '',
-    // isAdmin: true, // dejado para probar Seokju
+    /////////////////// Seokju
+    // isAdmin: true,
     // allUsers: [
     //   // dejado para probar Seokju
     //   { user_id: 1, name: 'alberto', content: 'hola1' },
@@ -42,17 +43,17 @@ export default new Vuex.Store({
     //   { user_id: 4, name: 'david', content: 'hola4' },
     //   { user_id: 5, name: 'elisa', content: 'hola5' }
     // ],
-    // isLogin: false, // el codigo probado para Seokju
-    // ifLoginError: false // el codigo probado para Seokju
+    // isLogin: false,
+    // ifLoginError: false
     users: null,
     projects: null,
     overlay: false
   },
   getters: {
     getBaseURL(state) {
-      // he dejado Seokju para probar
       return state.baseURL
     },
+    /////////////////// Seokju
     // allUsers: (state) => {
     //   // he dejado Seokju para probar
     //   return state.allUsers

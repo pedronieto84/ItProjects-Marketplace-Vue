@@ -230,7 +230,7 @@ export default {
       }
     },
 
-    updateUser() {
+    async updateUser() {
       const aixo = this;
       const baseURL = this.$store.getters.getBaseURL;
       const dades = {
@@ -247,7 +247,7 @@ export default {
         delete dades.password;
       }
 
-      axios({
+      await axios({
         method: "post",
         url: baseURL + "updateUser",
         data: dades,
