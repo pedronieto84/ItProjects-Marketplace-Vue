@@ -214,11 +214,12 @@ export default new Vuex.Store({
       commit('SET_PROJECTS', projects.data)
       commit('SET_OVERLAY', false)
     },
-    async updateProject({ state, commit, dispatch }, projectId) {
-      const title = state.title
-      const shortExplanation = state.shortExplanation
-      const pState = state.state
-      await axios.post(state.baseURL + 'updateProject', { projectId, title, shortExplanation, pState })
+    async updateProject({ commit, dispatch }, project) {
+      const projectId = project.projectId
+      const title = project.title
+      const shortExplanation = project.shortExplanation
+      const state = project.state
+      await axios.post('https://us-central1-asamblea-27a8d.cloudfunctions.net/updateProject', { projectId, title, shortExplanation, state })
       commit('SET_TITLE', '')
       commit('SET_SHORTEXPLANATION', '')
       commit('SET_STATE', '')
