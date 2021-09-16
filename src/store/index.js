@@ -151,6 +151,9 @@ export default new Vuex.Store({
         case 'typeOfInstitution':
           state.user.typeOfInstitution = value
           break
+        case 'projectsPublished':
+          state.user.projectsPublished = value
+          break
         case 'object':
           // Change the whole user object
           state.user.userId = value.userId
@@ -246,6 +249,5 @@ export default new Vuex.Store({
     //     ? commit('loginError')
     //     : commit('loginSuccess')
     // }
-  },
-  modules: {}
+  }
 })

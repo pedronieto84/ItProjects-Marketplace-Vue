@@ -46,7 +46,7 @@
       <!-- Prop `add-on-change` is needed to enable adding tags vie the `change` event -->
       <b-form-tags
         id="tags-component-select"
-        v-model="project2.value"
+        v-model="project2.techSet"
         size="lg"
         class="mb-2"
         add-on-change
@@ -101,11 +101,10 @@ export default {
       maxDate.setMonth(maxDate.getMonth() + 6)
       return {
         project2:{
-          techSet:"",
+          techSet:[],
           projectPrice:"",
           publishedDate:"",
-          deadline:"",
-          value:""
+          deadline:""
         },
         
         technologies:[],
@@ -144,7 +143,7 @@ export default {
     disabledBtn(){
       return this.project2.projectPrice >= 500000 
       || this.project2.deadline === "" || this.project2.publishedDate === "" ||
-      this.project2.value.length === 0
+      this.project2.techSet.length === 0
     }
   },
   methods:{
