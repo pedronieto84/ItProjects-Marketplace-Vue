@@ -13,9 +13,16 @@
           >
             <b-card-text>
               {{ project.title }}
+              {{ project.projectId }}
             </b-card-text>
 
-            <b-button href="#" variant="primary">Detail</b-button>
+            <b-button
+            router :to="{
+              name:'ProjectDetail',
+              params: {
+                id: project.projectId
+              }
+            }" variant="primary">Detail</b-button>
           </b-card>
         </b-col>
       </b-row>

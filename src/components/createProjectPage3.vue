@@ -2,13 +2,16 @@
 <b-container fluid>
   <div>
     <h4 class="text-left mb-2 mt-5">Drag and drop files (pdf, png, jpg)</h4>
+
     <UploadImages
     uploadMsg="upload product images" 
     @changed="handleImages"/>
      
+
    <div>
       <h4 class="text-left my-5">Published files:</h4>
       <p>File name: </p></div>
+
       <div v-for="(file, index) in project3.filesArray" :key="file.id" 
       class="d-flex col-12 justify-content-between align-items-center">
         {{file.name}} <loadingUploading class="col-8"/>
@@ -21,6 +24,7 @@
       <b-button variant="info" :disabled="disabledBtn" @click="sendProjectData3">PUBLISH</b-button>
     </div>
     
+
   </div>
   </b-container>
 </template>
@@ -29,7 +33,7 @@
 import UploadImages from "vue-upload-drop-images"
 import loadingUploading from "./loadingUploading.vue"
   export default {
-    data() {  
+    data() {
       return {
         project3:{
           filesArray: []
