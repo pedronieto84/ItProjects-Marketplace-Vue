@@ -1,23 +1,21 @@
 <template>
   <div id="app">
     <div id="nav">
-     <Navbar-Component></Navbar-Component>
+      <Navbar-Component></Navbar-Component>
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
-// hola mundo
 import Navbar from './components/navbarComp.vue'
 
 export default {
   components:{
     "Navbar-Component": Navbar
   },
-   computed: {
-       
-   },
+  computed: {
+  },
 }
 </script>
 
