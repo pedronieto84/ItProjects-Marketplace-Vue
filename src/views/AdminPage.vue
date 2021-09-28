@@ -13,16 +13,23 @@
           </b-input-group-append>
         </b-input-group>
         <b-overlay :show="getOverlay" rounded="sm">
-          <b-table striped bordered :items="getUsers" :per-page="perPage" :current-page="currentPage" :fields="fields" :sort-by.sync="sortBy" :filter="filter"
+          <b-table
+            striped
+            bordered
+            :items="getUsers"
+            :per-page="perPage"
+            :current-page="currentPage"
+            :fields="fields"
+            :sort-by.sync="sortBy"
+            :filter="filter"
           >
-          <template #cell(show_details)="row">
-            <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-              {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
-            </b-button>
-          </template>
+            <template #cell(show_details)="row">
+              <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+                {{ row.detailsShowing ? "Hide" : "Show" }} Details
+              </b-button>
+            </template>
 
             <template #row-details="row">
-
               <b-card v-if="!editUsuario">
                 <b-row class="mb-2">
                   <b-col sm="3" class="text-sm-right"><b>Name:</b></b-col>
@@ -34,17 +41,32 @@
                   <b-col>{{ row.item.email }}</b-col>
                 </b-row>
 
-                  <b-button size="sm" variant="secondary" @click="row.toggleDetails">Hide Details</b-button>
+                <b-button
+                  size="sm"
+                  variant="secondary"
+                  @click="row.toggleDetails"
+                  >Hide Details</b-button
+                >
 
-                  <b-button size="sm" class="m-3" variant="primary"  @click="editUsuario = true">Edit <i class="fas fa-pencil-alt"></i></b-button>
+                <b-button
+                  size="sm"
+                  class="m-3"
+                  variant="primary"
+                  @click="editUsuario = true"
+                  >Edit <i class="fas fa-pencil-alt"></i
+                ></b-button>
 
-                  <b-button size="sm" variant="danger" @click="deleteUser(row.item.userId)">Delete <i class="fas fa-trash-alt"></i></b-button>
+                <b-button
+                  size="sm"
+                  variant="danger"
+                  @click="deleteUser(row.item.userId)"
+                  >Delete <i class="fas fa-trash-alt"></i
+                ></b-button>
               </b-card>
 
               <b-card v-if="editUsuario">
-
-              <!-- Seokju -->
-              <!-- <b-row class="mb-2">
+                <!-- Seokju -->
+                <!-- <b-row class="mb-2">
                 <b-col sm="3" class="text-sm-right"><b>Name:</b></b-col>
                 <b-col>{{row.item.name}}</b-col>
               </b-row>
@@ -55,24 +77,32 @@
               </b-row> -->
                 <b-input-group style="width: 80%" class="mx-auto m-2">
                   <template #prepend>
-                    <b-input-group-text >Name:</b-input-group-text>
+                    <b-input-group-text>Name:</b-input-group-text>
                   </template>
                   <b-form-input v-model="row.item.name"></b-form-input>
                 </b-input-group>
                 <b-input-group style="width: 80%" class="mx-auto">
                   <template #prepend>
-                    <b-input-group-text >Email:</b-input-group-text>
+                    <b-input-group-text>Email:</b-input-group-text>
                   </template>
                   <b-form-input v-model="row.item.email"></b-form-input>
                 </b-input-group>
 
-                <b-button size="sm" class="m-3" variant="success"  @click="updateUser(row.item.userId, row.item.name, row.item.email)">Guardar <i class="fas fa-pencil-alt"></i></b-button>
+                <b-button
+                  size="sm"
+                  class="m-3"
+                  variant="success"
+                  @click="
+                    updateUser(row.item.userId, row.item.name, row.item.email)
+                  "
+                  >Guardar <i class="fas fa-pencil-alt"></i
+                ></b-button>
 
-                <b-button size="sm" variant="info" @click="editUsuario = false">Cerrar <i class="fas fa-trash-alt"></i></b-button>
-
+                <b-button size="sm" variant="info" @click="editUsuario = false"
+                  >Cerrar <i class="fas fa-trash-alt"></i
+                ></b-button>
               </b-card>
             </template>
-
           </b-table>
         </b-overlay>
 
@@ -86,9 +116,7 @@
       </b-tab>
 
       <b-tab title="PROJECTS">
-
         <stateSelectComponent></stateSelectComponent>
-
       </b-tab>
     </b-tabs>
   </div>
@@ -96,9 +124,9 @@
 
 <script>
 // @ is an alias to /src
-import stateSelectComponent from '@/components/stateSelectComponent.vue'
-import store from '@/store'
-import {mapGetters, mapMutations, mapActions} from 'vuex'
+import stateSelectComponent from "@/components/stateSelectComponent.vue";
+import store from "@/store";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "Admin",
@@ -111,37 +139,37 @@ export default {
     return {
       currentPage: 1,
       perPage: 10,
-      sortBy:'name',
+      sortBy: "name",
       filter: null,
       spinner: null,
       /////////////////// Seokju
       // fields: ['name', 'content'] // probar Seokju
       // items: store.getters.getUsers,
       fields: [
-        { key: 'name', label: 'NOMBRE', sortable: true},
-        { key:'email', label: 'EMAIL', sortable: true },
-        { key: 'userId', label: 'USER_ID', sortable: true },
-        { key: 'show_details', label: 'ACTIONS' }
+        { key: "name", label: "NOMBRE", sortable: true },
+        { key: "email", label: "EMAIL", sortable: true },
+        { key: "userId", label: "USER_ID", sortable: true },
+        { key: "show_details", label: "ACTIONS" },
       ],
       currentPage2: 1,
       perPage2: 10,
-      sortBy2:'title',
+      sortBy2: "title",
       filter2: null,
       spinner2: null,
       fields2: [
-        { key: 'title', label: 'TITLE', sortable: true},
-        { key: 'shortExplanation', label: 'SHORT_EXPLANATION', sortable: true },
-        { key:'state', label: 'STATE', sortable: true },
-        { key: 'show_details', label: 'ACTIONS' }
+        { key: "title", label: "TITLE", sortable: true },
+        { key: "shortExplanation", label: "SHORT_EXPLANATION", sortable: true },
+        { key: "state", label: "STATE", sortable: true },
+        { key: "show_details", label: "ACTIONS" },
       ],
       editUsuario: false,
-      editProject: false
-    }
+      editProject: false,
+    };
   },
-  created(){
+  created() {
     // this.getUsers
-    store.dispatch('getUsers')
-    this.SET_OVERLAY(true)
+    store.dispatch("getUsers");
+    this.SET_OVERLAY(true);
     // store.dispatch('getProjects')
 
     /////////////////// Seokju
@@ -149,22 +177,22 @@ export default {
     // store.commit('SET_OVERLAY2', 'true')
   },
   computed: {
-    rows(){
+    rows() {
       /////////////////// Seokju
       // return this.items ? this.items.length : 0
 
-      return this.getUsers ? this.getUsers.length : 0
+      return this.getUsers ? this.getUsers.length : 0;
     },
-    rows2(){
+    rows2() {
       /////////////////// Seokju
       // return this.items ? this.items.length : 0
 
-      return this.getProjects ? this.getProjects.length : 0
+      return this.getProjects ? this.getProjects.length : 0;
     },
     ...mapGetters({
-      getUsers : 'getUsers',
-      getOverlay : 'getOverlay',
-      getProjects : 'getProjects',
+      getUsers: "getUsers",
+      getOverlay: "getOverlay",
+      getProjects: "getProjects",
     }),
   },
 
@@ -177,51 +205,54 @@ export default {
 
   methods: {
     ...mapMutations({
-      SET_NAME : 'SET_NAME',
-      SET_EMAIL : 'SET_EMAIL',
-      SET_TITLE : 'SET_TITLE',
-      SET_SHORTEXPLANATION : 'SET_SHORTEXPLANATION',
-      SET_STATE : 'SET_STATE',
-      SET_OVERLAY: 'SET_OVERLAY',
+      SET_NAME: "SET_NAME",
+      SET_EMAIL: "SET_EMAIL",
+      SET_TITLE: "SET_TITLE",
+      SET_SHORTEXPLANATION: "SET_SHORTEXPLANATION",
+      SET_STATE: "SET_STATE",
+      SET_OVERLAY: "SET_OVERLAY",
     }),
     ...mapActions({
       /////////////////// Seokju
       // getUsers : 'getUsers',
       // getProjects : 'getProjects',
-      updateUser : 'updateUser',
-      deleteUser : 'deleteUser',
-      updateProject : 'updateProject',
-      deleteProject : 'deleteProject'
+      updateUser: "updateUser",
+      deleteUser: "deleteUser",
+      updateProject: "updateProject",
+      deleteProject: "deleteProject",
     }),
-    updateProject(projectId, title, shortExplanation, state){
+    updateProject(projectId, title, shortExplanation, state) {
       /////////////////// Seokju
       // store.commit('SET_OVERLAY2', 'true')
       // console.log(projectId, title, shortExplanation, state);
       // store.commit('SET_OVERLAY', 'true')
 
-      this.SET_TITLE(title)
-      this.SET_SHORTEXPLANATION(shortExplanation)
-      this.SET_STATE(state)
-      this.SET_OVERLAY(true)
-      store.dispatch('updateProject', projectId)
+      this.SET_TITLE(title);
+      this.SET_SHORTEXPLANATION(shortExplanation);
+      this.SET_STATE(state);
+      this.SET_OVERLAY(true);
+      store.dispatch("updateProject", projectId);
     },
-    deleteProject(projectId){
-      this.SET_OVERLAY(true)
-      store.dispatch('deleteProject', projectId)
+    deleteProject(projectId) {
+      this.SET_OVERLAY(true);
+      store.dispatch("deleteProject", projectId);
     },
-    updateUser(userId, name, email){
+    updateUser(userId, name, email) {
       /////////////////// Seokju
       // store.commit('SET_OVERLAY2', 'true')
       // console.log(userId, name, email);
       // store.commit('SET_OVERLAY', 'true')
-      this.SET_NAME(name)
-      this.SET_EMAIL(email)
-      this.SET_OVERLAY(true)
-      store.dispatch('updateUser', userId)
+      this.SET_NAME(name);
+      this.SET_EMAIL(email);
+      this.SET_OVERLAY(true);
+      store.dispatch("updateUser", userId);
     },
-    deleteUser(userId){
-      this.SET_OVERLAY(true)
-      store.dispatch('deleteUser', userId)
+    deleteUser(userId) {
+      this.SET_OVERLAY(true);
+
+      // [SMC] before dispatchiing deleteUser check if userId is assigned to any project
+
+      store.dispatch("deleteUser", userId);
 
       /////////////////// Seokju
       // store.commit('SET_OVERLAY', 'true')
