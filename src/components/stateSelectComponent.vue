@@ -18,7 +18,7 @@
           >
 
           <template #cell(change_state)="row">
-            <b-form-select v-model="row.item.state" :options="options" @change="updateProject(row.item.projectId, row.item.title, row.item.shortExplanation, row.item.state)" class="w-75"></b-form-select>
+            <b-form-select v-model="row.item.state" :options="options" @change="updateProject(row.item)" class="w-75"></b-form-select>
           </template>
 
           <template #cell(show_details)="row">
@@ -77,7 +77,7 @@
                   <b-form-input v-model="row.item.state"></b-form-input>
                 </b-input-group>
 
-                <b-button size="sm" class="m-3" variant="success"  @click="updateProject(row.item.projectId, row.item.title, row.item.shortExplanation, row.item.state)">Guardar <i class="fas fa-pencil-alt"></i></b-button>
+                <b-button size="sm" class="m-3" variant="success"  @click="updateProject(row.item)">Guardar <i class="fas fa-pencil-alt"></i></b-button>
 
                 <b-button size="sm" variant="info" @click="editProject = false">Cerrar <i class="fas fa-trash-alt"></i></b-button>
 
