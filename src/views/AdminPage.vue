@@ -127,7 +127,7 @@
 import stateSelectComponent from "@/components/stateSelectComponent.vue";
 import store from "@/store";
 import { mapGetters, mapMutations, mapActions } from "vuex";
-
+import axios from "axios";
 export default {
   name: "Admin",
   components: {
@@ -248,44 +248,76 @@ export default {
       store.dispatch("updateUser", userId);
     },
     deleteUser(userId) {
-      this.SET_OVERLAY(true);
+      // this.SET_OVERLAY(true);
+      const baseURL = this.$store.getters.getBaseURL;
+      console.log(userId);
+      axios({
+        method: "get",
+        url: baseURL + "getUsers",
+        data: {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          typeOfInstitution: this.organizationType,
+        },
+      }).then(function (response) {
+        console.log(response.data);
+        const idx = response.data.findIndex((item) => {
+          return item.userId === userId;
+        });
+        // console.log(idx);
+        console.log(response.data[idx].projectsPublished);
+        if (response.data[idx].projectsPublished != undefined) {
+          // this.SET_OVERLAY(false);
+          alert("L'usuari no es pot esborrar");
+          return;
+          // console.log("usuari no es pot esborrar");
+          // this.$bvToast.toast("Usuari no es pot esborrar", {
+          //   variant: "warning",
+          //   toaster: "b-toaster-top-center",
+          //   solid: true,
+          //   title: "Avís",
+          //   autoHideDelay: 3000,
+          // });
+        } else {
+          // console.log("user esborrat");
 
-      // [SMC] before dispatchiing deleteUser check if userId is assigned to any project
-
-      store.dispatch("deleteUser", userId);
-
-      /////////////////// Seokju
-      // store.commit('SET_OVERLAY', 'true')
-      // console.log(index)
-      // console.log(row)
-      // let users = store.state.users.splice(index, 1)
-      // let users = store.state.users.splice(index, 1)
-      // console.log(users)
-      // items.splice(items.index, 1)
-      // store.dispatch('deleteUser', userId)
-
-      // this.$router.push('/redirac-admin')
-      // this.items = store.getters.getUsers
-      // if(store.dispatch('getUsers')){
-      //   this.items = store.getters.getUsers
-      // }
-      // console.log(userid)
-      // const idx = this.items.findIndex(item => item.userId === userid)
-      // this.items.splice(idx, 1)
-      // store.commit('SET_USERS', users)
-      // console.log(users)
-      // const idx = items.findIndex(item => {
-      //   return item.userId === userid
-      // })
-      // console.log(idx)
-      // let users = store.state.users.splice(idx, 1)
-      // console.log(users)
-      // items.splice(idx, 1)
-      // console.log(items)
-      // console.log(store.state.users)
-      // console.log(store.state.users[index])
-      // store.dispatch("actionUsers", users)
+          store.dispatch("deleteUser", userId);
+        }
+      });
     },
   },
 };
+
+/////////////////// Seokju
+// store.commit('SET_OVERLAY', 'true')
+// console.log(index)
+// console.log(row)
+// let users = store.state.users.splice(index, 1)
+// let users = store.state.users.splice(index, 1)
+// console.log(users)
+// items.splice(items.index, 1)
+// store.dispatch('deleteUser', userId)
+
+// this.$router.push('/redirac-admin')
+// this.items = store.getters.getUsers
+// if(store.dispatch('getUsers')){
+//   this.items = store.getters.getUsers
+// }
+// console.log(userid)
+// const idx = this.items.findIndex(item => item.userId === userid)
+// this.items.splice(idx, 1)
+// store.commit('SET_USERS', users)
+// console.log(users)
+// const idx = items.findIndex(item => {
+//   return item.userId === userid
+// })
+// console.log(idx)
+// let users = store.state.users.splice(idx, 1)
+// console.log(users)
+// items.splice(idx, 1)
+// console.log(items)
+// console.log(store.state.users)
+// console.log(store.state.users[index])
+// store.dispatch("actionUsers", users)
 </script>
