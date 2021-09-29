@@ -26,6 +26,10 @@
           </b-card>
         </b-col>
       </b-row>
+      <b-row>
+        <chatComponent></chatComponent>
+      </b-row>
+      
     </b-container>
   </div>
 </template>
@@ -34,9 +38,13 @@
 // @ is an alias to /src
 import store from '@/store'
 import {mapGetters} from 'vuex'
+import chatComponent from '@/components/chatComponent'
 
 export default {
   name: "Projects",
+  components:{
+    "chatComponent": chatComponent
+  },
   data() {
     return {
       items: store.getters.getProjects,
