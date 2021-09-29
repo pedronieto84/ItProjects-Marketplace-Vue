@@ -108,6 +108,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from "axios";
 import { formatDate } from "@/scripts/utilities.js";
 import { literalState } from "@/scripts/utilities.js";
@@ -398,6 +399,8 @@ export default {
     invalidFeedbackBid() {
       if (this.bid < 0) {
         return "La oferta ha de ser un nombre positiu";
+      } else if (this.bid = "") {
+        return "";
       }
       return "";
     },
