@@ -1,44 +1,44 @@
 <template>
-     <b-container fluid>
-         <div class="d-flex align-items-center justify-content-center">
-            <!--published-->
-            <b-row class="m-1">
-              <b-col sm="12">
-                  <label>Published: </label>
-              </b-col>
-            <b-col>
-                <b-form-datepicker v-model="project2.publishedDate" :min="min" :max="max" locale="en"></b-form-datepicker>
-            </b-col>
-          </b-row>
-            <!--deadliasdfasdfasdfne-->
-            <b-row class="m-1">
-            <b-col sm="12">
-                <label>Deadline: </label>
-            </b-col>
-            <b-col>
-                <b-form-datepicker :min="project2.publishedDate" v-model="project2.deadline" locale="en"></b-form-datepicker>
-            </b-col>
-            </b-row>
-            <!--price-->
-            
-              <b-col sm="3 mt-5">
-                <b-form-group :invalid-feedback="invalidFeedbackPrice">
-                  <b-form-input 
-                    id="priceId"
-                    type="number" 
-                    min="1" max="5000"
-                    step="any"
-                    placeholder="Bid In Euros" 
-                    v-model="project2.projectPrice"
-                    :state="statePrice"
-                    @click="entrada($event)">
-                  </b-form-input>
-                </b-form-group>
-              </b-col>
-            
-        </div>
-        <div class="add-technology m-5">
-              <b-row class="my-1">
+  <b-container fluid>
+    <div class="d-flex align-items-center justify-content-center">
+      <!--published-->
+        <b-row class="m-1">
+          <b-col sm="12">
+              <label>Published: </label>
+          </b-col>
+          <b-col>
+            <b-form-datepicker v-model="project2.publishedDate" :min="min" :max="max" locale="en"></b-form-datepicker>
+          </b-col>
+        </b-row>
+      <!--deadliasdfasdfasdfne-->
+        <b-row class="m-1">
+          <b-col sm="12">
+            <label>Deadline: </label>
+          </b-col>
+          <b-col>
+            <b-form-datepicker :min="project2.publishedDate" v-model="project2.deadline" locale="en"></b-form-datepicker>
+          </b-col>
+        </b-row>
+      <!--price-->
+        <b-row class="m-1">
+          <b-col sm="3 mt-5">
+            <b-form-group :invalid-feedback="invalidFeedbackPrice">
+              <b-form-input 
+                id="priceId"
+                type="number" 
+                min="1" max="5000"
+                step="any"
+                placeholder="Bid In Euros" 
+                v-model="project2.bid"
+                :state="statePrice"
+                @click="entrada($event)">
+              </b-form-input>
+            </b-form-group>
+          </b-col>
+        </b-row>
+    </div>
+      <div class="add-technology m-5">
+        <b-row class="my-1">
       <!--*** TECHNOLOGY NEEDED-->
       <b-col sm="4"><p>Add technology needed</p></b-col>
       <b-col sm="8">
@@ -102,13 +102,13 @@ export default {
       return {
         project2:{
           techSet:[],
-          projectPrice:"",
+          bid:0,
           publishedDate:"",
           deadline:""
         },
         
         technologies:[],
-        projectPriceId:true,
+        bidId:true,
         projectTechnologyId:true,
         min: minDate,
         max: maxDate,
@@ -123,25 +123,25 @@ export default {
       return this.project2.techSet.length > 0 && this.project2.techSet.length <= 35;
     },
     statePrice() {
-      if (this.projectPriceId) {
+      if (this.bidId) {
         return null;
       }
-      return this.project2.projectPrice <= 500000;
+      return this.project2.bid <= 500000;
     },
     filteredTechnologies() {
       const matches = this.technologies.filter((matchy) => matchy.includes(this.project2.techSet))
       return matches;
     },
     invalidFeedbackPrice(){
-      if(this.project2.projectPrice === ""){
+      if(this.project2.bid === ""){
         return "Add some value..."
-      }else if(this.project2.projectPrice > 500000){
+      }else if(this.project2.bid > 500000){
         return "Less of 500.000"
       }
       return ""
     },
     disabledBtn(){
-      return this.project2.projectPrice >= 500000 
+      return this.project2.bid >= 500000 
       || this.project2.deadline === "" || this.project2.publishedDate === "" ||
       this.project2.techSet.length === 0
     }
@@ -150,7 +150,7 @@ export default {
     entrada(event) {
        switch (event.target.id) {
           case "priceId":
-          this.projectPriceId = false;
+          this.bidId = false;
           break;
            case "projectTechnologyId":
           this.projectTechnologyId = false;
