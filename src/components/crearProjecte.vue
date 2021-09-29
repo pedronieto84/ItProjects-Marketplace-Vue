@@ -32,7 +32,6 @@ export default {
        createProjectPage1,
        createProjectPage2,
        createProjectPage3
-
    },
    methods:{
        updateProjectData1(project){ 
